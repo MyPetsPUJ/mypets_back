@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
 const bcrypt = require ('bcrypt');
 const bodyParser = require('body-parser');
 
 const adoptanteRoutes = require ("./routes/adoptante");
 const Adoptante = require('./models/adoptante');
-const saltRounds = 10;
+const Fundacion = require('./models/fundacion');
+
 
 //Initilizations
 const app = express();
@@ -76,6 +78,37 @@ app.post("/crear-cuenta/crear-adoptante",(req, res, next) =>{
         .then(result => {
             res.status(201).json({
                 message: 'Adoptante creado',
+                result: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        });
+    //});
+});
+
+app.post("/crear-cuenta/crear-fundacion",(req, res, next) =>{
+    //bcrypt.hash(req.body.password, 10)
+    //.then(function(hash) {
+        console.log("Creando fundacion");
+        console.log(req.body);
+        const fundacion = new Fundacion({
+            nombreFund: req.body.nombreFund,
+            nombreEncar: req.body.nombreEncar,
+            apellidosEncar: req.body.apellidosEncar,
+            fecha_creacion: req.body.fecha_creacion,
+            localidad: req.body.localidad,
+            correo: req.body.correo,
+            num_celular: req.body.num_celular,
+            contrasena: req.body.contrasena
+        });
+        console.log(fundacion)
+        fundacion.save()
+        .then(result => {
+            res.status(201).json({
+                message: 'Fundación creada',
                 result: result
             });
         })
