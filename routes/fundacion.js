@@ -9,10 +9,11 @@ const app = require('../app');
 router.get("/crear-cuenta/crear-fundacion", (req, res, next) =>{
     res.send([4,5,6]);
     console.log("Dentro de fundacion");
+    
 });
 
 
-router.post("/crear-cuenta/crear-fundacion", async (req, res, next) =>{
+router.post("/crear-cuenta/crear-fundacion", (req, res, next) =>{
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
         console.log("Creando fundacion");
@@ -29,7 +30,7 @@ router.post("/crear-cuenta/crear-fundacion", async (req, res, next) =>{
             tipo_usuario: 'Fundacion'
         });
         console.log(fundacion)
-        await fundacion.save()
+        fundacion.save()
         const token = jwt.sign({_id: fundacion._id}, 'fundacionkey')
         res.status(200).json({token});
 

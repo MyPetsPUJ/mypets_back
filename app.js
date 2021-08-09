@@ -1,5 +1,7 @@
 const express = require('express');
+const serveStatic = require('serve-static');
 const mongoose = require('mongoose');
+const path = require('path');
 
 
 const adoptanteRoutes = require ("./routes/adoptante");
@@ -12,8 +14,10 @@ const app = express();
 const url = "mongodb+srv://gabokid:bg1CbQvQEvqavI4w@cluster0.igejl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 
-app.use('/api',require('./routes/adoptante'));
-app.use('/api',require('./routes/fundacion'));
+app.use('/api', adoptanteRoutes);
+//app.use('/api',require('./routes/fundacion'));
+
+app.use(express.static(path.join(__dirname, 'models')));
 
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -42,7 +46,7 @@ app.use((req, res, next) =>{
     next();
 });
 
-app.post("/crear-cuenta/crear-adoptante", (req, res, next) =>{
+/*app.post("/crear-cuenta/crear-adoptante",(req, res, next) =>{
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
         console.log("Creando adoptante");
@@ -58,20 +62,21 @@ app.post("/crear-cuenta/crear-adoptante", (req, res, next) =>{
             password: req.body.password,
             tipo_usuario: 'Adoptante'
         });
-        console.log(adoptante);
+        console.log(adoptante)
         adoptante.save()
         .then(result => {
             res.status(201).json({
                 message: 'Adoptante creado',
                 result: result
-            })
-            .catch(err => {
-                res.status(500).json({
-                    error: err
-                });
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
             });
         });
-});
+    //});
+});*/
 
 app.get('/login', (req, res) => {
     res.send([1,2,3]);

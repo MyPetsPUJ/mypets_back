@@ -25,13 +25,14 @@ router.use(cors());
 router.get("/crear-cuenta/crear-adoptante", (req, res, next) =>{
     res.send([1,2,3]);
     console.log("Dentro de adoptante");
+    next();
 });
 
 router.post("/crear-cuenta/crear-adoptante", async (req, res, next) =>{
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
         console.log("Creando adoptante");
-        console.log(req.body.apellidos);
+        console.log(req.body);
         const adoptante = new Adoptante({
             nombre: req.body.nombre,
             apellidos: req.body.apellidos,
