@@ -10,6 +10,7 @@ const schema_fundacion = mongoose.Schema({
     correo: {type: String, required: true},
     num_celular: {type: String, required: true},
     contrasena: {type: String, required: true},
+    tipo_usuario: {type: String}
 });
 
 schema_fundacion.plugin(uniqueValidator);

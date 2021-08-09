@@ -10,11 +10,11 @@ const schema_adoptante = mongoose.Schema({
     localidad: {type: String, required: true},
     correo: {type: String, required: true, unique: true},
     num_celular: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    tipo_usuario: {type: String}
 });
 
 schema_adoptante.plugin(uniqueValidator);
-
 
 
 module.exports = mongoose.model('Adoptante', schema_adoptante);
