@@ -1,13 +1,15 @@
-const { Router } = require('express');
-const router = Router();
+const express = require('express');
+const router = express.Router();
+
 
 const cors = require('cors');
 //const bcrypt = require ('bcrypt');
 
-const Adoptante = require('../models/adoptante');
+const Adoptante = require('../src/models/adoptante');
 const jwt = require('jsonwebtoken');
 const app = require('../app');
 
+/*
 router.use((req, res, next) =>{
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -17,15 +19,27 @@ router.use((req, res, next) =>{
         "Access-Control-Allow-Methods", 
         "GET, POST, PATCH, DELETE, OPTIONS");
     next();
+});*/
+
+router.get('/login', (req, res) => {
+    res.send([1,2,3]);
+    console.log("Dentro de login")
+    //next();
 });
 
-router.use(cors());
+router.get('/', (req, res) => {
+    res.send('Hello world');
+    console.log("Dentro de login")
+    //next();
+}); 
+
+//router.use(cors());
 
 
 router.get("/crear-cuenta/crear-adoptante", (req, res, next) =>{
     res.send([1,2,3]);
     console.log("Dentro de adoptante");
-    next();
+    //next();
 });
 
 router.post("/crear-cuenta/crear-adoptante", async (req, res, next) =>{
@@ -60,8 +74,6 @@ router.post("/crear-cuenta/crear-adoptante", async (req, res, next) =>{
         //});
     //});
 });
-
-
 
 
 module.exports = router;

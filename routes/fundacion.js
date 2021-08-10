@@ -1,8 +1,8 @@
-const { Router } = require('express');
-const router = Router();
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
 
-const Fundacion = require('../models/fundacion');
-
+const Fundacion = require('../src/models/fundacion');
 const app = require('../app');
 
 
@@ -47,6 +47,5 @@ router.post("/crear-cuenta/crear-fundacion", (req, res, next) =>{
         //});
     //});
 });
-
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const router = Router();
 
-const Adoptante = require('../models/adoptante');
-const Fundacion = require('../models/fundacion');
+const Adoptante = require('../src/models/adoptante');
+const Fundacion = require('../src/models/fundacion');
 
 const jwt = require('jsonwebtoken');
 
