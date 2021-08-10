@@ -39,7 +39,7 @@ app.use('/api', require('./routes/adoptante'));
 app.post('/api/login', (req, res) => {
 
     //const {correo, password, tipo_usuario} = req.body;
-    console.log(req.body.correo);
+    console.log(req.body);
     
     Adoptante.findOne({correo: req.body.correo}).then(adoptante =>{
         if(!adoptante){
@@ -143,7 +143,7 @@ app.post("/api/crear-cuenta/crear-fundacion", (req, res, next) =>{
 });
 
 
-app.post("/crear-cuenta/crear-adoptante",(req, res, next) =>{
+app.post("/api/crear-cuenta/crear-adoptante",(req, res, next) =>{
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
         console.log("Creando adoptante");
