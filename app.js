@@ -9,6 +9,8 @@ require('./src/database');
 //const adoptanteRoutes = require ('./routes/adoptante');
 const Adoptante = require('./src/models/adoptante');
 const Fundacion = require('./src/models/fundacion');
+const Perro = require('./src/models/perro');
+const Gato = require('./src/models/gato');
 
 
 //Initilizations
@@ -33,8 +35,11 @@ app.use(cors({origin: 'http://localhost:4200'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use('/api', require('./routes/perro'));
 app.use('/api', require('./routes/adoptante'));
-//app.use('/api', require('./routes/fundacion'));
+app.use('/api', require('./routes/fundacion'));
+app.use('/api', require('./routes/gato'));
+
 
 app.post('/api/login', (req, res) => {
 

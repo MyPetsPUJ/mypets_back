@@ -6,7 +6,8 @@ const Fundacion = require('../src/models/fundacion');
 const app = require('../app');
 
 
-router.get("/crear-cuenta/crear-fundacion", (req, res, next) =>{
+
+router.get("/crear-cuenta/crear-fundacion", (req, res) =>{
     res.send([4,5,6]);
     console.log("Dentro de fundacion");
     

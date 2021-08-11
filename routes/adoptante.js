@@ -21,17 +21,6 @@ router.use((req, res, next) =>{
     next();
 });*/
 
-router.get('/login', (req, res) => {
-    res.send([1,2,3]);
-    console.log("Dentro de login")
-    //next();
-});
-
-router.get('/', (req, res) => {
-    res.send('Hello world');
-    console.log("Dentro de login")
-    //next();
-}); 
 
 //router.use(cors());
 
