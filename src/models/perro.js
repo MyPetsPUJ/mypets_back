@@ -15,7 +15,7 @@ const schema_perro = mongoose.Schema({
     desparasitado: {type: String, required: true},
     ultima_vac: {type: Date, required: true},
     descripcion: {type: String, required: true},
-    esquema_vac: {type: Array, required: true}
+    esquema_vac: {type: String, required: true}
 });
 
 schema_perro.plugin(uniqueValidator);

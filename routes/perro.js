@@ -6,9 +6,10 @@ const Perro = require('../src/models/perro');
 const app = require('../app');
 
 
-router.get("/dashboard/seleccion-animal/crear-animal-perro", (req, res) => {
+router.get("/dashboard/seleccion-animal/crear-animal-perro", (req, res, next) => {
     res.send([4,4,4]);
     console.log("Dentro de crear perro");
+    next();
 });
 
 router.post("/dashboard/seleccion-animal/crear-animal-perro", (req, res) => {
