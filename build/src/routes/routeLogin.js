@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const router = express_1.default();
-const adoptante_1 = __importDefault(require("../models/adoptante"));
+const router = express_1.default.Router();
+const modelAdoptante_1 = __importDefault(require("../models/modelAdoptante"));
 const jwt = require('jsonwebtoken');
 router.get('/login', (req, res, next) => {
     res.send([9, 9, 9]);
@@ -15,7 +15,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res) => {
     //const {correo, password, tipo_usuario} = req.body;
     console.log(req.body);
-    adoptante_1.default.findOne({ correo: req.body.correo }).then((adoptante) => {
+    modelAdoptante_1.default.findOne({ correo: req.body.correo }).then((adoptante) => {
         if (!adoptante) {
             return res.status(401).json({
                 message: "Correo inválido"

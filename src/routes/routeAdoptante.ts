@@ -1,22 +1,22 @@
-import express from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 const router = express.Router();
 
 
 //const bcrypt = require ('bcrypt');
 
-import Adoptante from '../models/adoptante';
+import Adoptante from '../models/modelAdoptante';
 import jwt from 'jsonwebtoken';
 import app from '../app';
 
 
-router.get("/crear-cuenta/crear-adoptante", (req, res, next) =>{
+router.get("/crear-cuenta/crear-adoptante", (req: Request, res: Response, next: NextFunction) =>{
     res.send([1,2,3]);
     console.log("Dentro de adoptante");
     next();
 });
 
 
-router.post("/crear-cuenta/crear-adoptante",(req, res, next) =>{
+router.post("/crear-cuenta/crear-adoptante",(req: Request, res: Response, next: NextFunction) =>{
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
         console.log("Creando adoptante");

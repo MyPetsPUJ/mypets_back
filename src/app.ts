@@ -38,11 +38,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 //Routes
 // --------------------------------------------------------------------------
 
-app.use('/api', require('./routes/perro'));
-app.use('/api', require('./routes/adoptante'));
-app.use('/api', require('./routes/fundacion'));
-app.use('/api', require('./routes/gato'));
-app.use('/api', require('./routes/login'));
+app.use('/api', require('./routes/routePerro'));
+app.use('/api', require('./routes/routeAdoptante'));
+app.use('/api', require('./routes/routeFundacion'));
+app.use('/api', require('./routes/routeGato'));
+app.use('/api', require('./routes/routeLogin'));
 
 //module.exports = app;
 export default app;

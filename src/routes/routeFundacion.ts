@@ -1,19 +1,18 @@
-import express from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-import Fundacion from '../models/fundacion';
+import Fundacion from '../models/modelFundacion';
 import app from '../app';
 
 
 
-router.get("/crear-cuenta/crear-fundacion", (req, res, next) =>{
+router.get("/crear-cuenta/crear-fundacion", (req: Request, res: Response, next: NextFunction) =>{
     res.send([4,5,6]);
     console.log("Dentro de fundacion");
-    next()
 });
 
-router.post("/crear-cuenta/crear-fundacion",(req, res, next) =>{
+router.post("/crear-cuenta/crear-fundacion",(req: Request, res: Response, next: NextFunction) =>{
   //bcrypt.hash(req.body.password, 10)
   //.then(function(hash) {
       console.log("Creando fundacion");

@@ -1,18 +1,18 @@
-import  Router from 'express';
-const router = Router();
+import express, {Request, Response, NextFunction} from 'express';
+const router = express.Router();
 
-import Adoptante from '../models/adoptante';
-import Fundacion from '../models/fundacion';
+import Adoptante from '../models/modelAdoptante';
+import Fundacion from '../models/modelFundacion';
 
 const jwt = require('jsonwebtoken');
 
-router.get('/login', (req, res, next) =>{
+router.get('/login', (req: Request, res: Response, next: NextFunction) =>{
     res.send([9,9,9]);
     console.log('Dentro de login');
     next();
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', (req: Request, res: Response) => {
 
     //const {correo, password, tipo_usuario} = req.body;
     console.log(req.body);

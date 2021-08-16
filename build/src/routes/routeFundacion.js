@@ -6,18 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const jwt = require('jsonwebtoken');
-const fundacion_1 = __importDefault(require("../models/fundacion"));
+const modelFundacion_1 = __importDefault(require("../models/modelFundacion"));
 router.get("/crear-cuenta/crear-fundacion", (req, res, next) => {
     res.send([4, 5, 6]);
     console.log("Dentro de fundacion");
-    next();
 });
 router.post("/crear-cuenta/crear-fundacion", (req, res, next) => {
     //bcrypt.hash(req.body.password, 10)
     //.then(function(hash) {
     console.log("Creando fundacion");
     console.log(req.body);
-    const fundacion = new fundacion_1.default({
+    const fundacion = new modelFundacion_1.default({
         nombreFund: req.body.nombreFund,
         nombreEncar: req.body.nombreEncar,
         apellidosEncar: req.body.apellidosEncar,

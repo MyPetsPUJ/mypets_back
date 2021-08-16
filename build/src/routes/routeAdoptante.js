@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 //const bcrypt = require ('bcrypt');
-const adoptante_1 = __importDefault(require("../models/adoptante"));
+const modelAdoptante_1 = __importDefault(require("../models/modelAdoptante"));
 router.get("/crear-cuenta/crear-adoptante", (req, res, next) => {
     res.send([1, 2, 3]);
     console.log("Dentro de adoptante");
@@ -17,7 +17,7 @@ router.post("/crear-cuenta/crear-adoptante", (req, res, next) => {
     //.then(function(hash) {
     console.log("Creando adoptante");
     console.log(req.body);
-    const adoptante = new adoptante_1.default({
+    const adoptante = new modelAdoptante_1.default({
         nombre: req.body.nombre,
         apellidos: req.body.apellidos,
         fecha_nacimiento: req.body.fecha_nacimiento,
