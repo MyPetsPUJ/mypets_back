@@ -6,7 +6,6 @@ import app from '../app';
 
 router.get("/dashboard/seleccion-animal/crear-animal-perro", (req, res, next) => {
     res.send([4,4,4]);
-    res.end();
     console.log("Dentro de crear perro");
     //next();
 });
