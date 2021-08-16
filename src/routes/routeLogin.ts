@@ -3,14 +3,11 @@ const router = express.Router();
 
 import Adoptante from '../models/modelAdoptante';
 import Fundacion from '../models/modelFundacion';
+import {controllerLogin} from '../controllers/controllerLogin';
 
 const jwt = require('jsonwebtoken');
 
-router.get('/login', (req: Request, res: Response, next: NextFunction) =>{
-    res.send([9,9,9]);
-    console.log('Dentro de login');
-    next();
-})
+router.get('/login', controllerLogin.dentroLogin);
 
 router.post('/login', (req: Request, res: Response) => {
 

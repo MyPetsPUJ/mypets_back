@@ -1,7 +1,4 @@
 import express from 'express';
-import exphbs from "express-handlebars";
-import path from 'path';
-import jwt from 'jsonwebtoken';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -31,8 +28,8 @@ app.use(cors({origin: 'http://localhost:4200'}));
 
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 // --------------------------------------------------------------------------
 //Routes
