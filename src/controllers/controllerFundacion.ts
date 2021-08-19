@@ -7,6 +7,7 @@ class ControllerFundacion{
 
         res.send([4,5,6]);
         console.log("Dentro de fundacion");
+        next();
     }
 
     public crearFundacion(req: Request, res: Response, next: NextFunction){
@@ -25,7 +26,7 @@ class ControllerFundacion{
         localidad: req.body.localidad,
         correo: req.body.correo,
         num_celular: req.body.num_celular,
-        contrasena: req.body.contrasena,
+        password: req.body.password,
         tipo_usuario: 'Fundacion'
       });
       console.log(fundacion)

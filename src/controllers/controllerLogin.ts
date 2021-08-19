@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from 'express';
+import {Request, Response, NextFunction, json} from 'express';
 
 
 import Adoptante from '../models/modelAdoptante';
@@ -18,51 +18,76 @@ class ControllerLogin{
 
         //const {correo, password, tipo_usuario} = req.body;
 
-     console.log(req.body)   
-    
-    Adoptante.findOne({correo: req.body.correo}).then((adoptante:any) =>{
-        if(!adoptante){
-            return res.status(401).json({
-                message: "Correo inválido"
-            });
-        }
-        if(adoptante.password != req.body.password){
-            return res.status(401).json({
-                message: "Contraseña inválida"
-            });
-        }
-        if(adoptante.tipo_usuario != req.body.tipo_usuario){
-            return res.status(401).json({
-                message: "El tipo de usuario no coincide"
-            });
-        }        
+     console.log(req.body)
 
-        const token = jwt.sign({correo: adoptante.correo, _id: adoptante._id}, 
-        'adoptante_key', 
-        { expiresIn: '1h'}
-        );
-        res.status(200).json({
-            token: token
+     const tipo_usuario: String = JSON.stringify(req.body.tipo_usuario);
+
+     console.log('Este es el tipo de usuario:')
+     console.log(tipo_usuario)
+
+     if(tipo_usuario === 'Adoptante'){
+
+        Adoptante.findOne({correo: req.body.correo}).then((adoptante:any) =>{
+            if(!adoptante){
+                return res.status(401).json({
+                    message: "Correo inválido"
+                });
+            }
+            if(adoptante.password != req.body.password){
+                return res.status(401).json({
+                    message: "Contraseña inválida"
+                });
+            }
+            if(adoptante.tipo_usuario != req.body.tipo_usuario){
+                return res.status(401).json({
+                    message: "El tipo de usuario no coincide"
+                });
+            }        
+    
+            const token = jwt.sign({correo: adoptante.correo, _id: adoptante._id}, 
+            'adoptante_key', 
+            { expiresIn: '1h'}
+            );
+            res.status(200).json({
+                token: token
+            });
         });
-    });
-/*
-    Fundacion.findOne({correo: req.body.correo}).then(fundacion =>{
-        if(!fundacion){
-            return res.status(401).json({
-                message: "Correo inválido"
-            });
-        }
-        if(fundacion.password != req.body.password){
-            return res.status(401).json({
-                message: "Contraseña inválida"
-            });
-        }
-        if(fundacion.tipo_usuario != req.body.tipo_usuario){
-            return res.status(401).json({
-                message: "El tipo de usuario no coincide"
-            });
-        }        
-    });*/
+
+     }
+     else{
+        Fundacion.findOne({correo: req.body.correo}).then(fundacion =>{
+            if(!fundacion){
+                return res.status(401).json({
+                    message: "Correo inválido"
+                });
+            }
+            if(fundacion.password != req.body.password){
+                return res.status(401).json({
+                    message: "Contraseña inválida"
+                });
+            }
+            if(fundacion.tipo_usuario != req.body.tipo_usuario){
+                return res.status(401).json({
+                    message: "El tipo de usuario no coincide"
+                });
+            }
+            
+            const token = jwt.sign({correo: fundacion.correo, _id: fundacion._id}, 
+                'fundacion_key', 
+                { expiresIn: '1h'}
+                );
+                res.status(200).json({
+                    token: token
+                });
+
+        });
+     }
+     
+
+    
+
+    
+    
 
 
     

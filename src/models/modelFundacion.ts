@@ -11,7 +11,7 @@ interface Fundacion extends Document{
     localidad: string;
     correo: string;
     num_celular: string;
-    contrasena: string;
+    password: string;
     tipo_usuario: string;
 }
 
@@ -25,7 +25,7 @@ const schema_fundacion: Schema = new Schema({
     localidad: {type: String, required: true},
     correo: {type: String, required: true},
     num_celular: {type: String, required: true},
-    contrasena: {type: String, required: true},
+    password: {type: String, required: true},
     tipo_usuario: {type: String}
 });
 
