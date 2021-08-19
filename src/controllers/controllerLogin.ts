@@ -20,14 +20,16 @@ class ControllerLogin{
 
      console.log(req.body)
 
-     const tipo_usuario: String = JSON.stringify(req.body.tipo_usuario);
+     const tipo_usuario: String = req.body.tipo_usuario;
+     const usuarioAdoptante: String = "Adoptante";
+     const usuarioFundacion: String = "Fundacion";
 
      console.log('Este es el tipo de usuario:')
      console.log(tipo_usuario)
 
-     if(tipo_usuario === 'Adoptante'){
-
-        Adoptante.findOne({correo: req.body.correo}).then((adoptante:any) =>{
+     if(tipo_usuario === usuarioAdoptante){
+        console.log("Entrando a adoptante")
+        Adoptante.findOne({correo: req.body.correo}).then(adoptante =>{
             if(!adoptante){
                 return res.status(401).json({
                     message: "Correo inválido"
@@ -54,7 +56,8 @@ class ControllerLogin{
         });
 
      }
-     else{
+     else if(tipo_usuario === usuarioFundacion){
+        console.log("Entrando a fundacion")
         Fundacion.findOne({correo: req.body.correo}).then(fundacion =>{
             if(!fundacion){
                 return res.status(401).json({
