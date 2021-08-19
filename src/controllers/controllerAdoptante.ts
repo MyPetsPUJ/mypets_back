@@ -20,6 +20,8 @@ class ControllerAdoptante{
             nombre: req.body.nombre,
             apellidos: req.body.apellidos,
             fecha_nacimiento: req.body.fecha_nacimiento,
+            tipo_doc: req.body.tipo_doc,
+            num_doc: req.body.num_doc,
             genero: req.body.genero,
             localidad: req.body.localidad,
             correo: req.body.correo,

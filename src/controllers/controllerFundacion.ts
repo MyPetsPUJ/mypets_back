@@ -19,6 +19,8 @@ class ControllerFundacion{
         nombreFund: req.body.nombreFund,
         nombreEncar: req.body.nombreEncar,
         apellidosEncar: req.body.apellidosEncar,
+        tipo_doc: req.body.tipo_doc,
+        num_doc: req.body.num_doc,
         fecha_creacion: req.body.fecha_creacion,
         localidad: req.body.localidad,
         correo: req.body.correo,
