@@ -35,11 +35,13 @@ app.use(express.urlencoded({extended: true}));
 //Routes
 // --------------------------------------------------------------------------
 
-app.use('/api', require('./routes/routePerro'));
+//app.use('/api', require('./routes/routePerro'));
 app.use('/api', require('./routes/routeAdoptante'));
 app.use('/api', require('./routes/routeFundacion'));
-app.use('/api', require('./routes/routeGato'));
+//app.use('/api', require('./routes/routeGato'));
 app.use('/api', require('./routes/routeLogin'));
+app.use('/api', require('./routes/routeAnimal'));
+
 
 //module.exports = app;
 export default app;
