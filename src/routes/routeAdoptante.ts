@@ -2,12 +2,13 @@ import express, {Request, Response, NextFunction} from 'express';
 import { controllerAdoptante } from '../controllers/controllerAdoptante';
 
 const router = express.Router();
+const entidadPath = "crear-cuenta";
+const usuarioPath = "crear-adopante";
 
 
+router.get(`/${entidadPath}/${usuarioPath}`, controllerAdoptante.dentroAdoptante);
 
-router.get("/crear-cuenta/crear-adoptante", controllerAdoptante.dentroAdoptante);
-
-router.post("/crear-cuenta/crear-adoptante", controllerAdoptante.crearAdoptante);
+router.post(`/${entidadPath}/${usuarioPath}`, controllerAdoptante.crearAdoptante);
 
 
 

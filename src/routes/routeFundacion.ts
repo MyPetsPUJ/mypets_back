@@ -3,11 +3,13 @@ import { controllerFundacion } from '../controllers/controllerFundacion';
 
 const router = express.Router();
 
+const entidadPath = "crear-cuenta";
+const usuarioPath = "crear-fundacion";
 
 
-router.get("/crear-cuenta/crear-fundacion", controllerFundacion.dentroFundacion);
+router.get(`/${entidadPath}/${usuarioPath}`, controllerFundacion.dentroFundacion);
 
-router.post("/crear-cuenta/crear-fundacion", controllerFundacion.crearFundacion);
+router.post(`/${entidadPath}/${usuarioPath}`, controllerFundacion.crearFundacion);
 
 
 

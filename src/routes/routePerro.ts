@@ -1,11 +1,17 @@
 import express, {Request, Response, NextFunction} from 'express';
 import {controllerPerro} from '../controllers/controllerPerro'
 
+const checkAuth = require('../middleware/check-auth');
+
 const router = express.Router();
 
-router.get("/dashboard/seleccion-animal/crear-animal-perro", controllerPerro.dentroPerro);
+const dashboardPath = "dashboard";
+const eleccionPath = "seleccion-animal";
+const accionPath = "crear-animal-perro";
 
-router.post("/dashboard/seleccion-animal/crear-animal-perro", controllerPerro.crearPerro); 
+router.get(`/${dashboardPath}/${eleccionPath}/${accionPath}`, controllerPerro.dentroPerro);
+
+router.post(`/${dashboardPath}/${eleccionPath}/${accionPath}`, controllerPerro.crearPerro); 
 
 
 

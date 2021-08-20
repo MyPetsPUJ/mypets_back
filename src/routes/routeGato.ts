@@ -3,10 +3,14 @@ import {controllerGato} from '../controllers/controllerGato'
 
 const router = express.Router();
 
+const dashboardPath = "dashboard";
+const eleccionPath = "seleccion-animal";
+const accionPath = "crear-animal-gato";
 
-router.get("/dashboard/seleccion-animal/crear-animal-gato", controllerGato.dentroGato);
 
-router.post("/dashboard/seleccion-animal/crear-animal-gato", controllerGato.crearGato);
+router.get(`/${dashboardPath}/${eleccionPath}/${accionPath}`, controllerGato.dentroGato);
+
+router.post(`/${dashboardPath}/${eleccionPath}/${accionPath}`, controllerGato.crearGato);
 
 
 module.exports = router;

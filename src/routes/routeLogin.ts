@@ -2,11 +2,12 @@ import express, {Request, Response, NextFunction} from 'express';
 import {controllerLogin} from '../controllers/controllerLogin';
 
 const router = express.Router();
+const loginPath = "login";
 
 
-router.get('/login', controllerLogin.dentroLogin);
+router.get(`/${loginPath}`, controllerLogin.dentroLogin);
 
-router.post('/login', controllerLogin.hacerLogin);
+router.post(`/${loginPath}`, controllerLogin.hacerLogin);
 
 
 
