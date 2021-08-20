@@ -3,7 +3,7 @@ import { controllerAdoptante } from '../controllers/controllerAdoptante';
 
 const router = express.Router();
 const entidadPath = "crear-cuenta";
-const usuarioPath = "crear-adopante";
+const usuarioPath = "crear-adoptante";
 
 
 router.get(`/${entidadPath}/${usuarioPath}`, controllerAdoptante.dentroAdoptante);
