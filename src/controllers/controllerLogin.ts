@@ -14,6 +14,10 @@ class ControllerLogin {
     next();
   }
 
+  public profile(req: Request, res: Response){
+    res.send([1,2,3,4])
+  }
+
   public hacerLogin(req: Request, res: Response, next: NextFunction) {
     //const {correo, password, tipo_usuario} = req.body;
 
@@ -26,13 +30,14 @@ class ControllerLogin {
 
     if (tipo_usuario === UserType.ADOPTANTE) {
       console.log("Entrando a adoptante");
-      Adoptante.findOne({ correo: req.body.correo }).then((adoptante) => {
+      Adoptante.findOne({ correo: req.body.correo }).then(async (adoptante) => {
         if (!adoptante) {
           return res.status(401).json({
             message: "Correo inválido",
           });
         }
-        if (adoptante.password != req.body.password) {
+        const correctPassword: boolean = await adoptante.validatePassword(req.body.password);
+        if (!correctPassword) {
           return res.status(401).json({
             message: "Contraseña inválida",
           });
@@ -48,9 +53,7 @@ class ControllerLogin {
           "adoptante_key",
           { expiresIn: "1h" }
         );
-        res.status(200).json({
-          token: token,
-        });
+        res.header('auth-token', token).json(200);
       });
     } else if (tipo_usuario === UserType.FUNDACION) {
       console.log("Entrando a fundación");
