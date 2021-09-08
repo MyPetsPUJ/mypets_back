@@ -1,6 +1,11 @@
 import mongoose, {Schema, Document} from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
+export enum UserType{
+    ADOPTANTE = "Adoptante",
+    FUNDACION = "Fundacion"  
+}
+
 interface User extends Document{
     nombre: string;
     apellidos: string;

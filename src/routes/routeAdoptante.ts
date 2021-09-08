@@ -1,18 +1,19 @@
-import express, {Request, Response, NextFunction} from 'express';
-import { controllerAdoptante } from '../controllers/controllerAdoptante';
+import express, { Request, Response, NextFunction } from "express";
+import { controllerAdoptante } from "../controllers/controllerAdoptante";
 
 const router = express.Router();
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-adoptante";
 
+router.get(
+  `/${entidadPath}/${usuarioPath}`,
+  controllerAdoptante.dentroAdoptante
+);
 
-router.get(`/${entidadPath}/${usuarioPath}`, controllerAdoptante.dentroAdoptante);
-
-router.post(`/${entidadPath}/${usuarioPath}`, controllerAdoptante.crearAdoptante);
-
-
-
-
+router.post(
+  `/${entidadPath}/${usuarioPath}`,
+  controllerAdoptante.crearAdoptante
+);
 
 /*
 router.post("/crear-cuenta/crear-adoptante", async (req, res, next) =>{
@@ -47,7 +48,6 @@ router.post("/crear-cuenta/crear-adoptante", async (req, res, next) =>{
         //});
     //});
 });*/
-
 
 module.exports = router;
 //export default router;
