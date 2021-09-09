@@ -9,8 +9,7 @@ class ControllerAdoptante {
   }
 
   public async crearAdoptante(req: Request, res: Response, next: NextFunction) {
-    //bcrypt.hash(req.body.password, 10)
-    //.then(function(hash) {
+    
     console.log("Creando adoptante");
     console.log(req.body);
     const adoptante = new Adoptante({
@@ -41,7 +40,6 @@ class ControllerAdoptante {
           error: err,
         });
       });
-    //});
   }
 }
 

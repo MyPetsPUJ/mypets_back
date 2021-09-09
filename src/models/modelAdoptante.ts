@@ -52,11 +52,4 @@ schema_adoptante.methods.validatePassword = async function (
   return await bcrypt.compare(password, this.password);
 };
 
-// schema_adoptante.methods.validatePassword = async (
-//   password: string,
-//   passwordReceived
-// ) => {
-//   return await bcrypt.compare(password, passwordReceived);
-// };
-
 export default mongoose.model<User>("Adoptante", schema_adoptante);
