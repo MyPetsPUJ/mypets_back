@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import { controllerAnimal } from "../controllers/controllerAnimal";
 
+import multer from "../lib/multer";
+
 const router = express.Router();
 
 const dashboardPath = "dashboard";
@@ -19,11 +21,13 @@ router.get(
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,
+  multer.single("image"),
   controllerAnimal.crearAnimalGato
 );
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${perroPath}`,
+  multer.single("image"),
   controllerAnimal.crearAnimalPerro
 );
 

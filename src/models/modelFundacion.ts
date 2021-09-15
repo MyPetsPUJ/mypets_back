@@ -8,11 +8,12 @@ interface Fundacion extends Document {
   apellidosEncar: string;
   tipo_doc: string;
   num_doc: string;
-  fecha_creacion: Date;
+  fecha_creacion: string;
   localidad: string;
   correo: string;
   num_celular: string;
   password: string;
+  urlImg: string;
   tipo_usuario: string;
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
@@ -24,11 +25,12 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   apellidosEncar: { type: String, required: true },
   tipo_doc: { type: String, required: true },
   num_doc: { type: String, required: true },
-  fecha_creacion: { type: Date, required: true },
+  fecha_creacion: { type: String, required: true },
   localidad: { type: String, required: true },
   correo: { type: String, required: true },
   num_celular: { type: String, required: true },
   password: { type: String, required: true },
+  urlImg: { type: String },
   tipo_usuario: { type: String },
 });
 

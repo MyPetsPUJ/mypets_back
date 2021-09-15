@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import path from 'path';
 import cors from 'cors';
 
 require('./database');
@@ -35,12 +35,13 @@ app.use(express.urlencoded({extended: true}));
 //Routes
 // --------------------------------------------------------------------------
 
-//app.use('/api', require('./routes/routePerro'));
 app.use('/api', require('./routes/routeAdoptante'));
 app.use('/api', require('./routes/routeFundacion'));
-//app.use('/api', require('./routes/routeGato'));
 app.use('/api', require('./routes/routeLogin'));
 app.use('/api', require('./routes/routeAnimal'));
+
+//esta carpeta se utlizará para guardar los archivos públicos de la aplicación
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 
 //module.exports = app;

@@ -11,6 +11,7 @@ class ControllerFundacion {
   public async crearFundacion(req: Request, res: Response, next: NextFunction) {
     console.log("Creando fundacion");
     console.log(req.body);
+    console.log(req.file);
     const fundacion = new Fundacion({
       nombreFund: req.body.nombreFund,
       nombreEncar: req.body.nombreEncar,
@@ -22,23 +23,24 @@ class ControllerFundacion {
       correo: req.body.correo,
       num_celular: req.body.num_celular,
       password: req.body.password,
+      urlImg: req.file?.path,
       tipo_usuario: "Fundacion",
     });
     fundacion.password = await fundacion.encryptPassword(fundacion.password);
     console.log(fundacion);
-    fundacion
-      .save()
-      .then((result: any) => {
-        res.status(201).json({
-          message: "Fundación creada",
-          result: result,
-        });
-      })
-      .catch((err: any) => {
-        res.status(500).json({
-          error: err,
-        });
-      });
+    // fundacion
+    //   .save()
+    //   .then((result: any) => {
+    //     res.status(201).json({
+    //       message: "Fundación creada",
+    //       result: result,
+    //     });
+    //   })
+    //   .catch((err: any) => {
+    //     res.status(500).json({
+    //       error: err,
+    //     });
+    //   });
   }
 }
 

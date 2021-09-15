@@ -11,7 +11,7 @@ class ControllerAnimal {
   public crearAnimalPerro(req: Request, res: Response, next: NextFunction) {
     console.log("Creando Animal");
     console.log(req.body);
-
+    console.log(req.file);
     const animal = new Animal({
       nombre: req.body.nombre,
       edad: req.body.edad,
@@ -24,23 +24,24 @@ class ControllerAnimal {
       desparasitado: req.body.desparasitado,
       ultima_vac: req.body.ultima_vac,
       descripcion: req.body.descripcion,
+      urlImg: req.file?.path,
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Perro",
     });
     console.log(animal);
-    animal
-      .save()
-      .then((result) => {
-        res.status(200).json({
-          message: "Animal perro creado",
-          result: result,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
-        });
-      });
+    // animal
+    //   .save()
+    //   .then((result) => {
+    //     res.status(200).json({
+    //       message: "Animal perro creado",
+    //       result: result,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     res.status(500).json({
+    //       error: err,
+    //     });
+    //   });
   }
 
   public crearAnimalGato(req: Request, res: Response, next: NextFunction) {
@@ -59,23 +60,24 @@ class ControllerAnimal {
       desparasitado: req.body.desparasitado,
       ultima_vac: req.body.ultima_vac,
       descripcion: req.body.descripcion,
+      urlImg: req.file?.path,
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Gato",
     });
     console.log(animal);
-    animal
-      .save()
-      .then((result) => {
-        res.status(200).json({
-          message: "Animal gato creado",
-          result: result,
-        });
-      })
-      .catch((err) => {
-        res.status(500).json({
-          error: err,
-        });
-      });
+    // animal
+    //   .save()
+    //   .then((result) => {
+    //     res.status(200).json({
+    //       message: "Animal gato creado",
+    //       result: result,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     res.status(500).json({
+    //       error: err,
+    //     });
+    //   });
   }
 }
 
