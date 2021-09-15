@@ -79,6 +79,27 @@ class ControllerAnimal {
     //     });
     //   });
   }
+
+  public async getAnimales(req: Request, res: Response): Promise<Response> {
+    const animales = await Animal.find();
+    return res.json(animales);
+  }
+
+  public async getAnimal(req: Request, res: Response): Promise<Response>{
+    const id = req.params.id;
+    const animal = await Animal.findById(id);
+    return res.json(animal);
+  }
+
+  public async deleteAnimal(req: Request, res: Response): Promise<Response>{
+    const id = req.params.id;
+    const animal = await Animal.findByIdAndRemove(id);
+    return res.json({
+      message: 'Animal eliminado satisfactoriamente',
+      animal
+    });
+  }
+
 }
 
 export const controllerAnimal = new ControllerAnimal();

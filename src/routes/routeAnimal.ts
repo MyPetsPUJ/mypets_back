@@ -7,6 +7,7 @@ const router = express.Router();
 
 const dashboardPath = "dashboard";
 const eleccionAnimalPath = "seleccion-animal";
+const getAnimalesPath = "mis-animales";
 const gatoPath = "crear-animal-gato";
 const perroPath = "crear-animal-perro";
 
@@ -29,6 +30,21 @@ router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${perroPath}`,
   multer.single("image"),
   controllerAnimal.crearAnimalPerro
+);
+
+router.get(
+  `/${dashboardPath}/${getAnimalesPath}`,
+  controllerAnimal.getAnimales
+);
+
+router.get(
+  `/${dashboardPath}/${getAnimalesPath}/:id`,
+  controllerAnimal.getAnimal
+);
+
+router.delete(
+  `/${dashboardPath}/${getAnimalesPath}/:id`,
+  controllerAnimal.deleteAnimal
 );
 
 module.exports = router;
