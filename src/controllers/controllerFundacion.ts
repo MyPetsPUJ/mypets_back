@@ -68,6 +68,40 @@ class ControllerFundacion {
       fundacion,
     });
   }
+
+  public async updateFundacion(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const {
+      nombreFund,
+      nombreEncar,
+      apellidosEncar,
+      tipo_doc,
+      num_doc,
+      fecha_creacion,
+      localidad,
+      correo,
+      num_celular,
+      password,
+    } = req.body;
+
+    const updatedFundacion = await Fundacion.findByIdAndUpdate(id, {
+      nombreFund,
+      nombreEncar,
+      apellidosEncar,
+      tipo_doc,
+      num_doc,
+      fecha_creacion,
+      localidad,
+      correo,
+      num_celular,
+      password
+    }, {new: true});
+    return res.json({
+      message: 'Fundación actualizada correctamente',
+      updatedFundacion
+    });
+  }
+
 }
 
 export const controllerFundacion = new ControllerFundacion();

@@ -7,7 +7,7 @@ interface Animal extends Document {
   raza: String;
   sexo: String;
   tamano: String;
-  color_ojos: String;
+  color_ojos: String;   
   tipo_pelaje: String;
   situacion: String;
   desparasitado: String;

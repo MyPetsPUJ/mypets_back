@@ -64,6 +64,39 @@ class ControllerAdoptante {
       adoptante,
     });
   }
+
+  public async updateAdoptante(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const {
+      nombre,
+      apellidos,
+      fecha_nacimiento,
+      tipo_doc,
+      num_doc,
+      genero,
+      localidad,
+      correo,
+      num_celular,
+      password,
+    } = req.body;
+
+    const updatedAdoptante = await Adoptante.findByIdAndUpdate(id, {
+      nombre,
+      apellidos,
+      fecha_nacimiento,
+      tipo_doc,
+      num_doc,
+      genero,
+      localidad,
+      correo,
+      num_celular,
+      password
+    }, {new: true});
+    return res.json({
+      message: 'Adoptante actualizado correctamente',
+      updatedAdoptante
+    });
+  }
 }
 
 export const controllerAdoptante = new ControllerAdoptante();

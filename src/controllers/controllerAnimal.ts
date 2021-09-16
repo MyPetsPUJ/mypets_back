@@ -105,6 +105,43 @@ class ControllerAnimal {
       animal,
     });
   }
+
+  public async updateAnimal(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const {
+      nombre,
+      edad,
+      raza,
+      sexo,
+      tamano,
+      color_ojos,
+      tipo_pelaje,
+      situacion,
+      desparasitado,
+      ultima_vac,
+      descripcion,
+      esquema_vac,
+    } = req.body;
+
+    const updatedAnimal = await Animal.findByIdAndUpdate(id, {
+      nombre,
+      edad,
+      raza,
+      sexo,
+      tamano,
+      color_ojos,
+      tipo_pelaje,
+      situacion,
+      desparasitado,
+      ultima_vac,
+      descripcion,
+      esquema_vac
+    }, {new: true});
+    return res.json({
+      message: 'Animal actualizado correctamente',
+      updatedAnimal
+    });
+  }
 }
 
 export const controllerAnimal = new ControllerAnimal();

@@ -42,6 +42,11 @@ router.get(
   controllerAnimal.getAnimal
 );
 
+router.put(
+  `/${dashboardPath}/${getAnimalesPath}/:id`,
+  controllerAnimal.updateAnimal
+);
+
 router.delete(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
   controllerAnimal.deleteAnimal
