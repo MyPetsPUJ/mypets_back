@@ -2,11 +2,11 @@ import mongoose, { Schema, Document } from "mongoose";
 
 interface Publicacion extends Document{
 
-    titulo: String;
-    cuerpo: String;
-    fecha: String;
-    urlImg: String;
-    seccion: String;
+    titulo: string;
+    cuerpo: string;
+    fecha: string;
+    urlImg: string;
+    seccion: string;
 
 }
 

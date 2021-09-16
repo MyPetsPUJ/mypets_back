@@ -3,7 +3,7 @@ import { controllerAdoptante } from "../controllers/controllerAdoptante";
 
 const router = express.Router();
 const dashboardPath = "dashboard-adoptante";
-const cuentaPath = "mi-cuenta";
+const perfilPath = "mi-cuenta";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-adoptante";
 
@@ -21,8 +21,13 @@ router.get(`/${dashboardPath}/:id`, controllerAdoptante.getAdoptantes);
 
 router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
 
-router.get(
-  `/${dashboardPath}/${cuentaPath}/:id`,
+router.put(
+  `/${dashboardPath}/${perfilPath}/:id`,
+  controllerAdoptante.updateAdoptante
+);
+
+router.delete(
+  `/${dashboardPath}/${perfilPath}/:id`,
   controllerAdoptante.deleteAdoptante
 );
 

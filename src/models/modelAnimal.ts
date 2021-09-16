@@ -2,20 +2,20 @@ import mongoose, { Schema, Document } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 interface Animal extends Document {
-  nombre: String;
-  edad: String;
-  raza: String;
-  sexo: String;
-  tamano: String;
-  color_ojos: String;   
-  tipo_pelaje: String;
-  situacion: String;
-  desparasitado: String;
-  ultima_vac: String;
-  descripcion: String;
+  nombre: string;
+  edad: string;
+  raza: string;
+  sexo: string;
+  tamano: string;
+  color_ojos: string;
+  tipo_pelaje: string;
+  situacion: string;
+  desparasitado: string;
+  ultima_vac: string;
+  descripcion: string;
   urlImg: string;
-  esquema_vac: String;
-  tipo_animal: String;
+  esquema_vac: string;
+  tipo_animal: string;
 }
 
 const schema_animal: Schema = new Schema({

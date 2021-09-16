@@ -43,7 +43,7 @@ router.get(
 );
 
 router.put(
-  `/${dashboardPath}/${getAnimalesPath}/:id`,
+  `/${dashboardPath}/${getAnimalesPath}/:id`,     //añadir ruta editar animales
   controllerAnimal.updateAnimal
 );
 
