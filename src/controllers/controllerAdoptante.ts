@@ -9,7 +9,6 @@ class ControllerAdoptante {
   }
 
   public async crearAdoptante(req: Request, res: Response, next: NextFunction) {
-    
     console.log("Creando adoptante");
     console.log(req.body);
     const adoptante = new Adoptante({
@@ -40,6 +39,30 @@ class ControllerAdoptante {
           error: err,
         });
       });
+  }
+
+  public async getAdoptantes(req: Request, res: Response): Promise<Response> {
+    const adoptantes = await Adoptante.find();
+    return res.json(adoptantes);
+  }
+
+  public async getAdoptante(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const adoptante = await Adoptante.findById(id);
+    return res.json(adoptante);
+  }
+
+  public async deleteAdoptante(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const adoptante = await Adoptante.findByIdAndRemove(id);
+
+    // if (adoptante) {
+    //   fs.unlink(path.resolve(adoptante.urlImg));
+    // }
+    return res.json({
+      message: "Adoptante eliminado satisfactoriamente",
+      adoptante,
+    });
   }
 }
 

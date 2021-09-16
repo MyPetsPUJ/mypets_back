@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Animal from "../models/modelAnimal";
+import fs from "fs-extra";
+import path from "path";
 
 class ControllerAnimal {
   public dentroDeAnimal(req: Request, res: Response, next: NextFunction) {
@@ -29,19 +31,19 @@ class ControllerAnimal {
       tipo_animal: "Perro",
     });
     console.log(animal);
-    // animal
-    //   .save()
-    //   .then((result) => {
-    //     res.status(200).json({
-    //       message: "Animal perro creado",
-    //       result: result,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     res.status(500).json({
-    //       error: err,
-    //     });
-    //   });
+    animal
+      .save()
+      .then((result) => {
+        res.status(200).json({
+          message: "Animal perro creado",
+          result: result,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
   }
 
   public crearAnimalGato(req: Request, res: Response, next: NextFunction) {
@@ -65,19 +67,19 @@ class ControllerAnimal {
       tipo_animal: "Gato",
     });
     console.log(animal);
-    // animal
-    //   .save()
-    //   .then((result) => {
-    //     res.status(200).json({
-    //       message: "Animal gato creado",
-    //       result: result,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     res.status(500).json({
-    //       error: err,
-    //     });
-    //   });
+    animal
+      .save()
+      .then((result) => {
+        res.status(200).json({
+          message: "Animal gato creado",
+          result: result,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
   }
 
   public async getAnimales(req: Request, res: Response): Promise<Response> {
@@ -85,21 +87,24 @@ class ControllerAnimal {
     return res.json(animales);
   }
 
-  public async getAnimal(req: Request, res: Response): Promise<Response>{
+  public async getAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const animal = await Animal.findById(id);
     return res.json(animal);
   }
 
-  public async deleteAnimal(req: Request, res: Response): Promise<Response>{
+  public async deleteAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const animal = await Animal.findByIdAndRemove(id);
+
+    if (animal) {
+      fs.unlink(path.resolve(animal.urlImg));
+    }
     return res.json({
-      message: 'Animal eliminado satisfactoriamente',
-      animal
+      message: "Animal eliminado satisfactoriamente",
+      animal,
     });
   }
-
 }
 
 export const controllerAnimal = new ControllerAnimal();
