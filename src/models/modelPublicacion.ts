@@ -7,6 +7,7 @@ interface Publicacion extends Document{
     fecha: string;
     urlImg: string;
     seccion: string;
+    autorPublicacion: Schema.Types.ObjectId;
 
 }
 
@@ -17,9 +18,8 @@ const schema_publicacion: Schema = new Schema({
     fecha: {type: String, required: true},
     urlImg: {type: String, required: true},
     seccion: {type: String, required: true},
+    autorPublicacion: {type: Schema.Types.ObjectId, ref: "Fundacion"}
 
 });
-
-
 
 export default mongoose.model<Publicacion>('Publicacion', schema_publicacion);

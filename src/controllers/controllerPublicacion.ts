@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Publicacion from "../models/modelPublicacion";
+import Fundacion from "../models/modelFundacion";
 import path from "path";
 import fs from "fs-extra";
 
@@ -31,20 +32,16 @@ class ControllerPublicacion {
       });
   }
 
-  public async getPublicaciones(
-    req: Request,
-    res: Response
-  ) {
-    
-      //const publicaciones = await 
-      Publicacion.find({}, (err, publicaciones) => {
-        if(err) return res.status(500).send({message: `Error: ${err}`})
-        if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
+  public async getPublicaciones(req: Request, res: Response) {
+    const publicaciones = await Publicacion.find();
+    Fundacion.populate(publicaciones, {path: "Fundacion"});
+    return res.json(publicaciones);
+    // Publicacion.find({}, (err, publicaciones) => {
+    //   if(err) return res.status(500).send({message: `Error: ${err}`})
+    //   if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
 
-        return res.status(200).send(publicaciones);
-      });
-      
-    
+    //   return res.status(200).send(publicaciones);
+    // });
   }
 
   public async getPublicacion(
