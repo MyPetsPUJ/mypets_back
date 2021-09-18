@@ -18,14 +18,15 @@ router.post(
 );
 
 router.get(
+  `/${dashboardPath}/${publicacionesPath}/:id`,
+  controllerPublicacion.getPublicacion
+);
+
+router.get(
   `/${dashboardPath}/${publicacionesPath}`,
   controllerPublicacion.getPublicaciones
 );
 
-router.get(
-  `/${dashboardPath}/${publicacionesPath}/:id`,
-  controllerPublicacion.getPublicacion
-);
 
 router.put(
   `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,

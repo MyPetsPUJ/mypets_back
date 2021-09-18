@@ -17,7 +17,7 @@ router.post(
   controllerAdoptante.crearAdoptante
 );
 
-router.get(`/${dashboardPath}/:id`, controllerAdoptante.getAdoptantes);
+router.get(`/${dashboardPath}/:id`, controllerAdoptante.getAdoptante);
 
 router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
 

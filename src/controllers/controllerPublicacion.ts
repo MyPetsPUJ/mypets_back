@@ -34,12 +34,24 @@ class ControllerPublicacion {
   public async getPublicaciones(
     req: Request,
     res: Response
-  ): Promise<Response> {
-    const publicaciones = await Publicacion.find();
-    return res.json(publicaciones);
+  ) {
+    
+      //const publicaciones = await 
+      Publicacion.find({}, (err, publicaciones) => {
+        if(err) return res.status(500).send({message: `Error: ${err}`})
+        if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
+
+        return res.status(200).send(publicaciones);
+      });
+      
+    
   }
 
-  public async getPublicacion(req: Request, res: Response): Promise<Response> {
+  public async getPublicacion(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
     const id = req.params.id;
     const publicacion = await Publicacion.findById(id);
     return res.json(publicacion);

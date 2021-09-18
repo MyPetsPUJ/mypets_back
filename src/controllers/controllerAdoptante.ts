@@ -80,21 +80,25 @@ class ControllerAdoptante {
       password,
     } = req.body;
 
-    const updatedAdoptante = await Adoptante.findByIdAndUpdate(id, {
-      nombre,
-      apellidos,
-      fecha_nacimiento,
-      tipo_doc,
-      num_doc,
-      genero,
-      localidad,
-      correo,
-      num_celular,
-      password
-    }, {new: true});
+    const updatedAdoptante = await Adoptante.findByIdAndUpdate(
+      id,
+      {
+        nombre,
+        apellidos,
+        fecha_nacimiento,
+        tipo_doc,
+        num_doc,
+        genero,
+        localidad,
+        correo,
+        num_celular,
+        password,
+      },
+      { new: true }
+    );
     return res.json({
-      message: 'Adoptante actualizado correctamente',
-      updatedAdoptante
+      message: "Adoptante actualizado correctamente",
+      updatedAdoptante,
     });
   }
 }
