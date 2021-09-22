@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import Animal from "../models/modelAnimal";
 import fs from "fs-extra";
 import path from "path";
+import cookieParser from 'cookie-parser';
 
 class ControllerAnimal {
   public dentroDeAnimal(req: Request, res: Response, next: NextFunction) {
@@ -82,9 +83,10 @@ class ControllerAnimal {
       });
   }
 
-  public async getAnimales(req: Request, res: Response): Promise<Response> {
-    const animales = await Animal.find();
-    return res.json(animales);
+  public async getAnimales(req: Request, res: Response) {
+    // const animales = await Animal.find();
+    // return res.json(animales);
+    console.log("getAnimales works");
   }
 
   public async getAnimal(req: Request, res: Response): Promise<Response> {

@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 require("./database");
 
@@ -15,7 +16,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, auth-token"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({ origin: "http://localhost:4200" }));
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

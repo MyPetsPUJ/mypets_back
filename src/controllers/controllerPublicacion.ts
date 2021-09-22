@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import Publicacion from "../models/modelPublicacion";
 import Fundacion from "../models/modelFundacion";
+import config from "../lib/helpers";
+
+import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs-extra";
 
@@ -9,12 +12,20 @@ class ControllerPublicacion {
     console.log("Creando publicación");
     console.log(req.body);
     console.log(req.file);
+
+    const token: string = req.header("auth-token")!;
+    console.log("Este es el token----------------");
+    console.log(token);
+    const decoded = jwt.verify(token, config.SECRET_KEY);
+    console.log(decoded);
+
     const publicacion = new Publicacion({
       titulo: req.body.titulo,
       cuerpo: req.body.cuerpo,
       fecha: req.body.fecha,
       urlImg: req.file?.path,
       seccion: req.body.seccion,
+      autorPublicacion: decoded,
     });
     console.log(publicacion);
     publicacion
@@ -32,16 +43,21 @@ class ControllerPublicacion {
       });
   }
 
-  public async getPublicaciones(req: Request, res: Response) {
-    const publicaciones = await Publicacion.find();
-    Fundacion.populate(publicaciones, {path: "Fundacion"});
-    return res.json(publicaciones);
-    // Publicacion.find({}, (err, publicaciones) => {
-    //   if(err) return res.status(500).send({message: `Error: ${err}`})
-    //   if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
+  public getPublicaciones(req: Request, res: Response) {
+    console.log("Hola mundo");
+    // console.log("Entrando a publicaciones");
+    // const publicaciones = await Publicacion.find();
+    // console.log("Entré a publi encontrada");
+    // console.log(publicaciones);
+    // Fundacion.populate(publicaciones, { path: "Fundacion" });
+    // return res.json(publicaciones);
 
-    //   return res.status(200).send(publicaciones);
-    // });
+    // // Publicacion.find({}, (err, publicaciones) => {
+    // //   if(err) return res.status(500).send({message: `Error: ${err}`})
+    // //   if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
+
+    // //   return res.status(200).send(publicaciones);
+    // // });
   }
 
   public async getPublicacion(

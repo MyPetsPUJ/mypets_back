@@ -2,6 +2,8 @@ import { Request, Response, NextFunction, json } from "express";
 
 import Adoptante, { UserType } from "../models/modelAdoptante";
 import Fundacion from "../models/modelFundacion";
+import config from "../lib/helpers";
+import cookieParser from "cookie-parser";
 
 const jwt = require("jsonwebtoken");
 
@@ -76,15 +78,17 @@ class ControllerLogin {
       }
       const token: string = jwt.sign(
         { _id: adoptante._id },
-        "adoptante_key_secret",
+        config.SECRET_KEY,
         { expiresIn: 60 * 60 }
       );
 
-      res
-        .header("auth-token", token)
-        .json({ message: "Usuario logueado satisfactoriamente", adoptante });
+      res.cookie("auth-token", token, {
+        httpOnly: true,
+      });
+
+      //.header("auth-token", token);
+      //.json({ message: "Usuario logueado satisfactoriamente", adoptante });
     } else if (tipo_usuario === UserType.FUNDACION) {
-      
       console.log("Entrando a fundación");
       const fundacion = await Fundacion.findOne({ correo: req.body.correo });
       if (!fundacion) {
@@ -107,14 +111,19 @@ class ControllerLogin {
       }
       const token: string = jwt.sign(
         { _id: fundacion._id },
-        "fundacion_key_secret",
+        config.SECRET_KEY,
         { expiresIn: 60 * 60 }
       );
 
-      res
-        .header("auth-token", token)
-        .json({ message: "Usuario logueado satisfactoriamente", fundacion });
-        
+      // res.cookie("token", token, {
+      //   expires: new Date(Date.now() + 900000),
+      //   httpOnly: true,
+      // });
+
+      res.status(200).send({token})
+        // .header("auth-token", token)
+        // .json({ message: "Usuario logueado satisfactoriamente", fundacion });
+
       // console.log("Entrando a fundación");
       // Fundacion.findOne({ correo: req.body.correo }).then((fundacion) => {
       //   if (!fundacion) {
@@ -143,7 +152,6 @@ class ControllerLogin {
       //   });
       // });
     }
-
   }
 }
 
