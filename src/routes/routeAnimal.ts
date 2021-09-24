@@ -6,6 +6,8 @@ import multer from "../lib/multer";
 const router = express.Router();
 
 const dashboardPath = "dashboard";
+const adoptantePath = "dashboard-adoptante";
+const adoptamePath = "adoptame";
 const eleccionAnimalPath = "seleccion-animal";
 const getAnimalesPath = "mis-animales";
 const gatoPath = "crear-animal-gato";
@@ -37,13 +39,15 @@ router.get(
   controllerAnimal.getAnimales
 );
 
+router.get(`/${adoptantePath}/${adoptamePath}`, controllerAnimal.getAnimales);
+
 router.get(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
   controllerAnimal.getAnimal
 );
 
 router.put(
-  `/${dashboardPath}/${getAnimalesPath}/:id`,     //añadir ruta editar animales
+  `/${dashboardPath}/${getAnimalesPath}/:id`, //añadir ruta editar animales
   controllerAnimal.updateAnimal
 );
 

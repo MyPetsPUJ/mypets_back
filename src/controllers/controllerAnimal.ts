@@ -84,9 +84,9 @@ class ControllerAnimal {
   }
 
   public async getAnimales(req: Request, res: Response) {
-    // const animales = await Animal.find();
-    // return res.json(animales);
-    console.log("getAnimales works");
+    const animales = await Animal.find();
+    return res.json(animales);
+    
   }
 
   public async getAnimal(req: Request, res: Response): Promise<Response> {
