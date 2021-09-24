@@ -14,6 +14,8 @@ class ControllerPublicacion {
     console.log(req.file);
 
     const token: string = req.header("auth-token")!;
+    //req.cookies.token;
+
     console.log("Este es el token----------------");
     console.log(token);
     const decoded = jwt.verify(token, config.SECRET_KEY);
@@ -43,21 +45,11 @@ class ControllerPublicacion {
       });
   }
 
-  public getPublicaciones(req: Request, res: Response) {
-    console.log("Hola mundo");
-    // console.log("Entrando a publicaciones");
-    // const publicaciones = await Publicacion.find();
-    // console.log("Entré a publi encontrada");
-    // console.log(publicaciones);
-    // Fundacion.populate(publicaciones, { path: "Fundacion" });
-    // return res.json(publicaciones);
-
-    // // Publicacion.find({}, (err, publicaciones) => {
-    // //   if(err) return res.status(500).send({message: `Error: ${err}`})
-    // //   if(!publicaciones) return res.status(404).send({message: `No existen publicaciones`})
-
-    // //   return res.status(200).send(publicaciones);
-    // // });
+  public async getPublicaciones(req: Request, res: Response) {
+    
+    const publicaciones = await Publicacion.find();
+    //Fundacion.populate(publicaciones, { path: "Fundacion" });
+    return res.json(publicaciones);
   }
 
   public async getPublicacion(

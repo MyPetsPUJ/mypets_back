@@ -5,15 +5,17 @@ import multer from "../lib/multer";
 
 const router = express.Router();
 
-const dashboardPath = "dashboard";
+const dashboardPath = "dashboard-adoptante";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-fundacion";
 const perfilPath = "mi-cuenta";
+const fundacionesPath = "get-fundaciones";
+const fundacionPath = "get-fundacion"
 
-router.get(
-  `/${entidadPath}/${usuarioPath}`,
-  controllerFundacion.dentroFundacion
-);
+// router.get(
+//   `/${entidadPath}/${usuarioPath}`,
+//   controllerFundacion.dentroFundacion
+// );
 
 router.post(
   `/${entidadPath}/${usuarioPath}`,
@@ -21,9 +23,12 @@ router.post(
   controllerFundacion.crearFundacion
 );
 
-router.get(`/${dashboardPath}`, controllerFundacion.getFundaciones);
+router.get(
+  `/${dashboardPath}/${fundacionesPath}`,
+  controllerFundacion.getFundaciones
+);
 
-router.get(`/${dashboardPath}/:id`, controllerFundacion.getFundacion);
+router.get(`/${dashboardPath}/${fundacionPath}/:id`, controllerFundacion.getFundacion);
 
 router.put(
   `/${dashboardPath}/${perfilPath}/:id`,

@@ -109,20 +109,26 @@ class ControllerLogin {
           message: "El tipo de usuario no coincide",
         });
       }
-      const token: string = jwt.sign(
-        { _id: fundacion._id },
-        config.SECRET_KEY,
-        { expiresIn: 60 * 60 }
-      );
+      const token = jwt.sign({ _id: fundacion._id }, config.SECRET_KEY, {
+        expiresIn: 60 * 60,
+      });
 
-      // res.cookie("token", token, {
-      //   expires: new Date(Date.now() + 900000),
-      //   httpOnly: true,
-      // });
+      // return res
+      //   .cookie("auth-token", token, {
+      //     //expires: new Date(Date.now() + 900000),
+      //     httpOnly: true,
+      //   })
+      //   .status(200)
+      //   .json({ message: "Usuario logueado correctamente" });
 
-      res.status(200).send({token})
-        // .header("auth-token", token)
-        // .json({ message: "Usuario logueado satisfactoriamente", fundacion });
+      return res
+        .header("auth-token", token)
+        .json({
+          message: "Usuario logueado satisfactoriamente",
+          fundacion,
+          token,
+        });
+      //.status(200).send({token})
 
       // console.log("Entrando a fundación");
       // Fundacion.findOne({ correo: req.body.correo }).then((fundacion) => {

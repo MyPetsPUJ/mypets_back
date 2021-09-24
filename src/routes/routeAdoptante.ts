@@ -2,7 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import { controllerAdoptante } from "../controllers/controllerAdoptante";
 
 const router = express.Router();
+
 const dashboardPath = "dashboard-adoptante";
+const adoptantePath = "traer-adoptante"
 const perfilPath = "mi-cuenta";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-adoptante";
@@ -17,7 +19,7 @@ router.post(
   controllerAdoptante.crearAdoptante
 );
 
-router.get(`/${dashboardPath}/:id`, controllerAdoptante.getAdoptante);
+router.get(`/${dashboardPath}/${adoptantePath}/:id`, controllerAdoptante.getAdoptante);
 
 router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
 
