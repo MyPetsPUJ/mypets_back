@@ -46,10 +46,15 @@ class ControllerPublicacion {
   }
 
   public async getPublicaciones(req: Request, res: Response) {
-    
-    const publicaciones = await Publicacion.find();
-    //Fundacion.populate(publicaciones, { path: "Fundacion" });
-    return res.json(publicaciones);
+    const resultado = await Publicacion.find({}, function (err, publicaciones) {
+      Fundacion.populate(
+        publicaciones,
+        { path: "Fundacion" },
+        function (err, publicaciones) {
+          res.status(200).send(publicaciones);
+        }
+      );
+    });
   }
 
   public async getPublicacion(

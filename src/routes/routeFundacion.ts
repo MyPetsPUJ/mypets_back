@@ -6,11 +6,12 @@ import multer from "../lib/multer";
 const router = express.Router();
 
 const dashboardPath = "dashboard-adoptante";
+const dashboardFunPath = "dashboard";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-fundacion";
 const perfilPath = "mi-cuenta";
 const fundacionesPath = "get-fundaciones";
-const fundacionPath = "get-fundacion"
+const fundacionPath = "get-fundacion";
 
 // router.get(
 //   `/${entidadPath}/${usuarioPath}`,
@@ -28,7 +29,10 @@ router.get(
   controllerFundacion.getFundaciones
 );
 
-router.get(`/${dashboardPath}/${fundacionPath}/:id`, controllerFundacion.getFundacion);
+router.get(
+  `/${dashboardPath}/${fundacionPath}/:id`,
+  controllerFundacion.getFundacion
+);
 
 router.put(
   `/${dashboardPath}/${perfilPath}/:id`,
@@ -36,7 +40,7 @@ router.put(
 );
 
 router.delete(
-  `/${dashboardPath}/${perfilPath}/:id`,
+  `/${dashboardFunPath}/${perfilPath}/:id`,
   controllerFundacion.deleteFundacion
 );
 

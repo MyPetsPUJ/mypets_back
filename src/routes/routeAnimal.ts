@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import { controllerAnimal } from "../controllers/controllerAnimal";
+import { tokenValidation } from "../lib/validateToken";
 
 import multer from "../lib/multer";
 
@@ -24,13 +25,13 @@ router.get(
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,
-  multer.single("image"),
+  [multer.single("image"), tokenValidation],
   controllerAnimal.crearAnimalGato
 );
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${perroPath}`,
-  multer.single("image"),
+  [multer.single("image"), tokenValidation],
   controllerAnimal.crearAnimalPerro
 );
 

@@ -82,9 +82,17 @@ class ControllerLogin {
         { expiresIn: 60 * 60 }
       );
 
-      res.cookie("auth-token", token, {
-        httpOnly: true,
+      return res
+      .header("auth-token", token)
+      .json({
+        message: "Usuario logueado satisfactoriamente",
+        adoptante,
+        token,
       });
+
+      // res.cookie("auth-token", token, {
+      //   httpOnly: true,
+      // });
 
       //.header("auth-token", token);
       //.json({ message: "Usuario logueado satisfactoriamente", adoptante });
@@ -128,7 +136,7 @@ class ControllerLogin {
           fundacion,
           token,
         });
-      //.status(200).send({token})
+      
 
       // console.log("Entrando a fundación");
       // Fundacion.findOne({ correo: req.body.correo }).then((fundacion) => {
