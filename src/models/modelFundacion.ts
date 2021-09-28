@@ -15,7 +15,7 @@ interface Fundacion extends Document {
   password: string;
   urlImg: string;
   tipo_usuario: string;
-  publicaciones: [{ type: Schema.Types.ObjectId; ref: "Publicacion" }];
+  publicaciones: [{ type: mongoose.Types.ObjectId; ref: "Publicacion" }];
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
@@ -33,7 +33,7 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   password: { type: String, required: true },
   urlImg: { type: String },
   tipo_usuario: { type: String },
-  publicaciones: [{ type: String, ref: "Publicacion" }],
+  publicaciones: [{ type: mongoose.Types.ObjectId, ref: "Publicacion" }],
 });
 
 //schema_fundacion.plugin(uniqueValidator);

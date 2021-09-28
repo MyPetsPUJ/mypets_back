@@ -8,7 +8,11 @@ import path from "path";
 import fs from "fs-extra";
 
 class ControllerPublicacion {
-  public crearPublicacion(req: Request, res: Response, next: NextFunction) {
+  public async crearPublicacion(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     console.log("Creando publicación");
     console.log(req.body);
     console.log(req.file);
@@ -43,18 +47,40 @@ class ControllerPublicacion {
           error: err,
         });
       });
+    console.log("Este es el id de la publi recien creada", publicacion._id);
+
+    const fundacionUpdate = await Fundacion.findByIdAndUpdate(
+      decoded,
+      { $push: { publicaciones: publicacion._id } },
+      { new: true, useFindAndModify: false }
+    );
+
+    console.log("Fundación actualizada correctamente", fundacionUpdate);
   }
 
+  // public async getPublicaciones(req: Request, res: Response) {
+  //   const resultado = await Publicacion.find({}, function (err, publicaciones) {
+  //     Fundacion.populate(
+  //       publicaciones,
+  //       { path: "Fundacion" },
+  //       function (err, publicaciones) {
+  //         res.status(200).send(publicaciones);
+  //       }
+  //     );
+  //   });
+  // }
+
   public async getPublicaciones(req: Request, res: Response) {
-    const resultado = await Publicacion.find({}, function (err, publicaciones) {
-      Fundacion.populate(
-        publicaciones,
-        { path: "Fundacion" },
-        function (err, publicaciones) {
-          res.status(200).send(publicaciones);
-        }
-      );
-    });
+    const token: string = req.header("auth-token")!;
+    const decoded = jwt.verify(token, config.SECRET_KEY);
+
+    console.log("Este es el token: ", decoded);
+
+    const resultado = await Fundacion.findById(decoded).populate(
+      "publicaciones"
+    );
+
+    return res.json({ message: "Este es el res: ", resultado });
   }
 
   public async getPublicacion(
