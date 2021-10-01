@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+
 import Publicacion from "../models/modelPublicacion";
 import Fundacion from "../models/modelFundacion";
 import config from "../lib/helpers";
@@ -58,19 +59,13 @@ class ControllerPublicacion {
     console.log("Fundación actualizada correctamente", fundacionUpdate);
   }
 
-  // public async getPublicaciones(req: Request, res: Response) {
-  //   const resultado = await Publicacion.find({}, function (err, publicaciones) {
-  //     Fundacion.populate(
-  //       publicaciones,
-  //       { path: "Fundacion" },
-  //       function (err, publicaciones) {
-  //         res.status(200).send(publicaciones);
-  //       }
-  //     );
-  //   });
-  // }
-
-  public async getPublicaciones(req: Request, res: Response) {
+  
+  public async getPublicaciones(req: Request, res: Response){
+    const publicaciones = await Publicacion.find();
+    return res.json(publicaciones);
+  }
+  
+  public async populatePublicaciones(req: Request, res: Response) {
     const token: string = req.header("auth-token")!;
     const decoded = jwt.verify(token, config.SECRET_KEY);
 

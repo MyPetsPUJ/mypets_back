@@ -25,7 +25,12 @@ router.get(
 );
 
 router.get(
-  `/${dashboardPath}/${publicacionesPath}/:id`,
+  `/${dashboardPath}/${publicacionesPath}`,
+  controllerPublicacion.populatePublicaciones
+);
+
+router.get(
+  `/${dashboardPath}/${publicacionesPath}/${mostrarPath}/:id`,
   controllerPublicacion.getPublicacion
 );
 

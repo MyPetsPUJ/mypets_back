@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from "express";
+
 import Animal from "../models/modelAnimal";
+import Fundacion from "../models/modelFundacion";
+import config from "../lib/helpers";
+
 import fs from "fs-extra";
 import path from "path";
-import cookieParser from 'cookie-parser';
+import jwt from "jsonwebtoken";
 
 class ControllerAnimal {
   public dentroDeAnimal(req: Request, res: Response, next: NextFunction) {
@@ -11,10 +15,18 @@ class ControllerAnimal {
     next();
   }
 
-  public crearAnimalPerro(req: Request, res: Response, next: NextFunction) {
+  public async crearAnimalPerro(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     console.log("Creando Animal");
     console.log(req.body);
     console.log(req.file);
+
+    const token: string = req.header("auth-token")!;
+    const decoded = jwt.verify(token, config.SECRET_KEY);
+
     const animal = new Animal({
       nombre: req.body.nombre,
       edad: req.body.edad,
@@ -30,6 +42,7 @@ class ControllerAnimal {
       urlImg: req.file?.path,
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Perro",
+      ownerFundacion: decoded,
     });
     console.log(animal);
     animal
@@ -45,11 +58,27 @@ class ControllerAnimal {
           error: err,
         });
       });
+    console.log("Este es el id del perro creado: ", animal._id);
+
+    const animalUpdate = await Fundacion.findByIdAndUpdate(
+      decoded,
+      { $push: { animales: animal._id } },
+      { new: true, useFindAndModify: false }
+    );
+
+    console.log("Fundación actualizada correctamente", animalUpdate);
   }
 
-  public crearAnimalGato(req: Request, res: Response, next: NextFunction) {
+  public async crearAnimalGato(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
     console.log("Creando Animal");
     console.log(req.body);
+
+    const token: string = req.header("auth-token")!;
+    const decoded = jwt.verify(token, config.SECRET_KEY);
 
     const animal = new Animal({
       nombre: req.body.nombre,
@@ -66,6 +95,7 @@ class ControllerAnimal {
       urlImg: req.file?.path,
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Gato",
+      ownerFundacion: decoded,
     });
     console.log(animal);
     animal
@@ -81,12 +111,31 @@ class ControllerAnimal {
           error: err,
         });
       });
+    console.log("Este es el id del gato creado: ", animal._id);
+
+    const animalUpdate = await Fundacion.findByIdAndUpdate(
+      decoded,
+      { $push: { animales: animal._id } },
+      { new: true, useFindAndModify: false }
+    );
+
+    console.log("Fundación actualizada correctamente", animalUpdate);
   }
 
   public async getAnimales(req: Request, res: Response) {
     const animales = await Animal.find();
     return res.json(animales);
-    
+  }
+
+  public async populateAnimales(req: Request, res: Response) {
+    const token: string = req.header("auth-token")!;
+    const decoded = jwt.verify(token, config.SECRET_KEY);
+
+    console.log("Este es el token: ", decoded);
+
+    const resultado = await Fundacion.findById(decoded).populate("animales");
+
+    return res.json({ message: "Este es el res: ", resultado });
   }
 
   public async getAnimal(req: Request, res: Response): Promise<Response> {
@@ -125,23 +174,27 @@ class ControllerAnimal {
       esquema_vac,
     } = req.body;
 
-    const updatedAnimal = await Animal.findByIdAndUpdate(id, {
-      nombre,
-      edad,
-      raza,
-      sexo,
-      tamano,
-      color_ojos,
-      tipo_pelaje,
-      situacion,
-      desparasitado,
-      ultima_vac,
-      descripcion,
-      esquema_vac
-    }, {new: true});
+    const updatedAnimal = await Animal.findByIdAndUpdate(
+      id,
+      {
+        nombre,
+        edad,
+        raza,
+        sexo,
+        tamano,
+        color_ojos,
+        tipo_pelaje,
+        situacion,
+        desparasitado,
+        ultima_vac,
+        descripcion,
+        esquema_vac,
+      },
+      { new: true }
+    );
     return res.json({
-      message: 'Animal actualizado correctamente',
-      updatedAnimal
+      message: "Animal actualizado correctamente",
+      updatedAnimal,
     });
   }
 }

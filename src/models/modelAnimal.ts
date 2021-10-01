@@ -16,6 +16,7 @@ interface Animal extends Document {
   urlImg: string;
   esquema_vac: string;
   tipo_animal: string;
+  ownerFundacion: mongoose.Types.ObjectId;
 }
 
 const schema_animal: Schema = new Schema({
@@ -33,6 +34,7 @@ const schema_animal: Schema = new Schema({
   urlImg: { type: String },
   esquema_vac: { type: String, required: true },
   tipo_animal: { type: String, required: true },
+  ownerFundacion: { type: mongoose.Types.ObjectId, ref: "Fundacion" },
 });
 
 schema_animal.plugin(uniqueValidator);

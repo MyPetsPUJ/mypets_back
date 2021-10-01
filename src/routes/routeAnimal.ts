@@ -35,6 +35,8 @@ router.post(
   controllerAnimal.crearAnimalPerro
 );
 
+router.get(`/${dashboardPath}/animales`, controllerAnimal.populateAnimales);
+
 router.get(
   `/${dashboardPath}/${getAnimalesPath}`,
   controllerAnimal.getAnimales
