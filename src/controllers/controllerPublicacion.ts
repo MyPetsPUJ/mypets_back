@@ -59,12 +59,11 @@ class ControllerPublicacion {
     console.log("Fundación actualizada correctamente", fundacionUpdate);
   }
 
-  
-  public async getPublicaciones(req: Request, res: Response){
+  public async getPublicaciones(req: Request, res: Response) {
     const publicaciones = await Publicacion.find();
     return res.json(publicaciones);
   }
-  
+
   public async populatePublicaciones(req: Request, res: Response) {
     const token: string = req.header("auth-token")!;
     const decoded = jwt.verify(token, config.SECRET_KEY);
@@ -96,7 +95,13 @@ class ControllerPublicacion {
     const publicacion = await Publicacion.findByIdAndRemove(id);
 
     if (publicacion) {
-      fs.unlink(path.resolve(publicacion.urlImg));
+      try {
+        fs.unlink(path.resolve(publicacion.urlImg));
+      } catch (e) {
+        return res
+          .status(401)
+          .json({ message: "No se ha encontrado el archivo", e });
+      }
     }
     return res.json({
       message: "Publicación eliminada satisfactoriamente",

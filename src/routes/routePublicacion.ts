@@ -7,6 +7,8 @@ import { tokenValidation } from "../lib/validateToken";
 const router = express.Router();
 
 const dashboardPath = "dashboard";
+const dashboardAdoptantePath = "dashboard-adoptante";
+const consejosPath = "consejos";
 const publicacionesPath = "publicaciones";
 const mostrarPath = "mostrar-publicaciones";
 const creacionPath = "crear-publicacion";
@@ -21,6 +23,11 @@ router.post(
 
 router.get(
   `/${dashboardPath}/${publicacionesPath}/${mostrarPath}`,
+  controllerPublicacion.getPublicaciones
+);
+
+router.get(
+  `/${dashboardAdoptantePath}/${consejosPath}`,
   controllerPublicacion.getPublicaciones
 );
 
