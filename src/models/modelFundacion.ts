@@ -9,7 +9,7 @@ interface Fundacion extends Document {
   tipo_doc: string;
   num_doc: string;
   fecha_creacion: string;
-  localidad: string;
+  // localidad: string;
   correo: string;
   num_celular: string;
   password: string;
@@ -31,7 +31,7 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   tipo_doc: { type: String, required: true },
   num_doc: { type: String, required: true },
   fecha_creacion: { type: String, required: true },
-  localidad: { type: String, required: true },
+  // localidad: { type: String, required: true },
   correo: { type: String, required: true },
   num_celular: { type: String, required: true },
   password: { type: String, required: true },
