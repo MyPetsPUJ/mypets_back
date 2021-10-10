@@ -12,6 +12,7 @@ const usuarioPath = "crear-fundacion";
 const perfilPath = "mi-cuenta";
 const fundacionesPath = "get-fundaciones";
 const fundacionPath = "get-fundacion";
+const publicacionesPath = "publicaciones";
 
 // router.get(
 //   `/${entidadPath}/${usuarioPath}`,
@@ -33,6 +34,11 @@ router.get(
   `/${dashboardPath}/${fundacionPath}/:id`,
   controllerFundacion.getFundacion
 );
+
+// router.get(
+//   `/${dashboardFunPath}/${publicacionesPath}/:id`,
+//   controllerFundacion.getFundacion
+// );
 
 router.put(
   `/${dashboardPath}/${perfilPath}/:id`,

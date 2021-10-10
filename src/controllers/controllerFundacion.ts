@@ -54,6 +54,7 @@ class ControllerFundacion {
 
   public async getFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
+    console.log(id);
     const fundacion = await Fundacion.findById(id);
     return res.json(fundacion);
   }

@@ -20,7 +20,7 @@ export const tokenValidation = (
 
     console.log(decoded);
 
-    return next();
+    next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized" });
   }

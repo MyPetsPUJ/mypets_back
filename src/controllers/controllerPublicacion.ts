@@ -24,7 +24,6 @@ class ControllerPublicacion {
     console.log("Este es el token----------------");
     console.log(token);
     const decoded = jwt.verify(token, config.SECRET_KEY);
-    console.log(decoded);
 
     const publicacion = new Publicacion({
       titulo: req.body.titulo,
@@ -64,17 +63,22 @@ class ControllerPublicacion {
     return res.json(publicaciones);
   }
 
-  public async populatePublicaciones(req: Request, res: Response) {
-    const token: string = req.header("auth-token")!;
-    const decoded = jwt.verify(token, config.SECRET_KEY);
+  public async populatePublicaciones(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    // const token: string = req.header("auth-token")!;
+    // const decoded = jwt.verify(token, config.SECRET_KEY);
 
-    console.log("Este es el token: ", decoded);
+    // console.log("Este es el token: ", decoded);
+    const id = req.params.id;
 
-    const resultado = await Fundacion.findById(decoded).populate(
-      "publicaciones"
-    );
+    const resultado = await Fundacion.findById(id).populate("publicaciones");
 
-    return res.json({ message: "Este es el res: ", resultado });
+    const publis = resultado!.publicaciones;
+    
+
+    return res.json({resultado, publis });
   }
 
   public async getPublicacion(
