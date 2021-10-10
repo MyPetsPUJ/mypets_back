@@ -43,6 +43,7 @@ class ControllerAnimal {
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Perro",
       ownerFundacion: decoded,
+      enAdopcion: false,
     });
     console.log(animal);
     animal
@@ -96,6 +97,7 @@ class ControllerAnimal {
       esquema_vac: req.body.esquema_vac,
       tipo_animal: "Gato",
       ownerFundacion: decoded,
+      enAdopcion: false,
     });
     console.log(animal);
     animal
@@ -128,14 +130,16 @@ class ControllerAnimal {
   }
 
   public async populateAnimales(req: Request, res: Response) {
-    const token: string = req.header("auth-token")!;
-    const decoded = jwt.verify(token, config.SECRET_KEY);
+    // const token: string = req.header("auth-token")!;
+    // const decoded = jwt.verify(token, config.SECRET_KEY);
 
-    console.log("Este es el token: ", decoded);
+    // console.log("Este es el token: ", decoded);
 
-    const resultado = await Fundacion.findById(decoded).populate("animales");
+    const id = req.params.id;
+    const resultado = await Fundacion.findById(id).populate("animales");
+    const animales = resultado!.animales;
 
-    return res.json({ message: "Este es el res: ", resultado });
+    return res.json({ resultado, animales });
   }
 
   public async getAnimal(req: Request, res: Response): Promise<Response> {

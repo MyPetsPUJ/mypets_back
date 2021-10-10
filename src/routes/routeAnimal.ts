@@ -35,12 +35,15 @@ router.post(
   controllerAnimal.crearAnimalPerro
 );
 
-router.get(`/${dashboardPath}/animales`, controllerAnimal.populateAnimales);
-
 router.get(
-  `/${dashboardPath}/${getAnimalesPath}`,
-  controllerAnimal.getAnimales
+  `/${dashboardPath}/${getAnimalesPath}/:id`,
+  controllerAnimal.populateAnimales
 );
+
+// router.get(
+//   `/${dashboardPath}/${getAnimalesPath}`,
+//   controllerAnimal.getAnimales
+// );
 
 router.get(`/${adoptantePath}/${adoptamePath}`, controllerAnimal.getAnimales);
 
