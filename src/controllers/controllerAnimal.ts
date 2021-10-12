@@ -44,6 +44,7 @@ class ControllerAnimal {
       tipo_animal: "Perro",
       ownerFundacion: decoded,
       enAdopcion: false,
+      adoptado: false
     });
     console.log(animal);
     animal
@@ -98,6 +99,7 @@ class ControllerAnimal {
       tipo_animal: "Gato",
       ownerFundacion: decoded,
       enAdopcion: false,
+      adoptado: false,
     });
     console.log(animal);
     animal
