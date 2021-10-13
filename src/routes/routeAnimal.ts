@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { controllerAnimal } from "../controllers/controllerAnimal";
+import { controllerAnimal } from "../controllers/usuarios/controllerAnimal";
 import { tokenValidation } from "../lib/validateToken";
 
 import multer from "../lib/multer";
@@ -13,15 +13,6 @@ const eleccionAnimalPath = "seleccion-animal";
 const getAnimalesPath = "mis-animales";
 const gatoPath = "crear-animal-gato";
 const perroPath = "crear-animal-perro";
-
-router.get(
-  `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,
-  controllerAnimal.dentroDeAnimal
-);
-router.get(
-  `/${dashboardPath}/${eleccionAnimalPath}/${perroPath}`,
-  controllerAnimal.dentroDeAnimal
-);
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,

@@ -1,15 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import Fundacion from "../models/modelFundacion";
+import Fundacion from "../../models/usuarios/modelFundacion";
 import path from "path";
 import fs from "fs-extra";
 
 class ControllerFundacion {
-  public dentroFundacion(req: Request, res: Response, next: NextFunction) {
-    res.send([4, 5, 6]);
-    console.log("Dentro de fundacion");
-    next();
-  }
-
   public async crearFundacion(req: Request, res: Response, next: NextFunction) {
     console.log("Creando fundacion");
     console.log(req.body);
@@ -87,24 +81,27 @@ class ControllerFundacion {
       password,
     } = req.body;
 
-    const updatedFundacion = await Fundacion.findByIdAndUpdate(id, {
-      nombreFund,
-      nombreEncar,
-      apellidosEncar,
-      tipo_doc,
-      num_doc,
-      fecha_creacion,
-      localidad,
-      correo,
-      num_celular,
-      password
-    }, {new: true});
+    const updatedFundacion = await Fundacion.findByIdAndUpdate(
+      id,
+      {
+        nombreFund,
+        nombreEncar,
+        apellidosEncar,
+        tipo_doc,
+        num_doc,
+        fecha_creacion,
+        localidad,
+        correo,
+        num_celular,
+        password,
+      },
+      { new: true }
+    );
     return res.json({
-      message: 'Fundación actualizada correctamente',
-      updatedFundacion
+      message: "Fundación actualizada correctamente",
+      updatedFundacion,
     });
   }
-
 }
 
 export const controllerFundacion = new ControllerFundacion();

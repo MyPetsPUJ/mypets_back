@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { controllerFundacion } from "../controllers/controllerFundacion";
+import { controllerFundacion } from "../controllers/usuarios/controllerFundacion";
 
 import multer from "../lib/multer";
 
@@ -13,11 +13,6 @@ const perfilPath = "mi-cuenta";
 const fundacionesPath = "get-fundaciones";
 const fundacionPath = "get-fundacion";
 const publicacionesPath = "publicaciones";
-
-// router.get(
-//   `/${entidadPath}/${usuarioPath}`,
-//   controllerFundacion.dentroFundacion
-// );
 
 router.post(
   `/${entidadPath}/${usuarioPath}`,

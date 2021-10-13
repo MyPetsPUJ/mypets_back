@@ -1,5 +1,5 @@
 import express from "express";
-import { controllerVacunaGato } from "../controllers/controllerVacunaGato";
+import { controllerVacunaGato } from "../controllers/datos-app/controllerVacunaGato";
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, json } from "express";
 
-import Adoptante, { UserType } from "../models/modelAdoptante";
-import Fundacion from "../models/modelFundacion";
+import Adoptante, { UserType } from "../models/usuarios/modelAdoptante";
+import Fundacion from "../models/usuarios/modelFundacion";
 import config from "../lib/helpers";
 import cookieParser from "cookie-parser";
 

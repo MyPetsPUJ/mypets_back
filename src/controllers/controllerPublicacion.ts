@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import Publicacion from "../models/modelPublicacion";
-import Fundacion from "../models/modelFundacion";
+import Fundacion from "../models/usuarios/modelFundacion";
 import config from "../lib/helpers";
 
 import jwt from "jsonwebtoken";

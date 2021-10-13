@@ -1,87 +1,87 @@
 import { Response, Request } from "express";
 
-import Localidad from "../models/modelLocalidad";
+import Localidad from "../../models/datos-app/modelLocalidad";
 
 class ControllerLocalidad {
   public crearLocalidades(res: Response) {
     Localidad.create({
-      nombre: "1. Usaquén",
+      nombre: "Usaquén",
     });
 
     Localidad.create({
-      nombre: "2. Chapinero",
+      nombre: "Chapinero",
     });
 
     Localidad.create({
-      nombre: "3. Santa Fé",
+      nombre: "Santa Fé",
     });
 
     Localidad.create({
-      nombre: "4. San Cristóbal",
+      nombre: "San Cristóbal",
     });
 
     Localidad.create({
-      nombre: "5. Usme",
+      nombre: "Usme",
     });
 
     Localidad.create({
-      nombre: "6. Tunjuelito",
+      nombre: "Tunjuelito",
     });
 
     Localidad.create({
-      nombre: "7. Bosa",
+      nombre: "Bosa",
     });
 
     Localidad.create({
-      nombre: "8. Kennedy",
+      nombre: "Kennedy",
     });
 
     Localidad.create({
-      nombre: "9. Fontibón",
+      nombre: "Fontibón",
     });
 
     Localidad.create({
-      nombre: "10. Engativá",
+      nombre: "Engativá",
     });
 
     Localidad.create({
-      nombre: "11. Suba",
+      nombre: "Suba",
     });
 
     Localidad.create({
-      nombre: "12. Barrios Unidos",
+      nombre: "Barrios Unidos",
     });
 
     Localidad.create({
-      nombre: "13. Teusaquillo",
+      nombre: "Teusaquillo",
     });
 
     Localidad.create({
-      nombre: "14. Los Mártires",
+      nombre: "Los Mártires",
     });
 
     Localidad.create({
-      nombre: "15. Antonio Nariño",
+      nombre: "Antonio Nariño",
     });
 
     Localidad.create({
-      nombre: "16. Puente Aranda",
+      nombre: "Puente Aranda",
     });
 
     Localidad.create({
-      nombre: "17. Candelaria",
+      nombre: "Candelaria",
     });
 
     Localidad.create({
-      nombre: "18. Rafael Uribe Uribe",
+      nombre: "Rafael Uribe Uribe",
     });
 
     Localidad.create({
-      nombre: "19. Ciudad Bolívar",
+      nombre: "Ciudad Bolívar",
     });
 
     Localidad.create({
-      nombre: "20. Sumapaz",
+      nombre: "Sumapaz",
     });
 
     return res.json({ message: "Localidades creadas de manera correcta" });

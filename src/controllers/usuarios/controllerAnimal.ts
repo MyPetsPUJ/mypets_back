@@ -1,20 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 
-import Animal from "../models/modelAnimal";
-import Fundacion from "../models/modelFundacion";
-import config from "../lib/helpers";
+import Animal from "../../models/usuarios/modelAnimal";
+import Fundacion from "../../models/usuarios/modelFundacion";
+import config from "../../lib/helpers";
 
 import fs from "fs-extra";
 import path from "path";
 import jwt from "jsonwebtoken";
 
 class ControllerAnimal {
-  public dentroDeAnimal(req: Request, res: Response, next: NextFunction) {
-    res.send([1, 2, 3, 4]);
-    console.log("Dentro de crear animal");
-    next();
-  }
-
   public async crearAnimalPerro(
     req: Request,
     res: Response,
@@ -44,7 +38,7 @@ class ControllerAnimal {
       tipo_animal: "Perro",
       ownerFundacion: decoded,
       enAdopcion: false,
-      adoptado: false
+      adoptado: false,
     });
     console.log(animal);
     animal

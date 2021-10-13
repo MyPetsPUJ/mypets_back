@@ -1,13 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import Adoptante from "../models/modelAdoptante";
+import Adoptante from "../../models/usuarios/modelAdoptante";
 
 class ControllerAdoptante {
-  public dentroAdoptante(req: Request, res: Response, next: NextFunction) {
-    res.send([1, 2, 3]);
-    console.log("Dentro de adoptante");
-    next();
-  }
-
+  
   public async crearAdoptante(req: Request, res: Response, next: NextFunction) {
     console.log("Creando adoptante");
     console.log(req.body);

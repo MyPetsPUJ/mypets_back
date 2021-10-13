@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 
-import VacunaPerro from "../models/modelVacunaPerro";
+import VacunaPerro from "../../models/datos-app/modelVacunaPerro";
 
 class ControllerVacunaPerro {
   public crearVacunas(res: Response) {

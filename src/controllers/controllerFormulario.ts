@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Formulario from "../models/modelFormulario";
+import Formulario from "../models/formularios/modelFormulario";
 
 class ControllerFormulario{
   public dentroDeFormulario(req: Request, res: Response, next: NextFunction) {
