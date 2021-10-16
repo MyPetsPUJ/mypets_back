@@ -18,6 +18,7 @@
     "@types/express-handlebars": "^5.3.1",
     "@types/geojson": "^7946.0.8",
     "@types/mongoose-geojson-schema": "^2.1.5",
+    "@types/node-geocoder": "^3.24.2",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -29,6 +30,7 @@
     "mongoose-geojson-schema": "^2.1.7",
     "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.3",
+    "node-geocoder": "^3.27.0",
     "uuid": "^8.3.2",
     "uuidv4": "^6.2.12"
   },

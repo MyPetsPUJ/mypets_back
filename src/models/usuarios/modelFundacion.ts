@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import bcrypt from "bcryptjs";
+import geocoder from "../../lib/geocoder";
 
 interface Fundacion extends Document {
   nombreFund: string;
@@ -17,9 +18,10 @@ interface Fundacion extends Document {
   tipo_usuario: string;
   publicaciones: [{ type: mongoose.Types.ObjectId; ref: "Publicacion" }];
   animales: [{ type: mongoose.Types.ObjectId; ref: "Animal" }];
-  direccion: string;
+  direccion: string | undefined;
   mision: string;
   vision: string;
+  ubicacion: any;
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
@@ -42,9 +44,35 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   direccion: { type: String, require: true },
   mision: { type: String, require: true },
   vision: { type: String, require: true },
+  ubicacion: {
+    type: {
+      type: String,
+      enum: ["Point"], // 'location.type' must be 'Point'
+      //required: true,
+    },
+    coordinates: {
+      type: [Number],
+      index: "2dsphere",
+      //required: true,
+    },
+    direccionFormateada: String,
+  },
 });
 
 //schema_fundacion.plugin(uniqueValidator);
+
+schema_fundacion.pre("save", async function (next) {
+  const loc = await geocoder.geocode(this.direccion!);
+  console.log(loc);
+  this.ubicacion = {
+    type: "Point",
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    direccionFormateada: loc[0].formattedAddress,
+  };
+
+  this.direccion = undefined;
+  next();
+});
 
 schema_fundacion.methods.encryptPassword = async (
   password: string

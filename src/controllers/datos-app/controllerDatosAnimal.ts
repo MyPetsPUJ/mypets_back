@@ -5,99 +5,34 @@ import DatosAnimal from "../../models/datos-app/modelDatosAnimal";
 class ControllerDatosAnimal {
   public crearDatosAnimal(res: Response) {
     DatosAnimal.create({
-      edad: "Menos de 1 mes",
+      edad: [
+        "Menos de 1 mes",
+        "1 a 3 Meses",
+        "3 a 5 Meses",
+        "5 a 7 Meses",
+        "7 a 9 Meses",
+        "9 a 12 Meses",
+        "1 año",
+        "2 años",
+        "3 años",
+        "4 años",
+        "5 años",
+        "6 años",
+        "7 años",
+        "8 años",
+        "9 años",
+        "10 años",
+        "11 años",
+        "12 años",
+        "13 años",
+        "14 años",
+        "15 años",
+        "Más de 15 años",
+      ],
     });
 
     DatosAnimal.create({
-      edad: "1 a 3 meses",
-    });
-
-    DatosAnimal.create({
-      edad: "3 a 5 meses",
-    });
-
-    DatosAnimal.create({
-      edad: "5 a 7 meses",
-    });
-
-    DatosAnimal.create({
-      edad: "7 a 9 meses",
-    });
-
-    DatosAnimal.create({
-      edad: "9 a 12 meses",
-    });
-
-    DatosAnimal.create({
-      edad: "1 año",
-    });
-
-    DatosAnimal.create({
-      edad: "2 años",
-    });
-
-    DatosAnimal.create({
-      edad: "3 años",
-    });
-
-    DatosAnimal.create({
-      edad: "4 años",
-    });
-
-    DatosAnimal.create({
-      edad: "5 años",
-    });
-
-    DatosAnimal.create({
-      edad: "6 años",
-    });
-
-    DatosAnimal.create({
-      edad: "7 años",
-    });
-
-    DatosAnimal.create({
-      edad: "8 años",
-    });
-
-    DatosAnimal.create({
-      edad: "9 años",
-    });
-
-    DatosAnimal.create({
-      edad: "10 años",
-    });
-
-    DatosAnimal.create({
-      edad: "11 años",
-    });
-
-    DatosAnimal.create({
-      edad: "12 años",
-    });
-
-    DatosAnimal.create({
-      edad: "13 años",
-    });
-
-    DatosAnimal.create({
-      edad: "14 años",
-    });
-
-    DatosAnimal.create({
-      edad: "15 años",
-    });
-
-    DatosAnimal.create({
-      edad: "Más de 15 años",
-    });
-
-    DatosAnimal.create({
-      tipo: "Perro",
-    });
-
-    DatosAnimal.create({
-      tipo: "Gato",
+      tipo: ["Perro", "Gato"],
     });
 
     DatosAnimal.create({
@@ -181,11 +116,14 @@ class ControllerDatosAnimal {
 
   public async getDatosAnimal(req: Request, res: Response): Promise<Response> {
     const datosAnimal = await DatosAnimal.find();
-
+    console.log(datosAnimal);
     return res.json(datosAnimal);
   }
 
-  public async deleteDatosAnimal(req: Request, res: Response): Promise<Response> {
+  public async deleteDatosAnimal(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
     const dato = await DatosAnimal.findByIdAndRemove(id);
 

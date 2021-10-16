@@ -49,6 +49,7 @@ app.use("/api", require("./routes/routeFundacion"));
 app.use("/api", require("./routes/routeLogin"));
 app.use("/api", require("./routes/routeAnimal"));
 app.use("/api", require("./routes/routePublicacion"));
+app.use("/api", require("./routes/routePuntoInteres"));
 
 //esta carpeta se utlizará para guardar los archivos públicos de la aplicación
 app.use("/uploads", express.static(path.resolve("uploads")));

@@ -4,6 +4,8 @@ import Publicacion from "../models/modelPublicacion";
 import Fundacion from "../models/usuarios/modelFundacion";
 import config from "../lib/helpers";
 
+
+
 import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs-extra";
@@ -19,7 +21,8 @@ class ControllerPublicacion {
     console.log(req.file);
 
     const token: string = req.header("auth-token")!;
-    //req.cookies.token;
+    // const userId: string = localStorage.getItem("userId")!;
+    // console.log("Este es el id--------", userId);
 
     console.log("Este es el token----------------");
     console.log(token);
@@ -76,9 +79,8 @@ class ControllerPublicacion {
     const resultado = await Fundacion.findById(id).populate("publicaciones");
 
     const publis = resultado!.publicaciones;
-    
 
-    return res.json({resultado, publis });
+    return res.json({ resultado, publis });
   }
 
   public async getPublicacion(
