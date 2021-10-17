@@ -37,9 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 //Routes
 // --------------------------------------------------------------------------
 
-app.use("/api", require("./routes/routeGenero"));
+// app.use("/api", require("./routes/routeGenero"));
 app.use("/api", require("./routes/routeTipoDoc"));
-app.use("/api", require("./routes/routeDatosAnimal"));
+// app.use("/api", require("./routes/routeDatosAnimal"));
 app.use("/api", require("./routes/routeSeccion"));
 app.use("/api", require("./routes/routeLocalidad"));
 app.use("/api", require("./routes/routeVacunaGato"));

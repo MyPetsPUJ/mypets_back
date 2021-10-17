@@ -8,6 +8,8 @@ interface PuntoDeInteres extends Document {
   direccion: string | undefined;
   autorPuntoDeInteres: mongoose.Types.ObjectId;
   ubicacion: any;
+  longitud: number;
+  latitud: number;
 }
 
 const schema_punto_de_interes: Schema<PuntoDeInteres> =
@@ -29,21 +31,22 @@ const schema_punto_de_interes: Schema<PuntoDeInteres> =
       },
       direccionFormateada: String,
     },
+    longitud: { type: Number },
+    latitud: { type: Number },
   });
 
-schema_punto_de_interes.pre("save", async function (next) {
-  const loc = await geocoder.geocode(this.direccion!);
-  //  console.log(loc);
-  this.ubicacion = {
-    type: "Point",
-    coordinates: [loc[0].longitude, loc[0].latitude],
-    direccionFormateada: loc[0].formattedAddress,
-  };
+// schema_punto_de_interes.pre("save", async function (next) {
+//   const loc = await geocoder.geocode(this.direccion!);
+//   //  console.log(loc);
+//   this.ubicacion = {
+//     type: "Point",
+//     coordinates: [loc[0].longitude, loc[0].latitude],
+//     direccionFormateada: loc[0].formattedAddress,
+//   };
 
-  // this.direccion = undefined;
-  next();
-});
-
+//   // this.direccion = undefined;
+//   next();
+// });
 
 export default mongoose.model<PuntoDeInteres>(
   "PuntoDeInteres",

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import PuntoDeInteres from "../models/modelPuntoInteres";
+import Fundacion from "../models/usuarios/modelFundacion";
 
 import jwt from "jsonwebtoken";
 import config from "../lib/helpers";
@@ -15,7 +16,9 @@ class ControllerPuntoDeInteres {
 
       console.log("Este es el token----------------");
       console.log(token);
-      const decoded = jwt.verify(token, config.SECRET_KEY);
+
+      const decoded: any = jwt.verify(token, config.SECRET_KEY);
+      
 
       console.log(req.body);
       const punto = await PuntoDeInteres.create(req.body);
@@ -25,14 +28,23 @@ class ControllerPuntoDeInteres {
       const updatePunto = await PuntoDeInteres.findByIdAndUpdate(
         punto._id,
         {
-          $push: { autorPuntoDeInteres: decoded },
+          $set: { autorPuntoDeInteres: decoded },
         },
         { new: true, useFindAndModify: false }
       );
 
+      const fundacion = await Fundacion.findByIdAndUpdate(
+        decoded,
+        { $push: { puntosDeInteres: punto._id } },
+        { new: true, useFindAndModify: false }
+      );
+
+      console.log(fundacion);
+
       return res.status(200).json({
         success: true,
         data: updatePunto,
+        coord: updatePunto?.ubicacion.coordinates,
       });
     } catch (error) {
       console.log(error);
@@ -42,13 +54,33 @@ class ControllerPuntoDeInteres {
 
   public async getPuntos(req: Request, res: Response, next: NextFunction) {
     try {
-      const puntos = await PuntoDeInteres.find();
+      const id = req.params.id;
+
+      const fundacion = await Fundacion.findById(id).populate(
+        "puntosDeInteres"
+      );
+
+      const puntos = fundacion!.puntosDeInteres;
+      // console.log(puntos);
 
       return res.status(200).json({
-        success: true,
-        count: puntos.length,
-        data: puntos,
+        fundacion,
+        puntos,
       });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Error" });
+    }
+  }
+
+  public async mostrarPuntos(req: Request, res: Response, next: NextFunction) {
+    try {
+      const puntos = await PuntoDeInteres.find();
+      const fundaciones = await Fundacion.find();
+
+      return res
+        .status(200)
+        .json({ message: "Resultado de búsqueda: ", puntos, fundaciones });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Error" });

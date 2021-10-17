@@ -23,6 +23,7 @@ class ControllerFundacion {
       password: req.body.password,
       urlImg: req.file?.path,
       tipo_usuario: "Fundacion",
+      ubicacion: null,
     });
     fundacion.password = await fundacion.encryptPassword(fundacion.password);
     console.log(fundacion);
