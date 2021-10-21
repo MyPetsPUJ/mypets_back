@@ -9,8 +9,15 @@ const solicitudPath = "solicitudes-adopcion-adoptante";
 const formularioPath = "formulario-adopcion";
 
 router.post(
-    `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
-    controllerFormulario.crearFormulario
-  );
+  `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
+  controllerFormulario.crearFormulario
+);
+
+
+router.get(
+  `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
+  controllerFormulario.getFamiliar
+);
     
   module.exports = router;
+
