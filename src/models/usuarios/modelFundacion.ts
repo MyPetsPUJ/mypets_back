@@ -19,6 +19,7 @@ interface Fundacion extends Document {
   publicaciones: [{ type: mongoose.Types.ObjectId; ref: "Publicacion" }];
   animales: [{ type: mongoose.Types.ObjectId; ref: "Animal" }];
   puntosDeInteres: [{ type: mongoose.Types.ObjectId; ref: "PuntoDeInteres" }];
+  solicitudesFundacion: [{ type: mongoose.Types.ObjectId, ref: "SolicitudAdopcion" }];
   direccion: string | undefined;
   mision: string;
   vision: string;
@@ -42,6 +43,7 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   publicaciones: [{ type: mongoose.Types.ObjectId, ref: "Publicacion" }],
   animales: [{ type: mongoose.Types.ObjectId, ref: "Animal" }],
   puntosDeInteres: [{ type: mongoose.Types.ObjectId, ref: "PuntoDeInteres" }],
+  solicitudesFundacion: [{ type: mongoose.Types.ObjectId, ref: "SolicitudAdopcion" }],
   direccion: { type: String, require: true },
   mision: { type: String, require: true },
   vision: { type: String, require: true },

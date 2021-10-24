@@ -5,7 +5,7 @@ interface SolicitudAdopcion extends Document {
   idFundacion: mongoose.Types.ObjectId;
   idAdoptante: mongoose.Types.ObjectId;
   idFormulario: mongoose.Types.ObjectId;
-  estado: Boolean;
+  estado: string;
   fecha_solicitud: string;
 }
 
@@ -14,7 +14,7 @@ const schema_solicitudAdopcion: Schema = new Schema({
   idFundacion: { type: mongoose.Types.ObjectId, ref: "Fundacion"},
   idAdoptante: { type: mongoose.Types.ObjectId, ref: "Adoptante"},
   idFormulario: { type: mongoose.Types.ObjectId, ref: "Formulario"},
-  estado: {type : Boolean, required : true},
+  estado: {type : String, required : true},
   fecha_solicitud: {type : String, required : true}
 
 });

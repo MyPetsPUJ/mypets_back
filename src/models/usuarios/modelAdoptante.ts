@@ -20,6 +20,7 @@ interface User extends Document {
   password: string;
   tipo_usuario: string;
   animalesAdoptados: [{ type: mongoose.Types.ObjectId; ref: "Animal" }];
+  solicitudesAdoptante: [{ type: mongoose.Types.ObjectId, ref: "SolicitudAdopcion" }];
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
@@ -37,6 +38,7 @@ const schema_adoptante: Schema<User> = new Schema<User>({
   password: { type: String, required: true },
   tipo_usuario: { type: String },
   animalesAdoptados: [{ type: mongoose.Types.ObjectId, ref: "Animal" }],
+  solicitudesAdoptante: [{ type: mongoose.Types.ObjectId, ref: "SolicitudAdopcion" }]
 });
 
 //schema_adoptante.plugin(uniqueValidator);
