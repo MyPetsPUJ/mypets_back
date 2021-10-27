@@ -26,6 +26,6 @@ router.get(
 
 router.get(
     `/${dashboardPath}/${adoptamePath}/${listaSolicitudesPah}/:id`,
-    controllerSolicitudAdopcion.getSolicitudesFundacion
+    controllerSolicitudAdopcion.populateSolicitudesFundacion
 );
 module.exports = router;
