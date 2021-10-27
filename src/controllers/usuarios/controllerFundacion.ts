@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import Fundacion from "../../models/usuarios/modelFundacion";
 import path from "path";
 import fs from "fs-extra";
+import bcrypt from "bcryptjs";
 
 class ControllerFundacion {
   public async crearFundacion(req: Request, res: Response, next: NextFunction) {
@@ -69,38 +70,41 @@ class ControllerFundacion {
 
   public async updateFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
-    const {
-      nombreFund,
-      nombreEncar,
-      apellidosEncar,
-      tipo_doc,
-      num_doc,
-      fecha_creacion,
-      localidad,
-      correo,
-      num_celular,
-      password,
-    } = req.body;
+    console.log(id);
+    const updateFundacion = {
+      nombreFund: req.body.nombreFund,
+      nombreEncar: req.body.nombreEncar,
+      apellidosEncar: req.body.apellidosEncar,
+      tipo_doc: req.body.tipo_doc,
+      num_doc: req.body.num_doc,
+      fecha_creacion: req.body.fecha_creacion,
+      mision: req.body.mision,
+      vision: req.body.vision,
+      correo: req.body.correo,
+      num_celular: req.body.num_celular,
+      password: req.body.password,
+      direccion: req.body.direccion,
+      urlImg: req.file?.path,
+    };
 
-    const updatedFundacion = await Fundacion.findByIdAndUpdate(
+    const salt = await bcrypt.genSalt(10);
+
+    updateFundacion.password = await bcrypt.hash(
+      updateFundacion.password,
+      salt
+    );
+
+    console.log(updateFundacion);
+
+    const fund = await Fundacion.findByIdAndUpdate(
       id,
-      {
-        nombreFund,
-        nombreEncar,
-        apellidosEncar,
-        tipo_doc,
-        num_doc,
-        fecha_creacion,
-        localidad,
-        correo,
-        num_celular,
-        password,
-      },
+      { $set: updateFundacion },
       { new: true }
     );
+
     return res.json({
       message: "Fundación actualizada correctamente",
-      updatedFundacion,
+      fund,
     });
   }
 }

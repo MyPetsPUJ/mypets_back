@@ -4,8 +4,6 @@ import Publicacion from "../models/modelPublicacion";
 import Fundacion from "../models/usuarios/modelFundacion";
 import config from "../lib/helpers";
 
-
-
 import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs-extra";
@@ -120,20 +118,25 @@ class ControllerPublicacion {
     res: Response
   ): Promise<Response> {
     const id = req.params.id;
-    const { titulo, cuerpo, seccion } = req.body;
 
-    const updatedPublicacion = await Publicacion.findByIdAndUpdate(
+    const updatePublicacion = {
+      titulo: req.body.titulo,
+      cuerpo: req.body.cuerpo,
+      urlImg: req.file?.path,
+      seccion: req.body.seccion,
+    };
+
+    console.log(updatePublicacion);
+
+    const publi = Publicacion.findByIdAndUpdate(
       id,
-      {
-        titulo,
-        cuerpo,
-        seccion,
-      },
+      { $set: updatePublicacion },
       { new: true }
     );
+
     return res.json({
       message: "Publicación actualizada correctamente",
-      updatedPublicacion,
+      publi,
     });
   }
 }
