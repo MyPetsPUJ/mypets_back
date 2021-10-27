@@ -1,6 +1,7 @@
 import express from "express";
 import { controllerTipoDoc } from "../controllers/datos-app/controllerTipoDoc";
 
+
 const router = express.Router();
 
 const crearCuenta = "crear-cuenta";

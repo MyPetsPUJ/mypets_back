@@ -45,7 +45,7 @@ router.get(
 );
 
 router.put(
-  `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,
+  `/${dashboardPath}/${publicacionesPath}/${editarPath}`,
   controllerPublicacion.updatePublicacion
 );
 

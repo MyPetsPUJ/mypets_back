@@ -9,7 +9,7 @@ const dashboardPath = "dashboard-adoptante";
 const dashboardFunPath = "dashboard";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-fundacion";
-const perfilPath = "mi-cuenta";
+const perfilPath = "mi_cuenta";
 const fundacionesPath = "get-fundaciones";
 const fundacionPath = "get-fundacion";
 const publicacionesPath = "publicaciones";
@@ -26,7 +26,7 @@ router.get(
 );
 
 router.get(
-  `/${dashboardPath}/${fundacionPath}/:id`,
+  `/${dashboardFunPath}/${perfilPath}/:id`,
   controllerFundacion.getFundacion
 );
 
@@ -36,7 +36,8 @@ router.get(
 // );
 
 router.put(
-  `/${dashboardPath}/${perfilPath}/:id`,
+  `/${dashboardFunPath}/${perfilPath}/:id`,
+  multer.single("image"),
   controllerFundacion.updateFundacion
 );
 
