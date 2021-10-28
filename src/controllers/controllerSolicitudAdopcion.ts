@@ -9,8 +9,8 @@ class ControllerSolicitudAdopcion{
   public async crearSolicitud( req: Request, res: Response, next: NextFunction){
     console.log("Creando solicitud");
     const solicitud = new SolicitudAdopcion({
-      idAdoptante : mongoose.Types.ObjectId(req.body.idAdoptante),
-      idFundacion : mongoose.Types.ObjectId(req.body.animal.ownerFundacion),
+      idAdoptante :req.body.adoptante._id,
+      idFundacion : mongoose.Types.ObjectId(req.body.idFundacion),
       idAnimal : req.body.animal._id,
       //idFormulario :  mongoose.Types.ObjectId(req.body.idFormulario), 
       idFormulario: null,
@@ -72,7 +72,6 @@ class ControllerSolicitudAdopcion{
 
     try{
       const adoptante = await Adoptante.findById(id);
-      //console.log(adoptante);
 
       if( adoptante!.solicitudesAdoptante !== undefined )
       {
@@ -97,7 +96,6 @@ class ControllerSolicitudAdopcion{
 
     try{
       const fundacion = await Fundacion.findById(id);
-      //console.log(fundacion);
 
       if( fundacion!.solicitudesFundacion !== undefined )
       {
@@ -115,6 +113,55 @@ class ControllerSolicitudAdopcion{
       return res.json(solicitudes);
     }
   }
+
+  public async populateSolicitudesFundacion( req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    var solicitudes: any[] = [];
+    var adoptantes: any[] =[];
+    var animales: any[] =[];
+
+    const fundacion = await Fundacion.findById(id);
+
+    if( fundacion!.solicitudesFundacion !== undefined )
+    {
+      for(var solicitud of fundacion!.solicitudesFundacion)
+      {
+        var nSolicitud = await SolicitudAdopcion.findById(solicitud).populate("idAnimal");
+
+        var mSolicitud = await SolicitudAdopcion.findById(solicitud).populate("idAdoptante");  
+        solicitudes.push(nSolicitud);
+
+        var adoptante = mSolicitud!.idAdoptante;
+        adoptantes.push(adoptante);
+
+        var animal = nSolicitud!.idAnimal;
+        animales.push(animal);
+
+    //return res.json({ resultado, publis });
+      } 
+    }
+
+    return res.json({ fundacion,solicitudes,adoptantes,animales});
+  }
+
+  public async deleteSolicitud(req: Request, res: Response): Promise<Response>{
+    
+    const id = req.params.id;
+    const solicitud = await SolicitudAdopcion.findById(id);
+    const adoptante = await Adoptante.findById(solicitud?.idAdoptante);
+    const fundacion = await Fundacion.findById(solicitud?.idFundacion);
+
+
+
+    const animal = await Animal.findByIdAndRemove(id);
+
+
+    return res.json({
+      message: "Animal eliminado satisfactoriamente",
+      animal})
+  }
 };
 
 export const controllerSolicitudAdopcion= new ControllerSolicitudAdopcion()
+
+
