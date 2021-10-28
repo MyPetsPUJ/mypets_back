@@ -40,17 +40,18 @@ router.get(
 // controllerPublicacion.getPublicaciones);
 
 router.get(
-  `/${dashboardPath}/${publicacionesPath}/${mostrarPath}/:id`,
+  `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,
   controllerPublicacion.getPublicacion
 );
 
 router.put(
-  `/${dashboardPath}/${publicacionesPath}/${editarPath}`,
+  `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,
+  [multer.single("image"), tokenValidation],
   controllerPublicacion.updatePublicacion
 );
 
 router.delete(
-  `/${dashboardPath}/${publicacionesPath}/${eliminarPath}/:id`,
+  `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,
   controllerPublicacion.deletePublicacion
 );
 

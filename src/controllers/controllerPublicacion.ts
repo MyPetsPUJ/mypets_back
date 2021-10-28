@@ -119,25 +119,43 @@ class ControllerPublicacion {
   ): Promise<Response> {
     const id = req.params.id;
 
-    const updatePublicacion = {
-      titulo: req.body.titulo,
-      cuerpo: req.body.cuerpo,
-      urlImg: req.file?.path,
-      seccion: req.body.seccion,
-    };
+    const { titulo, cuerpo } = req.body;
 
-    console.log(updatePublicacion);
+    const urlImg = req.file?.path;
 
-    const publi = Publicacion.findByIdAndUpdate(
-      id,
-      { $set: updatePublicacion },
-      { new: true }
-    );
+    if (!urlImg) {
+      const publi = await Publicacion.findByIdAndUpdate(
+        id,
+        { titulo, cuerpo },
+        (err) => {
+          console.log("Error", err);
+        }
+      );
 
-    return res.json({
-      message: "Publicación actualizada correctamente",
-      publi,
-    });
+      console.log(publi);
+
+      return res.json({
+        message: "Publicación actualizada correctamente",
+        publi,
+      });
+    } else {
+      const publi = await Publicacion.findByIdAndUpdate(
+        id,
+        { titulo, cuerpo, urlImg },
+        (err) => {
+          console.log("Error", err);
+        }
+      );
+
+      console.log(publi);
+
+      return res.json({
+        message: "Publicación actualizada correctamente",
+        publi,
+      });
+    }
+
+    // console.log(updatePublicacion);
   }
 }
 
