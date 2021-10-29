@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import { controllerFundacion } from "../controllers/usuarios/controllerFundacion";
 
+import { tokenValidation } from "../lib/validateToken";
+
 import multer from "../lib/multer";
 
 const router = express.Router();
@@ -37,7 +39,7 @@ router.get(
 
 router.put(
   `/${dashboardFunPath}/${perfilPath}/:id`,
-  multer.single("image"),
+  [multer.single("image"), tokenValidation],
   controllerFundacion.updateFundacion
 );
 

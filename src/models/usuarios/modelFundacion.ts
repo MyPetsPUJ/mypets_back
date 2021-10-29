@@ -8,7 +8,7 @@ interface Fundacion extends Document {
   nombreEncar: string;
   apellidosEncar: string;
   tipo_doc: string;
-  num_doc: string;
+  num_doc: number;
   fecha_creacion: string;
   // localidad: string;
   correo: string;
@@ -33,7 +33,7 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   nombreEncar: { type: String, required: true },
   apellidosEncar: { type: String, required: true },
   tipo_doc: { type: String, required: true },
-  num_doc: { type: String, required: true },
+  num_doc: { type: Number, required: true },
   fecha_creacion: { type: String, required: true },
   correo: { type: String, required: true },
   num_celular: { type: String, required: true },

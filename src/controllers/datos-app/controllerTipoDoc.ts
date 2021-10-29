@@ -25,6 +25,7 @@ class ControllerTipoDoc {
   ): Promise<Response> {
     const tipodocs = await TipoDoc.find();
 
+    
     return res.json(tipodocs);
   }
 }
