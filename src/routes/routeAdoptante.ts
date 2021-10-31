@@ -22,7 +22,9 @@ router.get(
   controllerAdoptante.getAdoptante
 );
 
-router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
+router.get(
+  `/${dashboardPath}`, controllerAdoptante.getAdoptantes
+);
 
 router.get(
   `/${dashboardPath}/${perfilPath}/:id`,

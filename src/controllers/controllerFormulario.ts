@@ -2,23 +2,16 @@ import { Request, Response, NextFunction } from "express";
 import Formulario from "../models/formularios/modelFormulario";
 import InfoFamiliar from "../models/formularios/modelInformacionFamilia";
 import InfoRelacionada from "../models/formularios/modelInformacionRelacionada";
-import Referencia from "../models/formularios/modelReferenciaAdoptante";
-//import Controller
+import ReferenciaF from "../models/formularios/modelReferenciaFamiliar";
+import ReferenciaC from "../models/formularios/modelReferenciaConocido";
+import SolicitudAdopcion from "../models/solicitud-adopcion/modelSolicitudAdopcion";
+
 
 class ControllerFormulario{
-    public dentroDeFormulario(req: Request, res: Response, next: NextFunction) {
-      //res.send([1, 1, 1]);
-      console.log("Creando formulario");
-      next();
-    }
   
     public async crearFormulario( req: Request, res: Response, next: NextFunction)
     {
       console.log("Creando formulario");
-      //console.log(req.body);
-      //console.log(req.file);
-      
-      //res.send([9, 9, 9]);
 
       const informFamiliar = new InfoFamiliar({
         numAdultos: req.body.informacionFamiliar.numAdultos,
@@ -35,7 +28,6 @@ class ControllerFormulario{
         familiaresAlergias : req.body.informacionFamiliar.familiaresAlergias,
         familiaresPlaneaEmbarazo : req.body.informacionFamiliar.familiaresPlaneaEmbarazo
       });
-
       const informRelacionada = new InfoRelacionada({
         tiempoEnCasaHoras: req.body.informacionRelacionada.tiempoEnCasaHoras, 
         horaRegresoCasa: req.body.informacionRelacionada.horaRegresoCasa,
@@ -57,64 +49,54 @@ class ControllerFormulario{
         adoptanteAlternativoAusencia: req.body.informacionRelacionada.adoptanteAlternativoAusencia,
         permisionTenenciaAnimales: req.body.informacionRelacionada.permisionTenenciaAnimales
       });
-      const referenciaFamiliar = new Referencia({
+      const referenciaFamiliar = new ReferenciaF({
         nombresFamiliar: req.body.referenciaFamiliar.nombres,
         apellidosFamiliar: req.body.referenciaFamiliar.apellidos,
         numFijoFamiliar: req.body.referenciaFamiliar.numFijo,
         numCelularFamiliar: req.body.referenciaFamiliar.numCelular,
         parentezcoFamiliar: req.body.referenciaFamiliar.parentezco
       });
+      const referenciaConocido= new ReferenciaC({
+        nombresFamiliar: req.body.referenciaFamiliar.nombres,
+        apellidosFamiliar: req.body.referenciaFamiliar.apellidos,
+        numFijoFamiliar: req.body.referenciaFamiliar.numFijo,
+        numCelularFamiliar: req.body.referenciaFamiliar.numCelular,
+        tiempoDeConocimiento: req.body.referenciaFamiliar.tiempoDeConocimiento
+      });
+
       const formulario = new Formulario({
         informacionFamiliar : informFamiliar._id,
         informacionRelacionada: informRelacionada._id,
-        referencia: referenciaFamiliar._id
+        referenciaFamiliar: referenciaFamiliar._id,
+        referenciaConocido: referenciaConocido._id
       });
-
+      console.log("formulario")
       console.log(formulario);
       console.log("Informacion Familiar");
       console.log(informFamiliar);
       console.log("Informacion Relacionada");
       console.log(informRelacionada);
-      console.log("Referencia");
+      console.log("Referencia1");
       console.log(referenciaFamiliar);
+      console.log("Referencia2");
+      console.log(referenciaConocido);
 
       informFamiliar.save();
-        /*.then((result: any) => {
-          res.status(200).json({
-            message: "Solicitud creada",
-            result: result,
-          });
-        })
-        .catch((err: any) => {
-          res.status(500).json({
-            error: err,
-          });
-        });
-      */
+
       informRelacionada.save();
-        /*.then((result: any) => {
-          res.status(200).json({
-            message: "Solicitud creada",
-            result: result,
-          });
-        })
-        .catch((err: any) => {
-          res.status(500).json({
-            error: err,
-          });
-        });*/
+
       referenciaFamiliar.save();
-      /*  .then((result: any) => {
-          res.json({
-            message: "Solicitud creada2",
-            result: result,
-          });
-        })
-        .catch((err: any) => {
-          res.status(500).json({
-            error: err,
-          });
-        });*/
+
+      referenciaConocido.save();
+
+      //--------------------------------------------------
+      /*const idSolicitud = req.body.idSolicitud;
+      const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
+        idSolicitud,
+        { $set :{ idFormulario: formulario._id } },
+        { new: true, useFindAndModify: false }
+      );*/
+
       //--------------------------------------------------
       formulario.save()
         .then((result: any) => {
@@ -128,26 +110,47 @@ class ControllerFormulario{
             error: err,
           });
         });
- 
-    /*formulario.save()
-        .then((result: any) => {
-          res.status(1).json({
-            message: "Solicitud creada",
-            result: result,
-          });
-        })
-        .catch((err: any) => {
-          res.status(500).json({
-            error: err,
-          });
-        });
-      }*/
     }
-
-    public async getFamiliar( req: Request, res: Response, next: NextFunction): Promise<Response> {
+  
+    public async getFamiliares( req: Request, res: Response, next: NextFunction): Promise<Response> {
       const informFamiliar = await InfoFamiliar.find();
       return res.json(informFamiliar);
     }
+
+    public async getInfoRelacionada( req: Request, res: Response, next: NextFunction): Promise<Response> {
+      const informRelacionada = await InfoRelacionada.find();
+      return res.json(informRelacionada);
+    }
+
+    public async getReferenciaFamilia( req: Request, res: Response, next: NextFunction): Promise<Response> {
+      const referenciaFami = await ReferenciaF.find();
+      return res.json(referenciaFami);
+    }
+
+    public async getReferenciaConocido( req: Request, res: Response, next: NextFunction): Promise<Response> {
+      const referenciaConoc = await ReferenciaC.find();
+      return res.json(referenciaConoc);
+    }
+
+    public async getFormularios( req: Request, res: Response, next: NextFunction): Promise<Response> {
+      const formularios = await Formulario.find();
+      return res.json(formularios);
+    }
+
+    /*public async getFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
+
+
+    }*/
+
+    public async deleteFormulario( req: Request, res: Response, next: NextFunction): Promise<Response> {
+      const id = req.params.id;
+      await Formulario.findByIdAndRemove(id);
+      
+      return res.json({
+        message: "Eleminido exitosamente"
+      });
+    }
+
   }
   
   export const controllerFormulario = new ControllerFormulario();

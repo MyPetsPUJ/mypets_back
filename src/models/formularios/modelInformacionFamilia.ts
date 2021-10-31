@@ -2,8 +2,6 @@ import mongoose, { Schema, Document, Mongoose } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 interface InfoFamiliar extends Document{
-
-  //Informacion familiar
   numAdultos: number;
   numNinos: number;
   edadesAdultos: number;
