@@ -39,7 +39,7 @@ class ControllerSolicitudAdopcion{
 
     const adoptanteUpdate = await Adoptante.findByIdAndUpdate(
       idUser,
-      { $push: { solicitudesAdoptante: solicitud._id } },
+      { $push :{ solicitudesAdoptante: solicitud._id } },
       { new: true, useFindAndModify: false }
     );
 
@@ -54,7 +54,6 @@ class ControllerSolicitudAdopcion{
     console.log("Fundacion actualizada correctamente", fundacionUpdate);
 
   }
-
   public async getSolicitudes( req: Request, res: Response): Promise<Response> {
     const solicitudes = await SolicitudAdopcion.find();
     return res.json(solicitudes);
@@ -151,16 +150,65 @@ class ControllerSolicitudAdopcion{
     const adoptante = await Adoptante.findById(solicitud?.idAdoptante);
     const fundacion = await Fundacion.findById(solicitud?.idFundacion);
 
+    //const animal = await Animal.findByIdAndRemove(id);
 
+    if(solicitud != null)
+    {
+      const newAdoptante = await Adoptante.findByIdAndUpdate(
+      solicitud?.idAdoptante,
+      { $pull: { solicitudesAdoptante: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+      { new: true, useFindAndModify: false }
+    );
+    console.log("1 paso hecho");
+    
+    const newFundacion = await Fundacion.findByIdAndUpdate(
+      solicitud?.idFundacion,
+      { $pull: { solicitudesFundacion: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+      { new: true, useFindAndModify: false }
+    );
+    
+    const borrado = await SolicitudAdopcion.findByIdAndRemove(id);
+   
+    }
+     return res.json({
+      message: "2 paso  eliminado satisfactoriamente",solicitud
+    });
+  }
 
-    const animal = await Animal.findByIdAndRemove(id);
-
-
+  /*public async deleteSolicitud(req: Request, res: Response): Promise<Response>{
+  
+      const id = req.params.id;
+      const fundacion = await Fundacion.findByIdAndUpdate(
+      id,
+      { $pull: { solicitudesFundacion: {$in : [
+      mongoose.Types.ObjectId( "6173be1bdcc8168f3c662c90"),
+      mongoose.Types.ObjectId( "6173be34dcc8168f3c662c96"),
+      mongoose.Types.ObjectId( "6173be60dcc8168f3c662c9c"),
+      mongoose.Types.ObjectId( "6173be6fdcc8168f3c662ca1"),
+      mongoose.Types.ObjectId( "61758c2af6c63e3a185194dd"),
+      mongoose.Types.ObjectId( "617802f12b697a1980c1a718")]  
+        
+       } } },
+      { multi: true, new: true, useFindAndModify: false }
+    );
     return res.json({
-      message: "Animal eliminado satisfactoriamente",
-      animal})
+      message: " eliminado satisfactoriamente"
+    });
+  }*/
+  public async updateSolicitud(req: Request, res: Response): Promise<Response>{
+    const id = req.params.id;
+    const nuevoEstado = req.body.estado;
+    const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
+      id,
+      {$set :{ estado: nuevoEstado} },
+      { new: true, useFindAndModify: false }
+    );
+    return res.json({
+      message: " actualizado satisfactoriamente"
+    });
   }
 };
+
 
 export const controllerSolicitudAdopcion= new ControllerSolicitudAdopcion()
 

@@ -16,7 +16,7 @@ router.post(
 
 router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
-  controllerFormulario.getFamiliar
+  controllerFormulario.getFamiliares
 );
     
   module.exports = router;

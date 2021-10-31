@@ -1,31 +1,19 @@
 import mongoose, { Schema, Document, Mongoose } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
-//import InfoFamiliar from "./modelInformacionFamilia";
-//import InfoRelacionada from "./modelInformacionRelacionada";
-//import Referencia from "./modelReferenciaAdoptante";
 
 interface Formulario extends Document{
-
-  //Adoptante
-  adoptanteFormulario: mongoose.Types.ObjectId; //Falta completar
-
-  informacionFamiliar : mongoose.Types.ObjectId; //Ready
-  informacionRelacionada: mongoose.Types.ObjectId; //Ready
-  referencia: mongoose.Types.ObjectId;
-  //Animal
-  animal: mongoose.Types.ObjectId;
-  
-
+  informacionFamiliar : mongoose.Types.ObjectId; 
+  informacionRelacionada: mongoose.Types.ObjectId; 
+  referenciaFamiliar: mongoose.Types.ObjectId;
+  referenciaConocido: mongoose.Types.ObjectId;
 }
 
 const schema_formulario: Schema = new Schema({
   informacionFamiliar: {type: mongoose.Types.ObjectId , ref: "InfoFamiliar"},     
-  informacionRelacionada: {type: mongoose.Types.ObjectId, ref: "InfoRelcionada"},
-  referencia: {type: mongoose.Types.ObjectId, ref: "Referencia"}, 
- 
-  animal: {type : mongoose.Types.ObjectId, ref: "Animal"},
-  adoptanteFormulario: {type : mongoose.Types.ObjectId, ref: "Adoptante"}
-});
+  informacionRelacionada: {type: mongoose.Types.ObjectId, ref: "InfoRelacionada"},
+  referenciaFamiliar: {type: mongoose.Types.ObjectId, ref: "ReferenciaF"},
+  referenciaConocido: {type: mongoose.Types.ObjectId, ref: "ReferenciaC"}, 
 
+});
 
 export default mongoose.model<Formulario>("Formulario", schema_formulario);

@@ -19,7 +19,9 @@ router.get(
   controllerAdoptante.getAdoptante
 );
 
-router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
+router.get(
+  `/${dashboardPath}`, controllerAdoptante.getAdoptantes
+);
 
 router.put(
   `/${dashboardPath}/${perfilPath}/:id`,
