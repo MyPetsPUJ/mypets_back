@@ -146,10 +146,15 @@ class ControllerAnimal {
 
   public async deleteAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
+
     const animal = await Animal.findByIdAndRemove(id);
 
     if (animal) {
-      fs.unlink(path.resolve(animal.urlImg));
+      try {
+        fs.unlink(path.resolve(animal.urlImg));
+      } catch (error) {
+        console.log("No existe el archivo", error);
+      }
     }
     return res.json({
       message: "Animal eliminado satisfactoriamente",
@@ -176,7 +181,7 @@ class ControllerAnimal {
 
     const urlImg = req.file?.path;
 
-    if(!urlImg){
+    if (!urlImg) {
       const updatedAnimal = await Animal.findByIdAndUpdate(
         id,
         {
@@ -199,7 +204,7 @@ class ControllerAnimal {
         message: "Animal actualizado correctamente",
         updatedAnimal,
       });
-    }else{
+    } else {
       const updatedAnimal = await Animal.findByIdAndUpdate(
         id,
         {
@@ -215,7 +220,7 @@ class ControllerAnimal {
           ultima_vac,
           descripcion,
           esquema_vac,
-          urlImg
+          urlImg,
         },
         { new: true }
       );
@@ -224,8 +229,6 @@ class ControllerAnimal {
         updatedAnimal,
       });
     }
-
-    
   }
 }
 
