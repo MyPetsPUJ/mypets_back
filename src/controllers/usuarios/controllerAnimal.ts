@@ -174,28 +174,58 @@ class ControllerAnimal {
       esquema_vac,
     } = req.body;
 
-    const updatedAnimal = await Animal.findByIdAndUpdate(
-      id,
-      {
-        nombre,
-        edad,
-        raza,
-        sexo,
-        tamano,
-        color_ojos,
-        tipo_pelaje,
-        situacion,
-        desparasitado,
-        ultima_vac,
-        descripcion,
-        esquema_vac,
-      },
-      { new: true }
-    );
-    return res.json({
-      message: "Animal actualizado correctamente",
-      updatedAnimal,
-    });
+    const urlImg = req.file?.path;
+
+    if(!urlImg){
+      const updatedAnimal = await Animal.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          edad,
+          raza,
+          sexo,
+          tamano,
+          color_ojos,
+          tipo_pelaje,
+          situacion,
+          desparasitado,
+          ultima_vac,
+          descripcion,
+          esquema_vac,
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Animal actualizado correctamente",
+        updatedAnimal,
+      });
+    }else{
+      const updatedAnimal = await Animal.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          edad,
+          raza,
+          sexo,
+          tamano,
+          color_ojos,
+          tipo_pelaje,
+          situacion,
+          desparasitado,
+          ultima_vac,
+          descripcion,
+          esquema_vac,
+          urlImg
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Animal actualizado correctamente",
+        updatedAnimal,
+      });
+    }
+
+    
   }
 }
 
