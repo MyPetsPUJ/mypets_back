@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import Adoptante from "../../models/usuarios/modelAdoptante";
+import bcrypt from "bcryptjs";
+import fs from "fs-extra";
+import path from "path";
 
 class ControllerAdoptante {
-  
   public async crearAdoptante(req: Request, res: Response, next: NextFunction) {
     console.log("Creando adoptante");
     console.log(req.body);
@@ -17,6 +19,7 @@ class ControllerAdoptante {
       correo: req.body.correo,
       num_celular: req.body.num_celular,
       password: req.body.password,
+      urlImg: req.file?.path,
       tipo_usuario: "Adoptante",
     });
     adoptante.password = await adoptante.encryptPassword(adoptante.password);
@@ -51,9 +54,9 @@ class ControllerAdoptante {
     const id = req.params.id;
     const adoptante = await Adoptante.findByIdAndRemove(id);
 
-    // if (adoptante) {
-    //   fs.unlink(path.resolve(adoptante.urlImg));
-    // }
+    if (adoptante) {
+      fs.unlink(path.resolve(adoptante.urlImg));
+    }
     return res.json({
       message: "Adoptante eliminado satisfactoriamente",
       adoptante,
@@ -65,9 +68,9 @@ class ControllerAdoptante {
     const {
       nombre,
       apellidos,
-      fecha_nacimiento,
       tipo_doc,
       num_doc,
+      fecha_nacimiento,
       genero,
       localidad,
       correo,
@@ -75,26 +78,56 @@ class ControllerAdoptante {
       password,
     } = req.body;
 
-    const updatedAdoptante = await Adoptante.findByIdAndUpdate(
-      id,
-      {
-        nombre,
-        apellidos,
-        fecha_nacimiento,
-        tipo_doc,
-        num_doc,
-        genero,
-        localidad,
-        correo,
-        num_celular,
-        password,
-      },
-      { new: true }
-    );
-    return res.json({
-      message: "Adoptante actualizado correctamente",
-      updatedAdoptante,
-    });
+    const urlImg = req.file?.path;
+
+    const salt = await bcrypt.genSalt(10);
+
+    const newPassword = await bcrypt.hash(password, salt);
+
+    if (!urlImg) {
+      const updatedAdoptante = await Adoptante.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          apellidos,
+          fecha_nacimiento,
+          tipo_doc,
+          num_doc,
+          genero,
+          localidad,
+          correo,
+          num_celular,
+          newPassword,
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Adoptante actualizado correctamente",
+        updatedAdoptante,
+      });
+    } else {
+      const updatedAdoptante = await Adoptante.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          apellidos,
+          fecha_nacimiento,
+          tipo_doc,
+          num_doc,
+          genero,
+          localidad,
+          correo,
+          num_celular,
+          newPassword,
+          urlImg,
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Adoptante actualizado correctamente",
+        updatedAdoptante,
+      });
+    }
   }
 }
 

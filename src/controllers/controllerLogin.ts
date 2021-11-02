@@ -56,6 +56,7 @@ class ControllerLogin {
       return res.header("auth-token", token).json({
         message: "Usuario logueado satisfactoriamente",
         adoptante,
+        tipo_usuario,
         token,
         expiresIn: 3600,
         userId: adoptante._id,
@@ -88,6 +89,7 @@ class ControllerLogin {
       return res.header("auth-token", token).json({
         message: "Usuario logueado satisfactoriamente",
         fundacion,
+        tipo_usuario,
         token,
         expiresIn: 3600,
         userId: fundacion._id,

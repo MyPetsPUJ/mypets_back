@@ -146,10 +146,15 @@ class ControllerAnimal {
 
   public async deleteAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
+
     const animal = await Animal.findByIdAndRemove(id);
 
     if (animal) {
-      fs.unlink(path.resolve(animal.urlImg));
+      try {
+        fs.unlink(path.resolve(animal.urlImg));
+      } catch (error) {
+        console.log("No existe el archivo", error);
+      }
     }
     return res.json({
       message: "Animal eliminado satisfactoriamente",
@@ -174,28 +179,56 @@ class ControllerAnimal {
       esquema_vac,
     } = req.body;
 
-    const updatedAnimal = await Animal.findByIdAndUpdate(
-      id,
-      {
-        nombre,
-        edad,
-        raza,
-        sexo,
-        tamano,
-        color_ojos,
-        tipo_pelaje,
-        situacion,
-        desparasitado,
-        ultima_vac,
-        descripcion,
-        esquema_vac,
-      },
-      { new: true }
-    );
-    return res.json({
-      message: "Animal actualizado correctamente",
-      updatedAnimal,
-    });
+    const urlImg = req.file?.path;
+
+    if (!urlImg) {
+      const updatedAnimal = await Animal.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          edad,
+          raza,
+          sexo,
+          tamano,
+          color_ojos,
+          tipo_pelaje,
+          situacion,
+          desparasitado,
+          ultima_vac,
+          descripcion,
+          esquema_vac,
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Animal actualizado correctamente",
+        updatedAnimal,
+      });
+    } else {
+      const updatedAnimal = await Animal.findByIdAndUpdate(
+        id,
+        {
+          nombre,
+          edad,
+          raza,
+          sexo,
+          tamano,
+          color_ojos,
+          tipo_pelaje,
+          situacion,
+          desparasitado,
+          ultima_vac,
+          descripcion,
+          esquema_vac,
+          urlImg,
+        },
+        { new: true }
+      );
+      return res.json({
+        message: "Animal actualizado correctamente",
+        updatedAnimal,
+      });
+    }
   }
 }
 
