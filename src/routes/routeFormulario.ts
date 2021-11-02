@@ -13,11 +13,20 @@ router.post(
   controllerFormulario.crearFormulario
 );
 
+router.get(
+  `/${dashboardPath}/${solicitudPath}/${formularioPath}/:id`,
+  controllerFormulario.getFormulario
+);
 
 router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
-  controllerFormulario.getFamiliares
+  controllerFormulario.getFormularios
 );
+
+router.delete(
+  `/${dashboardPath}/${solicitudPath}/${formularioPath}:/id`,
+  controllerFormulario.deleteFormulario
+)
     
-  module.exports = router;
+module.exports = router;
 

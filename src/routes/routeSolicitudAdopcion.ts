@@ -18,6 +18,11 @@ router.post(
 );
 
 router.get(
+    `/${dashboardPath}/${adoptamePath}/${solicitudPath}:/id`,
+    controllerSolicitudAdopcion.getSolicitud
+);
+
+router.get(
     `/${dashboardPath}/${adoptamePath}/${solicitudPath}`,
     controllerSolicitudAdopcion.getSolicitudes
 );
@@ -39,7 +44,7 @@ router.delete(
 
 router.put(
     `/${dashboardFundacionPath}/${solicitudesPath}/:id`,
-    controllerSolicitudAdopcion.updateSolicitud
+    controllerSolicitudAdopcion.updateEstadoSolicitud
 )
 
 module.exports = router;

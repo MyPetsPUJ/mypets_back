@@ -2,7 +2,6 @@ import mongoose, { Schema, Document, Mongoose } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 interface ReferenciaF extends Document{
-
   nombresFamiliar: string;
   apellidosFamiliar: string;
   numFijoFamiliar: string;

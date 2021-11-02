@@ -6,13 +6,12 @@ import Fundacion from "../models/usuarios/modelFundacion";
 var mongoose = require('mongoose');
 
 class ControllerSolicitudAdopcion{
-  public async crearSolicitud( req: Request, res: Response, next: NextFunction){
-    console.log("Creando solicitud");
+  public async crearSolicitud( req: Request, res: Response, next: NextFunction)
+  {
     const solicitud = new SolicitudAdopcion({
       idAdoptante :req.body.adoptante._id,
       idFundacion : mongoose.Types.ObjectId(req.body.idFundacion),
       idAnimal : req.body.animal._id,
-      //idFormulario :  mongoose.Types.ObjectId(req.body.idFormulario), 
       idFormulario: null,
       fecha_solicitud: req.body.fecha,
       estado : req.body.estado
@@ -52,8 +51,8 @@ class ControllerSolicitudAdopcion{
     );
     
     console.log("Fundacion actualizada correctamente", fundacionUpdate);
-
   }
+  
   public async getSolicitudes( req: Request, res: Response): Promise<Response> {
     const solicitudes = await SolicitudAdopcion.find();
     return res.json(solicitudes);
@@ -88,7 +87,7 @@ class ControllerSolicitudAdopcion{
       return res.json(solicitudes);
     }
   }
-
+//?????????????????????????????????????
   public async getSolicitudesFundacion( req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     var solicitudes: any[] = [];
@@ -135,8 +134,6 @@ class ControllerSolicitudAdopcion{
 
         var animal = nSolicitud!.idAnimal;
         animales.push(animal);
-
-    //return res.json({ resultado, publis });
       } 
     }
 
@@ -144,33 +141,31 @@ class ControllerSolicitudAdopcion{
   }
 
   public async deleteSolicitud(req: Request, res: Response): Promise<Response>{
-    
     const id = req.params.id;
     const solicitud = await SolicitudAdopcion.findById(id);
-    const adoptante = await Adoptante.findById(solicitud?.idAdoptante);
-    const fundacion = await Fundacion.findById(solicitud?.idFundacion);
 
     //const animal = await Animal.findByIdAndRemove(id);
 
     if(solicitud != null)
     {
       const newAdoptante = await Adoptante.findByIdAndUpdate(
-      solicitud?.idAdoptante,
-      { $pull: { solicitudesAdoptante: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
-      { new: true, useFindAndModify: false }
-    );
-    console.log("1 paso hecho");
+        solicitud?.idAdoptante,
+        { $pull: { solicitudesAdoptante: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+        { new: true, useFindAndModify: false }
+      );
+
+      console.log("1 paso hecho");
     
-    const newFundacion = await Fundacion.findByIdAndUpdate(
-      solicitud?.idFundacion,
-      { $pull: { solicitudesFundacion: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
-      { new: true, useFindAndModify: false }
+      const newFundacion = await Fundacion.findByIdAndUpdate(
+        solicitud?.idFundacion,
+        { $pull: { solicitudesFundacion: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+        { new: true, useFindAndModify: false }
     );
     
-    const borrado = await SolicitudAdopcion.findByIdAndRemove(id);
+      const borrado = await SolicitudAdopcion.findByIdAndRemove(id);
    
     }
-     return res.json({
+    return res.json({
       message: "2 paso  eliminado satisfactoriamente",solicitud
     });
   }
@@ -182,12 +177,7 @@ class ControllerSolicitudAdopcion{
       id,
       { $pull: { solicitudesFundacion: {$in : [
       mongoose.Types.ObjectId( "6173be1bdcc8168f3c662c90"),
-      mongoose.Types.ObjectId( "6173be34dcc8168f3c662c96"),
-      mongoose.Types.ObjectId( "6173be60dcc8168f3c662c9c"),
-      mongoose.Types.ObjectId( "6173be6fdcc8168f3c662ca1"),
-      mongoose.Types.ObjectId( "61758c2af6c63e3a185194dd"),
-      mongoose.Types.ObjectId( "617802f12b697a1980c1a718")]  
-        
+      mongoose.Types.ObjectId( "6173be34dcc8168f3c662c96")]
        } } },
       { multi: true, new: true, useFindAndModify: false }
     );
@@ -195,7 +185,7 @@ class ControllerSolicitudAdopcion{
       message: " eliminado satisfactoriamente"
     });
   }*/
-  public async updateSolicitud(req: Request, res: Response): Promise<Response>{
+  public async updateEstadoSolicitud(req: Request, res: Response): Promise<Response>{
     const id = req.params.id;
     const nuevoEstado = req.body.estado;
     const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
@@ -208,7 +198,6 @@ class ControllerSolicitudAdopcion{
     });
   }
 };
-
 
 export const controllerSolicitudAdopcion= new ControllerSolicitudAdopcion()
 
