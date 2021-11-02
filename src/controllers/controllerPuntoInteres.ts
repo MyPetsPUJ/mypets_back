@@ -18,7 +18,6 @@ class ControllerPuntoDeInteres {
       console.log(token);
 
       const decoded: any = jwt.verify(token, config.SECRET_KEY);
-      
 
       console.log(req.body);
       const punto = await PuntoDeInteres.create(req.body);
@@ -86,6 +85,16 @@ class ControllerPuntoDeInteres {
       res.status(500).json({ error: "Error" });
     }
   }
+
+  public async getPunto(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id;
+
+    const punto = await PuntoDeInteres.findById(id);
+
+    return res.json({ message: "Punto encontrado: ", punto });
+  }
+
+  public async editarPunto(req: Request, res: Response, next: NextFunction) {}
 }
 
 export const controllerPuntoDeInteres = new ControllerPuntoDeInteres();
