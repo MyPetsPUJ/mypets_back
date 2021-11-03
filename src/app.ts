@@ -37,13 +37,8 @@ app.use(express.urlencoded({ extended: true }));
 //Routes
 // --------------------------------------------------------------------------
 
-// app.use("/api", require("./routes/routeGenero"));
-app.use("/api", require("./routes/routeTipoDoc"));
-// app.use("/api", require("./routes/routeDatosAnimal"));
-app.use("/api", require("./routes/routeSeccion"));
-app.use("/api", require("./routes/routeLocalidad"));
-app.use("/api", require("./routes/routeVacunaGato"));
-app.use("/api", require("./routes/routeVacunaPerro"));
+
+
 app.use("/api", require("./routes/routeAdoptante"));
 app.use("/api", require("./routes/routeFundacion"));
 app.use("/api", require("./routes/routeLogin"));
@@ -52,6 +47,13 @@ app.use("/api", require("./routes/routePublicacion"));
 app.use("/api", require("./routes/routePuntoInteres"));
 app.use("/api", require("./routes/routeFormulario"));
 app.use("/api", require("./routes/routeSolicitudAdopcion"));
+app.use("/api", require("./routes/routeDatosSignUp"));
+app.use("/api", require("./routes/routeDatosAnimal"));
+// app.use("/api", require("./routes/routeTipoDoc"));
+app.use("/api", require("./routes/routeSeccion"));
+// app.use("/api", require("./routes/routeLocalidad"));
+app.use("/api", require("./routes/routeVacunaGato"));
+app.use("/api", require("./routes/routeVacunaPerro"));
 
 //esta carpeta se utlizará para guardar los archivos públicos de la aplicación
 app.use("/uploads", express.static(path.resolve("uploads")));

@@ -8,8 +8,51 @@ const eleccionPath = "seleccion-animal";
 const gatoPath = "crear-animal-gato";
 const perroPath = "crear-animal-perro";
 const creacionPath = "crearDatosAnimal";
+const colorOjos = "colorOjos";
+const desparasitado = "desparasitado";
+const edad = "edad";
+const generoAnimal = "generoAnimal";
+const situacion = "situacion";
+const tamano = "tamano";
+const tipoAnimal = "tipoAnimal";
+const tipoPelaje = "tipoPelaje";
 
-router.post(`/${creacionPath}`, controllerDatosAnimal.crearDatosAnimal);
+router.post(
+  `/${creacionPath}/${colorOjos}`,
+  controllerDatosAnimal.crearColorOjos
+);
+
+router.post(
+  `/${creacionPath}/${desparasitado}`,
+  controllerDatosAnimal.crearDesparasitado
+);
+
+router.post(`/${creacionPath}/${edad}`, controllerDatosAnimal.crearEdad);
+
+router.post(
+  `/${creacionPath}/${generoAnimal}`,
+  controllerDatosAnimal.crearGeneroAnimal
+);
+
+router.post(
+  `/${creacionPath}/${situacion}`,
+  controllerDatosAnimal.crearSituacion
+);
+
+router.post(
+  `/${creacionPath}/${tamano}`,
+  controllerDatosAnimal.crearTamano
+);
+
+router.post(
+  `/${creacionPath}/${tipoAnimal}`,
+  controllerDatosAnimal.crearTipoAnimal
+);
+
+router.post(
+  `/${creacionPath}/${tipoPelaje}`,
+  controllerDatosAnimal.crearTipoPelaje
+);
 
 router.get(
   `/${dashboardPath}/${eleccionPath}/${gatoPath}`,
@@ -21,6 +64,5 @@ router.get(
   controllerDatosAnimal.getDatosAnimal
 );
 
-router.delete(`/eliminarDato/:id`, controllerDatosAnimal.deleteDatosAnimal);
 
 module.exports = router;
