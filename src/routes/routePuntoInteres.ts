@@ -6,6 +6,7 @@ const router = express.Router();
 const dashboardPath = "dashboard";
 const mapaPath = "mapa";
 const adoptantePath = "dashboard-adoptante";
+const editarPath = "editar-punto";
 
 router.post(
   `/${dashboardPath}/${mapaPath}/:id`,
@@ -19,6 +20,16 @@ router.get(
 router.get(
   `/${adoptantePath}/${mapaPath}`,
   controllerPuntoDeInteres.mostrarPuntos
+);
+
+router.get(
+  `/${dashboardPath}/${mapaPath}/${editarPath}/:id`,
+  controllerPuntoDeInteres.getPunto
+);
+
+router.delete(
+  `/${dashboardPath}/${mapaPath}/:id`,
+  controllerPuntoDeInteres.deletePunto
 );
 
 module.exports = router;

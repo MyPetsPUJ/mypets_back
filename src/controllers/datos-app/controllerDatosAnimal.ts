@@ -1,137 +1,133 @@
 import { Response, Request, NextFunction } from "express";
+import modelColorOjosAnimal from "../../models/datos-app/animal/modelColorOjosAnimal";
+import modelDesparasitadoAnimal from "../../models/datos-app/animal/modelDesparasitadoAnimal";
+import modelEdadAnimal from "../../models/datos-app/animal/modelEdadAnimal";
+import modelGeneroAnimal from "../../models/datos-app/animal/modelGeneroAnimal";
+import modelSituacionAnimal from "../../models/datos-app/animal/modelSituacionAnimal";
+import modelTamanoAnimal from "../../models/datos-app/animal/modelTamanoAnimal";
+import modelTipoAnimal from "../../models/datos-app/animal/modelTipoAnimal";
+import modelTipoPelajeAnimal from "../../models/datos-app/animal/modelTipoPelajeAnimal";
 
 import DatosAnimal from "../../models/datos-app/modelDatosAnimal";
 
 class ControllerDatosAnimal {
-  public crearDatosAnimal(res: Response) {
-    DatosAnimal.create({
-      edad: [
-        "Menos de 1 mes",
-        "1 a 3 Meses",
-        "3 a 5 Meses",
-        "5 a 7 Meses",
-        "7 a 9 Meses",
-        "9 a 12 Meses",
-        "1 año",
-        "2 años",
-        "3 años",
-        "4 años",
-        "5 años",
-        "6 años",
-        "7 años",
-        "8 años",
-        "9 años",
-        "10 años",
-        "11 años",
-        "12 años",
-        "13 años",
-        "14 años",
-        "15 años",
-        "Más de 15 años",
-      ],
+  public crearEdad(req: Request, res: Response) {
+    const edad = new modelEdadAnimal({
+      edad: req.body.edad,
     });
-
-    DatosAnimal.create({
-      tipo: ["Perro", "Gato"],
+    edad.save().then((respuesta) => {
+      return res.json({ message: "Edad creada de manera correcta", respuesta });
     });
+  }
 
-    DatosAnimal.create({
-      genero: "Macho",
+  public crearColorOjos(req: Request, res: Response) {
+    const colorOjos = new modelColorOjosAnimal({
+      color: req.body.color,
     });
-
-    DatosAnimal.create({
-      genero: "Hembra",
+    colorOjos.save().then((respuesta) => {
+      return res.json({
+        message: "Color de ojos creado de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      tamano: "Pequeño",
+  public crearDesparasitado(req: Request, res: Response) {
+    const desparasitado = new modelDesparasitadoAnimal({
+      estado: req.body.estado,
     });
-
-    DatosAnimal.create({
-      tipo: "Mediano",
+    desparasitado.save().then((respuesta) => {
+      return res.json({
+        message: "Estado desparasitado creado de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      tipo: "Grande",
+  public crearGeneroAnimal(req: Request, res: Response) {
+    const generoAnimal = new modelGeneroAnimal({
+      genero: req.body.genero,
     });
-
-    DatosAnimal.create({
-      color_ojos: "Azul",
+    generoAnimal.save().then((respuesta) => {
+      return res.json({
+        message: "Genero creado de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      color_ojos: "Verde",
+  public crearSituacion(req: Request, res: Response) {
+    const esterilizado = new modelSituacionAnimal({
+      situacion: req.body.situacion,
     });
-
-    DatosAnimal.create({
-      color_ojos: "Café",
+    esterilizado.save().then((respuesta) => {
+      return res.json({
+        message: "Situación de esterilización creada de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      color_ojos: "Dorado",
+  public crearTamano(req: Request, res: Response) {
+    const tamano = new modelTamanoAnimal({
+      tamano: req.body.tamano,
     });
-
-    DatosAnimal.create({
-      color_ojos: "Negro",
+    tamano.save().then((respuesta) => {
+      return res.json({
+        message: "Tamaño creado de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      color_ojos: "Heterocromía",
+  public crearTipoAnimal(req: Request, res: Response) {
+    const tipo = new modelTipoAnimal({
+      tipo: req.body.tipo,
     });
-
-    DatosAnimal.create({
-      tipo_pelaje: "Pelaje duro",
+    tipo.save().then((respuesta) => {
+      return res.json({
+        message: "Tipo animal creado de manera correcta",
+        respuesta,
+      });
     });
+  }
 
-    DatosAnimal.create({
-      tipo_pelaje: "Pelaje rizado",
+  public crearTipoPelaje(req: Request, res: Response) {
+    const tipoPelaje = new modelTipoPelajeAnimal({
+      tipoPelaje: req.body.tipoPelaje,
     });
-
-    DatosAnimal.create({
-      tipo_pelaje: "Pelaje corto",
+    tipoPelaje.save().then((respuesta) => {
+      return res.json({
+        message: "Tipo pelaje creado de manera correcta",
+        respuesta,
+      });
     });
-
-    DatosAnimal.create({
-      tipo_pelaje: "Pelaje largo",
-    });
-
-    DatosAnimal.create({
-      desparasitado: "Sí",
-    });
-
-    DatosAnimal.create({
-      desparasitado: "No",
-    });
-
-    DatosAnimal.create({
-      situacion: "Esterilizado",
-    });
-
-    DatosAnimal.create({
-      situacion: "Sin esterilizar",
-    });
-
-    return res.json({ message: "Datos de animal creados de manera correcta" });
   }
 
   public async getDatosAnimal(req: Request, res: Response): Promise<Response> {
-    const datosAnimal = await DatosAnimal.find();
-    console.log(datosAnimal);
-    return res.json(datosAnimal);
-  }
-
-  public async deleteDatosAnimal(
-    req: Request,
-    res: Response
-  ): Promise<Response> {
-    const id = req.params.id;
-    const dato = await DatosAnimal.findByIdAndRemove(id);
+    const colorOjos = await modelColorOjosAnimal.find();
+    const desparasitados = await modelDesparasitadoAnimal.find();
+    const edades = await modelEdadAnimal.find();
+    const generosAnimal = await modelGeneroAnimal.find();
+    const situaciones = await modelSituacionAnimal.find();
+    const tamanos = await modelTamanoAnimal.find();
+    const tiposAnimal = await modelTipoAnimal.find();
+    const tiposPelaje = await modelTipoPelajeAnimal.find();
 
     return res.json({
-      message: "Dato eliminado satisfactoriamente",
-      dato,
+      message: "Datos animal ",
+      colorOjos,
+      desparasitados,
+      edades,
+      generosAnimal,
+      situaciones,
+      tamanos,
+      tiposAnimal,
+      tiposPelaje,
     });
   }
+
+  
 }
 
 export const controllerDatosAnimal = new ControllerDatosAnimal();
