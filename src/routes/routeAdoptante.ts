@@ -10,6 +10,7 @@ const adoptantePath = "traer-adoptante";
 const perfilPath = "mi_cuenta";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-adoptante";
+const adopcionesPath = "obtener-adopciones"
 
 router.post(
   `/${entidadPath}/${usuarioPath}`,
@@ -29,6 +30,11 @@ router.get(
 router.get(
   `/${dashboardPath}/${perfilPath}/:id`,
   controllerAdoptante.getAdoptante
+);
+
+router.get(
+  `/${dashboardPath}/${adopcionesPath}/:id`,
+  controllerAdoptante.getAnimalesAdoptados
 );
 
 router.put(

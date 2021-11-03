@@ -144,6 +144,23 @@ class ControllerAnimal {
     return res.json(animal);
   }
 
+  public async getAnimalesAdoptados(req: Request, res: Response): Promise<Response> {
+    const animales = await Animal.find();
+    var animalesAdoptados: any[] =[];
+//*********************** */
+
+  for(var animal of animales)
+  {
+    if(animal.enAdopcion == false )
+    {
+      animalesAdoptados.push(animal);
+    }
+  }
+  return res.json(animalesAdoptados); 
+
+/*************************** */
+  }
+
   public async deleteAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
 

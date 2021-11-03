@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Adoptante from "../../models/usuarios/modelAdoptante";
+import Animal from "../../models/usuarios/modelAnimal";
 import bcrypt from "bcryptjs";
 import fs from "fs-extra";
 import path from "path";
@@ -48,6 +49,22 @@ class ControllerAdoptante {
     const id = req.params.id;
     const adoptante = await Adoptante.findById(id);
     return res.json(adoptante);
+  }
+
+  public async getAnimalesAdoptados(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const adoptante = await Adoptante.findById(id);
+    var animalesAdoptados: any[] =[];
+
+    for(var idAnimal of adoptante!.animalesAdoptados )
+    {
+      var nAnimal = await Animal.findById(idAnimal);
+      if( nAnimal!.enAdopcion == false )
+      {
+        animalesAdoptados.push(nAnimal);
+      }
+    }
+    return res.json(animalesAdoptados); 
   }
 
   public async deleteAdoptante(req: Request, res: Response): Promise<Response> {

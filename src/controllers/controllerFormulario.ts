@@ -56,11 +56,11 @@ class ControllerFormulario{
       parentezcoFamiliar: req.body.referenciaFamiliar.parentezco
     });
     const referenciaConocido= new ReferenciaC({
-      nombresFamiliar: req.body.referenciaFamiliar.nombres,
-      apellidosFamiliar: req.body.referenciaFamiliar.apellidos,
-      numFijoFamiliar: req.body.referenciaFamiliar.numFijo,
-      numCelularFamiliar: req.body.referenciaFamiliar.numCelular,
-      tiempoDeConocimiento: req.body.referenciaFamiliar.tiempoDeConocimiento
+      nombresFamiliar: req.body.referenciaPersonal.nombres,
+      apellidosFamiliar: req.body.referenciaPersonal.apellidos,
+      numFijoFamiliar: req.body.referenciaPersonal.numFijo,
+      numCelularFamiliar: req.body.referenciaPersonal.numCelular,
+      tiempoDeConocimiento: req.body.referenciaPersonal.tiempoDeConocimiento
     });
     const formulario = new Formulario({
       informacionFamiliar : informFamiliar._id,
@@ -138,6 +138,19 @@ class ControllerFormulario{
     const formulario = await Formulario.findById(id);
     return res.json(formulario);
   }
+
+  public async getDatosFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
+    const id = req.params.id;
+    const solicitud = await SolicitudAdopcion.findById(id);
+    
+    const formularioFami = await Formulario.findById(solicitud?.idFormulario).populate("informacionFamiliar");
+    const formularioRela = await Formulario.findById(solicitud?.idFormulario).populate("informacionRelacionada");
+    const formularioReF = await Formulario.findById(solicitud?.idFormulario).populate("referenciaFamiliar");
+    const formularioReC = await Formulario.findById(solicitud?.idFormulario).populate("referenciaConocido");
+
+    return res.json({formularioFami,formularioRela,formularioReF,formularioReC});
+  }
+
 
   public async deleteFormulario( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const id = req.params.id;

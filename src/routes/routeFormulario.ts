@@ -7,6 +7,9 @@ const router = express.Router();
 const dashboardPath = "dashboard-adoptante";
 const solicitudPath = "solicitudes-adopcion-adoptante";
 const formularioPath = "formulario-adopcion";
+const formularioSolicitudPath = "formulario-solicitud";
+
+const prueba = "prueba";
 
 router.post(
   `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
@@ -21,6 +24,17 @@ router.get(
 router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
   controllerFormulario.getFormularios
+);
+
+router.get(
+  `/${dashboardPath}/${solicitudPath}/${prueba}`,
+  controllerFormulario.getReferenciaFamilia
+);
+
+
+router.get(
+  `/${dashboardPath}/${solicitudPath}/${formularioSolicitudPath}/:id`,
+  controllerFormulario.getDatosFormulario
 );
 
 router.delete(

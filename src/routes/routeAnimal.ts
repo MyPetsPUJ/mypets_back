@@ -14,6 +14,7 @@ const getAnimalesPath = "mis-animales";
 const gatoPath = "crear-animal-gato";
 const perroPath = "crear-animal-perro";
 const editarPath = "editar-animal";
+const adopcionPath ="animal-adoptado";
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,
@@ -46,11 +47,22 @@ router.get(
 
 router.get(`/${dashboardPath}/${editarPath}/:id`, controllerAnimal.getAnimal);
 
+router.get(
+  `/${dashboardPath}/${adopcionPath}`,
+  controllerAnimal.getAnimalesAdoptados
+);
+
 router.put(
   `/${dashboardPath}/${editarPath}/:id`,
   [multer.single("image"), tokenValidation], //añadir ruta editar animales
   controllerAnimal.updateAnimal
 );
+
+/*router.put(
+  `/${dashboardPath}/${editarPath}/:id`,
+  [multer.single("image"), tokenValidation], //añadir ruta editar animales
+  controllerAnimal.updateAnimal
+);*/
 
 router.delete(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
