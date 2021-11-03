@@ -27,4 +27,9 @@ router.get(
   controllerPuntoDeInteres.getPunto
 );
 
+router.delete(
+  `/${dashboardPath}/${mapaPath}/:id`,
+  controllerPuntoDeInteres.deletePunto
+);
+
 module.exports = router;

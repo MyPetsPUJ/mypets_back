@@ -95,6 +95,17 @@ class ControllerPuntoDeInteres {
   }
 
   public async editarPunto(req: Request, res: Response, next: NextFunction) {}
+
+  public async deletePunto(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id;
+
+    const punto = await PuntoDeInteres.findByIdAndRemove(id);
+
+    return res.json({
+      message: "Punto de interés eliminado correctamente",
+      punto,
+    });
+  }
 }
 
 export const controllerPuntoDeInteres = new ControllerPuntoDeInteres();
