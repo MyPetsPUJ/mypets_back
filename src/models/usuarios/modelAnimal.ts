@@ -17,6 +17,7 @@ interface Animal extends Document {
   esquema_vac: string;
   tipo_animal: string;
   ownerFundacion: mongoose.Types.ObjectId;
+  ownerAdoptante: mongoose.Types.ObjectId;
   enAdopcion: boolean;
   adoptado: boolean;
 }
@@ -37,6 +38,7 @@ const schema_animal: Schema = new Schema({
   esquema_vac: { type: String, required: true },
   tipo_animal: { type: String, required: true },
   ownerFundacion: { type: mongoose.Types.ObjectId, ref: "Fundacion" },
+  ownerAdoptante: { type: mongoose.Types.ObjectId, ref: "Adoptante" },
   enAdopcion: { type: Boolean, required: true },
   adoptado: { type: Boolean, required: true },
 });
