@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import Animal from "../../models/usuarios/modelAnimal";
 import Fundacion from "../../models/usuarios/modelFundacion";
 import config from "../../lib/helpers";
+var mongoose = require('mongoose');
 
 import fs from "fs-extra";
 import path from "path";
@@ -177,6 +178,21 @@ class ControllerAnimal {
       message: "Animal eliminado satisfactoriamente",
       animal,
     });
+  }
+
+  public async updateAdopcionAnimal(req: Request, res: Response): Promise<Response>{
+    const id = req.params.id;
+    const idDueño = req.body.idAdoptante;
+    const animal = await Animal.findByIdAndUpdate(
+      id,
+      {$set :{ adoptado : true, ownerAdoptante: mongoose.Types.ObjectId(idDueño)} },
+      { new: true,useFindAndModify: false}
+    );
+    
+    return res.json({
+      message: " actualizado satisfactoriamente"
+    });
+
   }
 
   public async updateAnimal(req: Request, res: Response): Promise<Response> {
