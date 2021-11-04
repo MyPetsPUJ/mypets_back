@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import Animal from "../../models/usuarios/modelAnimal";
+import Adoptante from "../../models/usuarios/modelAdoptante";
 import Fundacion from "../../models/usuarios/modelFundacion";
 import config from "../../lib/helpers";
 var mongoose = require('mongoose');
@@ -8,6 +9,7 @@ var mongoose = require('mongoose');
 import fs from "fs-extra";
 import path from "path";
 import jwt from "jsonwebtoken";
+import modelAdoptante from "../../models/usuarios/modelAdoptante";
 
 class ControllerAnimal {
   public async crearAnimalPerro(
@@ -182,18 +184,38 @@ class ControllerAnimal {
 
   public async updateAdopcionAnimal(req: Request, res: Response): Promise<Response>{
     const id = req.params.id;
-    const idDueño = req.body.idAdoptante;
+    const idDueno = req.body.idDueno;
     const animal = await Animal.findByIdAndUpdate(
       id,
-      {$set :{ adoptado : true, ownerAdoptante: mongoose.Types.ObjectId(idDueño)} },
+      {$set :{ adoptado : true, ownerAdoptante: mongoose.Types.ObjectId(idDueno)} },
       { new: true,useFindAndModify: false}
     );
+    console.log(await Adoptante.findById(idDueno))
+
+    const adoptante = await Adoptante.findByIdAndUpdate(
+      idDueno,
+      { $push :{ animalesAdoptados: id } },
+      { new: true, useFindAndModify: false }
+    )
     
     return res.json({
-      message: " actualizado satisfactoriamente"
+      message: " actualizado satisfactoriamente",adoptante
     });
 
   }
+
+  public async updateEstadoAnimal(req: Request, res: Response): Promise<Response>{
+    const id = req.params.id;
+    const animal = await Animal.findByIdAndUpdate(
+      id,
+      {$set :{ enAdopcion : true } },
+      { new: true,useFindAndModify: false}
+    );
+    return res.json({
+      message: " actualizado satisfactoriamente",animal
+    });
+  }
+
 
   public async updateAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
