@@ -31,7 +31,6 @@ router.get(
   controllerFormulario.getReferenciaFamilia
 );
 
-
 router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioSolicitudPath}/:id`,
   controllerFormulario.getDatosFormulario

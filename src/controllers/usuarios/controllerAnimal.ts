@@ -206,9 +206,10 @@ class ControllerAnimal {
 
   public async updateEstadoAnimal(req: Request, res: Response): Promise<Response>{
     const id = req.params.id;
+    const estado = req.body.nuevoEstado;
     const animal = await Animal.findByIdAndUpdate(
       id,
-      {$set :{ enAdopcion : true } },
+      {$set :{ enAdopcion : estado } },
       { new: true,useFindAndModify: false}
     );
     return res.json({
