@@ -4,6 +4,7 @@ import Fundacion from "../models/usuarios/modelFundacion";
 
 import jwt from "jsonwebtoken";
 import config from "../lib/helpers";
+import geocoder from "../lib/geocoder";
 
 class ControllerPuntoDeInteres {
   public async crearPuntoDeInteres(
@@ -91,10 +92,39 @@ class ControllerPuntoDeInteres {
 
     const punto = await PuntoDeInteres.findById(id);
 
-    return res.json({ message: "Punto encontrado: ", punto });
+    return res.json(punto);
   }
 
-  public async editarPunto(req: Request, res: Response, next: NextFunction) {}
+  public async editarPunto(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id;
+
+    const { direccion, titulo, descripcion } = req.body;
+
+    const loc = await geocoder.geocode(direccion);
+
+    const ubicacion = {
+      type: "Point",
+      coordinates: [loc[0].longitude, loc[0].latitude],
+      direccionFormateada: loc[0].formattedAddress,
+    };
+
+    const puntoUpdated = await PuntoDeInteres.findByIdAndUpdate(
+      id,
+      {
+        titulo,
+        direccion,
+        descripcion,
+        ubicacion,
+      },
+      { new: true }
+    );
+
+    console.log("Punto act", puntoUpdated);
+    return res.json({
+      message: "Punto actualizado",
+      puntoUpdated,
+    });
+  }
 
   public async deletePunto(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;

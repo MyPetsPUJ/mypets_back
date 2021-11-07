@@ -32,4 +32,9 @@ router.delete(
   controllerPuntoDeInteres.deletePunto
 );
 
+router.put(
+  `/${dashboardPath}/${mapaPath}/${editarPath}/:id`,
+  controllerPuntoDeInteres.editarPunto
+);
+
 module.exports = router;
