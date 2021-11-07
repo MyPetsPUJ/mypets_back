@@ -152,10 +152,8 @@ class ControllerAnimal {
     var animalesAdoptados: any[] =[];
 //*********************** */
 
-  for(var animal of animales)
-  {
-    if(animal.enAdopcion == false )
-    {
+  for(var animal of animales){
+    if(animal.enAdopcion == true ){
       animalesAdoptados.push(animal);
     }
   }

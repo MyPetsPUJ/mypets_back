@@ -25,7 +25,7 @@ router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioPath}`,
   controllerFormulario.getFormularios
 );
-
+//pruebas
 router.get(
   `/${dashboardPath}/${solicitudPath}/${prueba}`,
   controllerFormulario.getReferenciaFamilia
@@ -33,7 +33,7 @@ router.get(
 
 router.get(
   `/${dashboardPath}/${solicitudPath}/${formularioSolicitudPath}/:id`,
-  controllerFormulario.getDatosFormulario
+  controllerFormulario.populateDatosFormulario
 );
 
 router.delete(

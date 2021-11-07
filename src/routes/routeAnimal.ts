@@ -16,6 +16,7 @@ const perroPath = "crear-animal-perro";
 const editarPath = "editar-animal";
 const editarEstadoPath = "editar-estado-animal"
 const editarEstadoIIPath = "editar-enAdopcion-animal"
+const solicitudPath = "solicitud";
 const adopcionPath ="animal-adoptado";
 
 router.post(
@@ -40,17 +41,21 @@ router.get(
 //   controllerAnimal.getAnimales
 // );
 
-router.get(`/${adoptantePath}/${adoptamePath}`, controllerAnimal.getAnimales);
+router.get(
+  `/${dashboardPath}/${adoptamePath}`, 
+  controllerAnimal.getAnimales
+);
 
 router.get(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
   controllerAnimal.getAnimal
 );
 
-router.get(`/${dashboardPath}/${editarPath}/:id`, controllerAnimal.getAnimal);
+router.get(
+  `/${dashboardPath}/${editarPath}/:id`, controllerAnimal.getAnimal);
 
 router.get(
-  `/${dashboardPath}/${adopcionPath}`,
+  `/${dashboardPath}/${solicitudPath}/${adopcionPath}`,
   controllerAnimal.getAnimalesAdoptados
 );
 
@@ -60,14 +65,13 @@ router.put(
   controllerAnimal.updateAnimal
 );
 
-
 router.put(
-  `/${dashboardPath}/${editarEstadoPath}/:id`,
+  `/${dashboardPath}/${solicitudPath}/${editarEstadoPath}/:id`,
   controllerAnimal.updateAdopcionAnimal
 );
 
 router.put(
-  `/${dashboardPath}/${editarEstadoIIPath}/:id`,
+  `/${dashboardPath}/${solicitudPath}/${editarEstadoIIPath}/:id`,
   controllerAnimal.updateEstadoAnimal
 );
 

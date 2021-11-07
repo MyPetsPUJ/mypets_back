@@ -4,46 +4,53 @@ import { controllerSolicitudAdopcion } from "../controllers/controllerSolicitudA
 const router = express.Router();
 
 const dashboardPath = "dashboard-adoptante";
-const dashboardFundacionPath ="dashboard"
+//const dashboardFundacionPath ="dashboard"
 const adoptamePath = "adoptame";
 const solicitudPath = "solicitud-adopcion";
 const solicitudAdoptantePath = "solicitud-adoptante";
-const listaSolicitudesPah = "solicitud-fundacion";
+const solicitudFundacionPath = "solicitud-fundacion";
+const listaSolicitudesPath = "lista-solicitudes";
 const solicitudAdoptantePreviewPath = "eliminar-solicitud-adoptante";
 const solicitudesPath = "solicitudes"
 
 router.post(
-    `/${dashboardPath}/${adoptamePath}/${solicitudPath}`,
+    `/${dashboardPath}/${solicitudPath}`,
     controllerSolicitudAdopcion.crearSolicitud
 );
 
 router.get(
-    `/${dashboardPath}/${adoptamePath}/${solicitudPath}:/id`,
+    `/${dashboardPath}/${solicitudPath}:/id`,
     controllerSolicitudAdopcion.getSolicitud
 );
 
 router.get(
-    `/${dashboardPath}/${adoptamePath}/${solicitudPath}`,
+    `/${dashboardPath}/${solicitudPath}`,
     controllerSolicitudAdopcion.getSolicitudes
 );
 
 router.get(
-    `/${dashboardPath}/${adoptamePath}/${solicitudAdoptantePath}/:id`,
+    `/${dashboardPath}/${solicitudAdoptantePath}/:id`,
     controllerSolicitudAdopcion.getSolicitudesAdoptante
 );
 
 router.get(
-    `/${dashboardPath}/${adoptamePath}/${listaSolicitudesPah}/:id`,
+    `/${dashboardPath}/${solicitudFundacionPath}/:id`,
+    controllerSolicitudAdopcion.getSolicitudesFundacion
+);
+
+router.get(
+    `/${dashboardPath}/${listaSolicitudesPath}/:id`,
     controllerSolicitudAdopcion.populateSolicitudesFundacion
 );
 
 router.delete(
-    `/${dashboardPath}/${adoptamePath}/${solicitudPath}/${solicitudAdoptantePreviewPath}/:id`,
+    //`/${dashboardPath}/${adoptamePath}/${solicitudPath}/${solicitudAdoptantePreviewPath}/:id`,
+    `/${dashboardPath}/${solicitudPath}:/id`,
     controllerSolicitudAdopcion.deleteSolicitud
 );
 
 router.put(
-    `/${dashboardFundacionPath}/${solicitudesPath}/:id`,
+    `/${dashboardPath}/${solicitudPath}/:id`,
     controllerSolicitudAdopcion.updateEstadoSolicitud
 )
 

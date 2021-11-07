@@ -56,13 +56,9 @@ class ControllerAdoptante {
     const adoptante = await Adoptante.findById(id);
     var animalesAdoptados: any[] =[];
 
-    for(var idAnimal of adoptante!.animalesAdoptados )
-    {
+    for(var idAnimal of adoptante!.animalesAdoptados ){
       var nAnimal = await Animal.findById(idAnimal);
-      if( nAnimal!.enAdopcion == false )
-      {
-        animalesAdoptados.push(nAnimal);
-      }
+      animalesAdoptados.push(nAnimal);
     }
     return res.json(animalesAdoptados); 
   }

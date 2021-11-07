@@ -68,46 +68,63 @@ class ControllerFormulario{
       referenciaFamiliar: referenciaFamiliar._id,
       referenciaConocido: referenciaConocido._id
     });
-      console.log("formulario")
-      console.log(formulario);
-      console.log("Informacion Familiar");
-      console.log(informFamiliar);
-      console.log("Informacion Relacionada");
-      console.log(informRelacionada);
-      console.log("Referencia1");
-      console.log(referenciaFamiliar);
-      console.log("Referencia2");
-      console.log(referenciaConocido);
+    console.log("formulario",formulario); console.log("Informacion Familiar",informFamiliar); console.log("Informacion Relacionada",informRelacionada);
+    console.log("Referencia1",referenciaFamiliar); console.log("Referencia2",referenciaConocido);
 
-      informFamiliar.save();
+    informFamiliar.save();
+    informRelacionada.save();
+    referenciaFamiliar.save();
+    referenciaConocido.save();
 
-      informRelacionada.save();
+    const idSolicitud = req.body.idSolicitud;
+    const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
+      idSolicitud,
+      { $set :{ idFormulario: formulario._id } },
+      { new: true, useFindAndModify: false }
+    );
 
-      referenciaFamiliar.save();
-
-      referenciaConocido.save();
-      //--------------------------------------------------
-      const idSolicitud = req.body.idSolicitud;
-      const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
-        idSolicitud,
-        { $set :{ idFormulario: formulario._id } },
-        { new: true, useFindAndModify: false }
-      );
-      //--------------------------------------------------
-      formulario.save()
-        .then((result: any) => {
-          res.status(200).json({
-            message: "Formulario Creado",
-            result: result,
-          });
-        })
-        .catch((err: any) => {
-          res.status(500).json({
-            error: err,
-          });
+    formulario.save()
+      .then((result: any) => {
+        res.status(200).json({
+          message: "Formulario Creado",
+          result: result,
         });
+      })
+      .catch((err: any) => {
+        res.status(500).json({
+          error: err,
+        });
+      });
     }
-  
+  /*
+  Param = id: idFormulario
+  */
+  public async getFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
+    const id = req.params.id;
+    const formulario = await Formulario.findById(id);
+    return res.json(formulario);
+  }
+  /*
+  Param = id idFormulario
+  Return [InformacionFamiliar, InformacionRelacionada, ReferenciaFamiliar, ReferenciaConocido]
+  */
+  public async populateDatosFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
+    const id = req.params.id;
+    const solicitud = await SolicitudAdopcion.findById(id);
+    
+    const formularioFami = await Formulario.findById(solicitud?.idFormulario).populate("informacionFamiliar");
+    const formularioRela = await Formulario.findById(solicitud?.idFormulario).populate("informacionRelacionada");
+    const formularioReF = await Formulario.findById(solicitud?.idFormulario).populate("referenciaFamiliar");
+    const formularioReC = await Formulario.findById(solicitud?.idFormulario).populate("referenciaConocido");
+
+    return res.json({formularioFami,formularioRela,formularioReF,formularioReC});
+  }
+
+  public async getFormularios( req: Request, res: Response, next: NextFunction): Promise<Response> {
+    const formularios = await Formulario.find();
+    return res.json(formularios);
+  }
+
   public async getFamiliares( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const informFamiliar = await InfoFamiliar.find();
     return res.json(informFamiliar);
@@ -127,40 +144,22 @@ class ControllerFormulario{
     const referenciaConoc = await ReferenciaC.find();
     return res.json(referenciaConoc);
   }
-
-  public async getFormularios( req: Request, res: Response, next: NextFunction): Promise<Response> {
-    const formularios = await Formulario.find();
-    return res.json(formularios);
-  }
-
-  public async getFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
-    const id = req.params.id;
-    const formulario = await Formulario.findById(id);
-    return res.json(formulario);
-  }
-
-  public async getDatosFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
-    const id = req.params.id;
-    const solicitud = await SolicitudAdopcion.findById(id);
-    
-    const formularioFami = await Formulario.findById(solicitud?.idFormulario).populate("informacionFamiliar");
-    const formularioRela = await Formulario.findById(solicitud?.idFormulario).populate("informacionRelacionada");
-    const formularioReF = await Formulario.findById(solicitud?.idFormulario).populate("referenciaFamiliar");
-    const formularioReC = await Formulario.findById(solicitud?.idFormulario).populate("referenciaConocido");
-
-    return res.json({formularioFami,formularioRela,formularioReF,formularioReC});
-  }
-
-
+  /*
+  SIN FINALIZAR- FALTA DESASOCIARSE DE LA SOLICITUD
+  */
   public async deleteFormulario( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const id = req.params.id;
-    await Formulario.findByIdAndRemove(id);
-     
+    const form = await Formulario.findByIdAndRemove(id);
+    await InfoFamiliar.findByIdAndRemove(form!.informacionFamiliar);
+    await InfoRelacionada.findByIdAndRemove(form!.informacionRelacionada);
+    await ReferenciaF.findByIdAndRemove(form!.referenciaFamiliar);
+    await ReferenciaC.findByIdAndRemove(form!.referenciaConocido);
+
     return res.json({
-      message: "Eleminido exitosamente"
+      message: "Eliminido exitosamente"
     });
   }
 
-  }
+}
   
-  export const controllerFormulario = new ControllerFormulario();
+export const controllerFormulario = new ControllerFormulario();
