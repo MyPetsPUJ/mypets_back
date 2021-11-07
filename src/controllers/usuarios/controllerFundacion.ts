@@ -70,26 +70,7 @@ class ControllerFundacion {
 
   public async updateFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
-    // console.log(id);
-
-    // const updateFundacion = {
-    //   nombreFund: req.body.nombreFund,
-    //   nombreEncar: req.body.nombreEncar,
-    //   apellidosEncar: req.body.apellidosEncar,
-    //   tipo_doc: req.body.tipo_doc,
-    //   num_doc: req.body.num_doc,
-    //   fecha_creacion: req.body.fecha_creacion,
-    //   mision: req.body.mision,
-    //   vision: req.body.vision,
-    //   correo: req.body.correo,
-    //   num_celular: req.body.num_celular,
-    //   password: req.body.password,
-    //   direccion: req.body.direccion,
-    //   urlImg: req.file?.path,
-    // };
-
-    // console.log(updateFundacion);
-
+    
     const {
       nombreFund,
       nombreEncar,
