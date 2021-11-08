@@ -44,6 +44,11 @@ router.get(
   controllerPublicacion.getPublicacion
 );
 
+router.get(
+  `/${dashboardAdoptantePath}/${consejosPath}/:id`,
+  controllerPublicacion.getPublicacion
+);
+
 router.put(
   `/${dashboardPath}/${publicacionesPath}/${editarPath}/:id`,
   [multer.single("image"), tokenValidation],
