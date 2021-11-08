@@ -37,7 +37,7 @@ router.get(
 );
 
 router.delete(
-  `/${dashboardPath}/${solicitudPath}/${formularioPath}:/id`,
+  `/${dashboardPath}/${solicitudPath}/${formularioPath}/:id`,
   controllerFormulario.deleteFormulario
 )
     

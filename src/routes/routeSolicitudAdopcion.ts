@@ -11,7 +11,8 @@ const solicitudAdoptantePath = "solicitud-adoptante";
 const solicitudFundacionPath = "solicitud-fundacion";
 const listaSolicitudesPath = "lista-solicitudes";
 const solicitudAdoptantePreviewPath = "eliminar-solicitud-adoptante";
-const solicitudesPath = "solicitudes"
+const solicitudesPath = "solicitudes";
+const eliminarPath = "eliminar-solicitud"
 
 router.post(
     `/${dashboardPath}/${solicitudPath}`,
@@ -19,7 +20,7 @@ router.post(
 );
 
 router.get(
-    `/${dashboardPath}/${solicitudPath}:/id`,
+    `/${dashboardPath}/${solicitudPath}/:id`,
     controllerSolicitudAdopcion.getSolicitud
 );
 
@@ -45,7 +46,7 @@ router.get(
 
 router.delete(
     //`/${dashboardPath}/${adoptamePath}/${solicitudPath}/${solicitudAdoptantePreviewPath}/:id`,
-    `/${dashboardPath}/${solicitudPath}:/id`,
+    `/${dashboardPath}/${solicitudPath}/${eliminarPath}/:id`,
     controllerSolicitudAdopcion.deleteSolicitud
 );
 
