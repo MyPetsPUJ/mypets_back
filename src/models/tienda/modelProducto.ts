@@ -5,7 +5,6 @@ interface Producto extends Document {
   nombre: string;
   tipoAnimal: string;
   urlImg: string;
-  descripcion: string;
   seccion: string;
   precio: number;
 }
@@ -14,7 +13,6 @@ const schema_producto: Schema = new Schema({
   nombre: { type: String, require: true },
   tipoAnimal: { type: String, require: true },
   urlImg: { type: String, require: true },
-  descripcion: { type: String, require: true },
   seccion: { type: String, require: true },
   precio: { type: Number, require: true },
 });

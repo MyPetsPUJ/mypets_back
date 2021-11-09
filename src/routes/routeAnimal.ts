@@ -14,10 +14,10 @@ const getAnimalesPath = "mis-animales";
 const gatoPath = "crear-animal-gato";
 const perroPath = "crear-animal-perro";
 const editarPath = "editar-animal";
-const editarEstadoPath = "editar-estado-animal"
-const editarEstadoIIPath = "editar-enAdopcion-animal"
+const editarEstadoPath = "editar-estado-animal";
+const editarEstadoIIPath = "editar-enAdopcion-animal";
 const solicitudPath = "solicitud";
-const adopcionPath ="animal-adoptado";
+const adopcionPath = "animal-adoptado";
 
 router.post(
   `/${dashboardPath}/${eleccionAnimalPath}/${gatoPath}`,
@@ -33,6 +33,7 @@ router.post(
 
 router.get(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
+  tokenValidation,
   controllerAnimal.populateAnimales
 );
 
@@ -41,18 +42,14 @@ router.get(
 //   controllerAnimal.getAnimales
 // );
 
-router.get(
-  `/${dashboardPath}/${adoptamePath}`, 
-  controllerAnimal.getAnimales
-);
+router.get(`/${dashboardPath}/${adoptamePath}`, controllerAnimal.getAnimales);
 
 router.get(
   `/${dashboardPath}/${getAnimalesPath}/:id`,
   controllerAnimal.getAnimal
 );
 
-router.get(
-  `/${dashboardPath}/${editarPath}/:id`, controllerAnimal.getAnimal);
+router.get(`/${dashboardPath}/${editarPath}/:id`, controllerAnimal.getAnimal);
 
 router.get(
   `/${dashboardPath}/${solicitudPath}/${adopcionPath}`,
@@ -74,7 +71,6 @@ router.put(
   `/${dashboardPath}/${solicitudPath}/${editarEstadoIIPath}/:id`,
   controllerAnimal.updateEstadoAnimal
 );
-
 
 /*router.put(
   `/${dashboardPath}/${editarPath}/:id`,

@@ -11,7 +11,6 @@ class ControllerProducto {
       nombre: req.body.nombre,
       tipoAnimal: req.body.tipoAnimal,
       urlImg: req.file?.path,
-      descripcion: req.body.descripcion,
       secion: req.body.seccion,
       precio: req.body.precio,
     });
@@ -46,7 +45,7 @@ class ControllerProducto {
   public async updateProducto(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
 
-    const { nombre, tipoAnimal, descripcion, seccion, precio } = req.body;
+    const { nombre, tipoAnimal, seccion, precio } = req.body;
 
     const urlImg = req.file?.path;
 
@@ -56,7 +55,6 @@ class ControllerProducto {
         {
           nombre,
           tipoAnimal,
-          descripcion,
           seccion,
           precio,
         },
@@ -73,7 +71,6 @@ class ControllerProducto {
         {
           nombre,
           tipoAnimal,
-          descripcion,
           seccion,
           precio,
           urlImg,
