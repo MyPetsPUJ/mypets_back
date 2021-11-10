@@ -2,11 +2,6 @@ import mongoose, { Schema, Document } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import bcrypt from "bcryptjs";
 
-export enum UserType {
-  ADOPTANTE = "Adoptante",
-  FUNDACION = "Fundacion",
-}
-
 interface User extends Document {
   nombre: string;
   apellidos: string;

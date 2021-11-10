@@ -3,14 +3,15 @@ import { Response, Request, NextFunction } from "express";
 import Admin from "../../models/usuarios/modelAdmin";
 
 class ControllerAdmin {
-  public crearAdmin(req: Request, res: Response, next: NextFunction) {
+  public async crearAdmin(req: Request, res: Response, next: NextFunction) {
     const admin = new Admin({
       nombres: req.body.nombre,
       apellidos: req.body.apellidos,
       correo: req.body.correo,
       password: req.body.password,
+      tipo_usuario: "Administrador",
     });
-
+    admin.password = await admin.encryptPassword(admin.password);
     admin
       .save()
       .then((result: any) => {
@@ -25,8 +26,6 @@ class ControllerAdmin {
         });
       });
   }
-
-  
 }
 
 export const controllerAdmin = new ControllerAdmin();

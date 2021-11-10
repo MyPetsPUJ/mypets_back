@@ -15,6 +15,7 @@ const mostrarItem = "item";
 const mostrarMisItems = "traer-todos-mis-items";
 const mostrarAllItems = "traer-todos-los-items";
 const editarItem = "editar-item";
+const eliminarItem = "eliminar-item";
 
 router.post(
   `/${dashAdmin}/${crearItem}`,
@@ -24,7 +25,34 @@ router.post(
 
 router.get(`/${dashAdmin}/${mostrarMisItems}`, controllerProducto.getProductos);
 
+router.put(
+  `/${dashAdmin}/${mostrarItem}/${editarItem}/:id`,
+  controllerProducto.updateProducto
+);
+
+router.delete(
+    `/${dashAdmin}/${mostrarItem}/${eliminarItem}/:id`,
+    controllerProducto.deleteProducto
+  );
+
+
+
 router.get(
   `/${dashAdoptante}/${tienda}/${mostrarAllItems}`,
   controllerProducto.getProductos
 );
+
+router.get(
+  `/${dashAdoptante}/${tienda}/${mostrarItem}(:id)`,
+  controllerProducto.getProducto
+);
+
+router.get(
+    `/${dashFundacion}/${tienda}/${mostrarAllItems}`,
+    controllerProducto.getProductos
+  );
+  
+  router.get(
+    `/${dashFundacion}/${tienda}/${mostrarItem}(:id)`,
+    controllerProducto.getProducto
+  );

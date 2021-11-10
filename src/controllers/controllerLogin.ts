@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction, json } from "express";
 
-import Adoptante, { UserType } from "../models/usuarios/modelAdoptante";
+import Adoptante from "../models/usuarios/modelAdoptante";
 import Fundacion from "../models/usuarios/modelFundacion";
-import config from "../lib/helpers";
+import Admin from "../models/usuarios/modelAdmin";
+import config, { UserType } from "../lib/helpers";
 import cookieParser from "cookie-parser";
 
 const jwt = require("jsonwebtoken");
@@ -93,6 +94,39 @@ class ControllerLogin {
         token,
         expiresIn: 3600,
         userId: fundacion._id,
+      });
+    } else if (tipo_usuario === UserType.ADMIN) {
+      console.log("Entrando a admin");
+      const admin = await Admin.findOne({ correo: req.body.correo });
+      if (!admin) {
+        return res.status(401).json({
+          message: "Correo inválido",
+        });
+      }
+      const correctPassword: boolean = await admin.validatePassword(
+        req.body.password
+      );
+      if (!correctPassword) {
+        return res.status(401).json({
+          message: "Contraseña inválida",
+        });
+      }
+      if (admin.tipo_usuario != req.body.tipo_usuario) {
+        return res.status(401).json({
+          message: "El tipo de usuario no coincide",
+        });
+      }
+      const token = jwt.sign({ _id: admin._id }, config.SECRET_KEY, {
+        expiresIn: 60 * 60,
+      });
+
+      return res.header("auth-token", token).json({
+        message: "Usuario logueado satisfactoriamente",
+        admin,
+        tipo_usuario,
+        token,
+        expiresIn: 3600,
+        userId: admin._id,
       });
     }
   }
