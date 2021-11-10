@@ -32,7 +32,7 @@ interface Fundacion extends Document {
 }
 
 const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
-  nombreFund: { type: String, required: true },
+  nombreFund: { type: String, required: [true, 'Por favor añada el nombre de fundación'] },
   nombreEncar: { type: String, required: true },
   apellidosEncar: { type: String, required: true },
   tipo_doc: { type: String, required: true },
