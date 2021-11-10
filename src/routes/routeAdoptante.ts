@@ -8,7 +8,7 @@ const router = express.Router();
 
 const dashboardPath = "dashboard-adoptante";
 const adoptantePath = "traer-adoptante";
-const perfilPath = "mi_cuenta";
+const perfilPath = "mi-cuenta";
 const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-adoptante";
 const adopcionesPath = "obtener-adopciones";

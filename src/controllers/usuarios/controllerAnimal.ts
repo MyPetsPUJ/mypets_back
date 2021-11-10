@@ -168,7 +168,7 @@ class ControllerAnimal {
   public async deleteAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
 
-    const animal = await Animal.findById(id);
+    const animal = await Animal.findByIdAndRemove(id);
 
     const fundacionID = animal?.ownerFundacion;
 
@@ -181,6 +181,7 @@ class ControllerAnimal {
     if (animal) {
       try {
         fs.unlink(path.resolve(animal.urlImg));
+        
       } catch (error) {
         console.log("No existe el archivo", error);
       }
