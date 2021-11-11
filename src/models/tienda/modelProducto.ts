@@ -6,7 +6,7 @@ interface Producto extends Document {
   tipoAnimal: string;
   urlImg: string;
   seccion: string;
-  precio: number;
+  precio: string;
 }
 
 const schema_producto: Schema = new Schema({
@@ -14,7 +14,7 @@ const schema_producto: Schema = new Schema({
   tipoAnimal: { type: String, require: true },
   urlImg: { type: String, require: true },
   seccion: { type: String, require: true },
-  precio: { type: Number, require: true },
+  precio: { type: String, require: true },
 });
 
 schema_producto.plugin(uniqueValidator);

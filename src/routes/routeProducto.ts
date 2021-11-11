@@ -18,24 +18,31 @@ const editarItem = "editar-item";
 const eliminarItem = "eliminar-item";
 
 router.post(
-  `/${dashAdmin}/${crearItem}`,
+  `/${dashAdmin}/${tienda}/${crearItem}`,
   multer.single("image"),
   controllerProducto.crearProducto
 );
 
-router.get(`/${dashAdmin}/${mostrarMisItems}`, controllerProducto.getProductos);
+router.get(
+  `/${dashAdmin}/${tienda}/${mostrarMisItems}`,
+  controllerProducto.getProductos
+);
+
+router.get(
+  `/${dashAdmin}/${tienda}/${mostrarItem}/:id`,
+  controllerProducto.getProducto
+);
 
 router.put(
-  `/${dashAdmin}/${mostrarItem}/${editarItem}/:id`,
+  `/${dashAdmin}/${tienda}/${mostrarItem}/${editarItem}/:id`,
+  multer.single("image"),
   controllerProducto.updateProducto
 );
 
 router.delete(
-    `/${dashAdmin}/${mostrarItem}/${eliminarItem}/:id`,
-    controllerProducto.deleteProducto
-  );
-
-
+  `/${dashAdmin}/${tienda}/${mostrarItem}/${eliminarItem}/:id`,
+  controllerProducto.deleteProducto
+);
 
 router.get(
   `/${dashAdoptante}/${tienda}/${mostrarAllItems}`,
@@ -43,16 +50,16 @@ router.get(
 );
 
 router.get(
-  `/${dashAdoptante}/${tienda}/${mostrarItem}(:id)`,
+  `/${dashAdoptante}/${tienda}/${mostrarItem}/:id`,
   controllerProducto.getProducto
 );
 
 router.get(
-    `/${dashFundacion}/${tienda}/${mostrarAllItems}`,
-    controllerProducto.getProductos
-  );
-  
-  router.get(
-    `/${dashFundacion}/${tienda}/${mostrarItem}(:id)`,
-    controllerProducto.getProducto
-  );
+  `/${dashFundacion}/${tienda}/${mostrarAllItems}`,
+  controllerProducto.getProductos
+);
+
+router.get(
+  `/${dashFundacion}/${tienda}/${mostrarItem}/:id`,
+  controllerProducto.getProducto
+);

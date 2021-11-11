@@ -23,6 +23,7 @@ const schema_admin: Schema<Admin> = new Schema<Admin>({
   },
   password: { type: String, require: true },
   tipo_usuario: { type: String },
+  
 });
 
 schema_admin.methods.encryptPassword = async (
