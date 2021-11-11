@@ -181,7 +181,6 @@ class ControllerAnimal {
     if (animal) {
       try {
         fs.unlink(path.resolve(animal.urlImg));
-        
       } catch (error) {
         console.log("No existe el archivo", error);
       }

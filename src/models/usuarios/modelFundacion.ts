@@ -10,7 +10,6 @@ interface Fundacion extends Document {
   tipo_doc: string;
   num_doc: number;
   fecha_creacion: string;
-  // localidad: string;
   correo: string;
   num_celular: string;
   password: string;

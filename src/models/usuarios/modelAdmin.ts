@@ -9,6 +9,7 @@ interface Admin extends Document {
   correo: string;
   password: string;
   tipo_usuario: string;
+  productos: [{ type: mongoose.Types.ObjectId; ref: "Producto" }];
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
@@ -23,7 +24,7 @@ const schema_admin: Schema<Admin> = new Schema<Admin>({
   },
   password: { type: String, require: true },
   tipo_usuario: { type: String },
-  
+  productos: [{ type: mongoose.Types.ObjectId, ref: "Producto" }],
 });
 
 schema_admin.methods.encryptPassword = async (

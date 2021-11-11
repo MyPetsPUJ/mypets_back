@@ -2,17 +2,24 @@ import { Response, Request, NextFunction } from "express";
 
 import Producto from "../../models/tienda/modelProducto";
 
+import config from "../../lib/helpers";
+
+import jwt from "jsonwebtoken";
 import path from "path";
 import fs from "fs-extra";
 
 class ControllerProducto {
   public crearProducto(req: Request, res: Response, next: NextFunction) {
+    const token: string = req.header("auth-token")!;
+    const decoded = jwt.verify(token, config.SECRET_KEY);
+
     const producto = new Producto({
       nombre: req.body.nombre,
       tipoAnimal: req.body.tipoAnimal,
       urlImg: req.file?.path,
       secion: req.body.seccion,
       precio: req.body.precio,
+      idFundacion: decoded,
     });
 
     producto
