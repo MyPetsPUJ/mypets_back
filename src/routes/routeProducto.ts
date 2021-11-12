@@ -63,3 +63,5 @@ router.get(
   `/${dashFundacion}/${tienda}/${mostrarItem}/:id`,
   controllerProducto.getProducto
 );
+
+module.exports = router;
