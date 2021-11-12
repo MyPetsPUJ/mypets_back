@@ -53,6 +53,7 @@ app.use("/api", require("./routes/routeSeccion"));
 app.use("/api", require("./routes/routeVacunaGato"));
 app.use("/api", require("./routes/routeVacunaPerro"));
 app.use("/api", require("./routes/routeAdmin"));
+app.use("/api", require("./routes/routeProducto"));
 
 //esta carpeta se utlizará para guardar los archivos públicos de la aplicación
 app.use("/uploads", express.static(path.resolve("uploads")));
