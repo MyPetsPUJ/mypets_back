@@ -38,7 +38,7 @@ class ControllerPublicacion {
     publicacion
       .save()
       .then((result) => {
-        res.status(200).json({
+        res.status(201).json({
           message: "Publicación creada satisfacotriamente",
           result: result,
         });
@@ -61,7 +61,7 @@ class ControllerPublicacion {
 
   public async getPublicaciones(req: Request, res: Response) {
     const publicaciones = await Publicacion.find();
-    return res.json(publicaciones);
+    return res.status(200).json(publicaciones);
   }
 
   public async populatePublicaciones(
@@ -78,7 +78,7 @@ class ControllerPublicacion {
 
     const publis = resultado!.publicaciones;
 
-    return res.json({ resultado, publis });
+    return res.status(200).json({ resultado, publis });
   }
 
   public async getPublicacion(
@@ -88,7 +88,7 @@ class ControllerPublicacion {
   ): Promise<Response> {
     const id = req.params.id;
     const publicacion = await Publicacion.findById(id);
-    return res.json(publicacion);
+    return res.status(200).json(publicacion);
   }
 
   public async deletePublicacion(
@@ -134,7 +134,7 @@ class ControllerPublicacion {
 
       console.log(publi);
 
-      return res.json({
+      return res.status(200).json({
         message: "Publicación actualizada correctamente",
         publi,
       });
@@ -149,7 +149,7 @@ class ControllerPublicacion {
 
       console.log(publi);
 
-      return res.json({
+      return res.status(200).json({
         message: "Publicación actualizada correctamente",
         publi,
       });

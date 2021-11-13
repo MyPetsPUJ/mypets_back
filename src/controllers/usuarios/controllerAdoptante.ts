@@ -42,13 +42,13 @@ class ControllerAdoptante {
 
   public async getAdoptantes(req: Request, res: Response): Promise<Response> {
     const adoptantes = await Adoptante.find();
-    return res.json(adoptantes);
+    return res.status(200).json(adoptantes);
   }
 
   public async getAdoptante(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const adoptante = await Adoptante.findById(id);
-    return res.json(adoptante);
+    return res.status(200).json(adoptante);
   }
 
   public async getAnimalesAdoptados(req: Request, res: Response): Promise<Response> {
@@ -60,7 +60,7 @@ class ControllerAdoptante {
       var nAnimal = await Animal.findById(idAnimal);
       animalesAdoptados.push(nAnimal);
     }
-    return res.json(animalesAdoptados); 
+    return res.status(200).json(animalesAdoptados); 
   }
 
   public async deleteAdoptante(req: Request, res: Response): Promise<Response> {
@@ -70,7 +70,7 @@ class ControllerAdoptante {
     if (adoptante) {
       fs.unlink(path.resolve(adoptante.urlImg));
     }
-    return res.json({
+    return res.status(200).json({
       message: "Adoptante eliminado satisfactoriamente",
       adoptante,
     });
@@ -114,7 +114,7 @@ class ControllerAdoptante {
         },
         { new: true }
       );
-      return res.json({
+      return res.status(200).json({
         message: "Adoptante actualizado correctamente",
         updatedAdoptante,
       });
@@ -136,7 +136,7 @@ class ControllerAdoptante {
         },
         { new: true }
       );
-      return res.json({
+      return res.status(200).json({
         message: "Adoptante actualizado correctamente",
         updatedAdoptante,
       });

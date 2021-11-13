@@ -85,7 +85,7 @@ class ControllerFormulario{
 
     formulario.save()
       .then((result: any) => {
-        res.status(200).json({
+        res.status(201).json({
           message: "Formulario Creado",
           result: result,
         });
@@ -102,7 +102,7 @@ class ControllerFormulario{
   public async getFormulario(req: Request, res: Response, next: NextFunction): Promise<Response>{
     const id = req.params.id;
     const formulario = await Formulario.findById(id);
-    return res.json(formulario);
+    return res.status(200).json(formulario);
   }
   /*
   Param = id idFormulario
@@ -117,32 +117,32 @@ class ControllerFormulario{
     const formularioReF = await Formulario.findById(solicitud?.idFormulario).populate("referenciaFamiliar");
     const formularioReC = await Formulario.findById(solicitud?.idFormulario).populate("referenciaConocido");
 
-    return res.json({formularioFami,formularioRela,formularioReF,formularioReC});
+    return res.status(200).json({formularioFami,formularioRela,formularioReF,formularioReC});
   }
 
   public async getFormularios( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const formularios = await Formulario.find();
-    return res.json(formularios);
+    return res.status(200).json(formularios);
   }
 
   public async getFamiliares( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const informFamiliar = await InfoFamiliar.find();
-    return res.json(informFamiliar);
+    return res.status(200).json(informFamiliar);
   }
 
   public async getInfoRelacionada( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const informRelacionada = await InfoRelacionada.find();
-    return res.json(informRelacionada);
+    return res.status(200).json(informRelacionada);
   }
 
   public async getReferenciaFamilia( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const referenciaFami = await ReferenciaF.find();
-    return res.json(referenciaFami);
+    return res.status(200).json(referenciaFami);
   }
 
   public async getReferenciaConocido( req: Request, res: Response, next: NextFunction): Promise<Response> {
     const referenciaConoc = await ReferenciaC.find();
-    return res.json(referenciaConoc);
+    return res.status(200).json(referenciaConoc);
   }
   /*
   SIN FINALIZAR- FALTA DESASOCIARSE DE LA SOLICITUD

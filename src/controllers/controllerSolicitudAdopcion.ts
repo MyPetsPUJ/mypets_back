@@ -58,12 +58,12 @@ class ControllerSolicitudAdopcion{
     const id = req.params.id;
 
     const solicitud = await SolicitudAdopcion.findById(id);
-    return res.json(solicitud);
+    return res.status(200).json(solicitud);
   }
 
   public async getSolicitudes( req: Request, res: Response): Promise<Response> {
     const solicitudes = await SolicitudAdopcion.find();
-    return res.json(solicitudes);
+    return res.status(200).json(solicitudes);
   }
   /*
   Param = id: IdAdoptante
@@ -87,7 +87,7 @@ class ControllerSolicitudAdopcion{
       console.error(error);
     }
     finally{
-      return res.json(solicitudes);
+      return res.status(200).json(solicitudes);
     }
   }
   /*
@@ -112,7 +112,7 @@ class ControllerSolicitudAdopcion{
       console.error(error);
     }
     finally{
-      return res.json(solicitudes);
+      return res.status(200).json(solicitudes);
     }
   }
   /*
@@ -148,7 +148,7 @@ class ControllerSolicitudAdopcion{
         animales.push(animal);
       } 
     }
-    return res.json({ fundacion,solicitudes,adoptantes,animales});
+    return res.status(200).json({ fundacion,solicitudes,adoptantes,animales});
   }
   /* 
   Param = id: idSolicitud
@@ -176,7 +176,7 @@ class ControllerSolicitudAdopcion{
     
       await SolicitudAdopcion.findByIdAndRemove(id);
     }
-    return res.json({
+    return res.status(200).json({
       message: "2 paso  eliminado satisfactoriamente",solicitud
     });
   }
@@ -194,7 +194,7 @@ class ControllerSolicitudAdopcion{
       {$set :{ estado: nuevoEstado} },
       { new: true, useFindAndModify: false }
     );
-    return res.json({
+    return res.status(200).json({
       message: " actualizado satisfactoriamente"
     });
   }

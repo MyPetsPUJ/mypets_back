@@ -47,7 +47,7 @@ class ControllerAnimal {
     animal
       .save()
       .then((result) => {
-        res.status(200).json({
+        res.status(201).json({
           message: "Animal perro creado",
           result: result,
         });
@@ -102,7 +102,7 @@ class ControllerAnimal {
     animal
       .save()
       .then((result) => {
-        res.status(200).json({
+        res.status(201).json({
           message: "Animal gato creado",
           result: result,
         });
@@ -125,7 +125,7 @@ class ControllerAnimal {
 
   public async getAnimales(req: Request, res: Response) {
     const animales = await Animal.find();
-    return res.json(animales);
+    return res.status(200).json(animales);
   }
 
   public async populateAnimales(req: Request, res: Response) {
@@ -138,13 +138,13 @@ class ControllerAnimal {
     const resultado = await Fundacion.findById(id).populate("animales");
     const animales = resultado!.animales;
 
-    return res.json({ resultado, animales });
+    return res.status(200).json({ resultado, animales });
   }
 
   public async getAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const animal = await Animal.findById(id);
-    return res.json(animal);
+    return res.status(200).json(animal);
   }
 
   public async getAnimalesAdoptados(
@@ -160,7 +160,7 @@ class ControllerAnimal {
         animalesAdoptados.push(animal);
       }
     }
-    return res.json(animalesAdoptados);
+    return res.status(200).json(animalesAdoptados);
 
     /*************************** */
   }
@@ -185,7 +185,7 @@ class ControllerAnimal {
         console.log("No existe el archivo", error);
       }
     }
-    return res.json({
+    return res.status(200).json({
       message: "Animal eliminado satisfactoriamente",
       animal,
     });
@@ -215,7 +215,7 @@ class ControllerAnimal {
       { new: true, useFindAndModify: false }
     );
 
-    return res.json({
+    return res.status(200).json({
       message: " actualizado satisfactoriamente",
       adoptante,
     });
@@ -232,7 +232,7 @@ class ControllerAnimal {
       { $set: { enAdopcion: estado } },
       { new: true, useFindAndModify: false }
     );
-    return res.json({
+    return res.status(200).json({
       message: " actualizado satisfactoriamente",
       animal,
     });
@@ -276,7 +276,7 @@ class ControllerAnimal {
         },
         { new: true }
       );
-      return res.json({
+      return res.status(200).json({
         message: "Animal actualizado correctamente",
         updatedAnimal,
       });
@@ -300,7 +300,7 @@ class ControllerAnimal {
         },
         { new: true }
       );
-      return res.json({
+      return res.status(200).json({
         message: "Animal actualizado correctamente",
         updatedAnimal,
       });

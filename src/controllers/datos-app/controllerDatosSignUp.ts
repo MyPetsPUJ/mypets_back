@@ -11,7 +11,9 @@ class ControllerDatosSignUp {
     });
 
     genero.save().then((respuesta) => {
-      return res.json({ message: "Genero creado correctamente", respuesta });
+      return res
+        .status(201)
+        .json({ message: "Genero creado correctamente", respuesta });
     });
   }
 
@@ -21,7 +23,7 @@ class ControllerDatosSignUp {
     });
 
     tipoDoc.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Tipo de documento creado correctamente",
         respuesta,
       });
@@ -34,7 +36,9 @@ class ControllerDatosSignUp {
     });
 
     localidad.save().then((respuesta) => {
-      return res.json({ message: "Localidad creada correctamente", respuesta });
+      return res
+        .status(201)
+        .json({ message: "Localidad creada correctamente", respuesta });
     });
   }
 
@@ -43,7 +47,9 @@ class ControllerDatosSignUp {
     const tipo_docs = await TipoDoc.find();
     const localidades = await Localidad.find();
 
-    return res.json({ message: "Datos ", generos, tipo_docs, localidades });
+    return res
+      .status(200)
+      .json({ message: "Datos ", generos, tipo_docs, localidades });
   }
 }
 

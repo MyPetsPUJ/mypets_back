@@ -46,13 +46,13 @@ class ControllerFundacion {
 
   public async getFundaciones(req: Request, res: Response): Promise<Response> {
     const fundaciones = await Fundacion.find();
-    return res.json(fundaciones);
+    return res.status(200).json(fundaciones);
   }
 
   public async getFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const fundacion = await Fundacion.findById(id);
-    return res.json(fundacion);
+    return res.status(200).json(fundacion);
   }
 
   public async deleteFundacion(req: Request, res: Response): Promise<Response> {
@@ -62,7 +62,7 @@ class ControllerFundacion {
     if (fundacion) {
       fs.unlink(path.resolve(fundacion.urlImg));
     }
-    return res.json({
+    return res.status(200).json({
       message: "Fundación eliminada satisfactoriamente",
       fundacion,
     });
@@ -140,7 +140,7 @@ class ControllerFundacion {
       );
 
       console.log("Fundación act", fund);
-      return res.json({
+      return res.status(200).json({
         message: "Fundación actualizada correctamente",
         fund,
       });
@@ -168,7 +168,7 @@ class ControllerFundacion {
 
       console.log("Fundación act", fund);
 
-      return res.json({
+      return res.status(200).json({
         message: "Fundación actualizada correctamente",
         fund,
       });

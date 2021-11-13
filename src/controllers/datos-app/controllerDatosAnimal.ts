@@ -16,7 +16,9 @@ class ControllerDatosAnimal {
       edad: req.body.edad,
     });
     edad.save().then((respuesta) => {
-      return res.json({ message: "Edad creada de manera correcta", respuesta });
+      return res
+        .status(201)
+        .json({ message: "Edad creada de manera correcta", respuesta });
     });
   }
 
@@ -25,7 +27,7 @@ class ControllerDatosAnimal {
       color: req.body.color,
     });
     colorOjos.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Color de ojos creado de manera correcta",
         respuesta,
       });
@@ -37,7 +39,7 @@ class ControllerDatosAnimal {
       estado: req.body.estado,
     });
     desparasitado.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Estado desparasitado creado de manera correcta",
         respuesta,
       });
@@ -49,7 +51,7 @@ class ControllerDatosAnimal {
       genero: req.body.genero,
     });
     generoAnimal.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Genero creado de manera correcta",
         respuesta,
       });
@@ -61,7 +63,7 @@ class ControllerDatosAnimal {
       situacion: req.body.situacion,
     });
     esterilizado.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Situación de esterilización creada de manera correcta",
         respuesta,
       });
@@ -73,7 +75,7 @@ class ControllerDatosAnimal {
       tamano: req.body.tamano,
     });
     tamano.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Tamaño creado de manera correcta",
         respuesta,
       });
@@ -85,7 +87,7 @@ class ControllerDatosAnimal {
       tipo: req.body.tipo,
     });
     tipo.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Tipo animal creado de manera correcta",
         respuesta,
       });
@@ -97,7 +99,7 @@ class ControllerDatosAnimal {
       tipoPelaje: req.body.tipoPelaje,
     });
     tipoPelaje.save().then((respuesta) => {
-      return res.json({
+      return res.status(201).json({
         message: "Tipo pelaje creado de manera correcta",
         respuesta,
       });
@@ -114,7 +116,7 @@ class ControllerDatosAnimal {
     const tiposAnimal = await modelTipoAnimal.find();
     const tiposPelaje = await modelTipoPelajeAnimal.find();
 
-    return res.json({
+    return res.status(200).json({
       message: "Datos animal ",
       colorOjos,
       desparasitados,
@@ -126,8 +128,6 @@ class ControllerDatosAnimal {
       tiposPelaje,
     });
   }
-
-  
 }
 
 export const controllerDatosAnimal = new ControllerDatosAnimal();

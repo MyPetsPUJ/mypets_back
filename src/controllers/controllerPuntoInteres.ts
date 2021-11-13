@@ -22,7 +22,7 @@ class ControllerPuntoDeInteres {
 
       console.log(req.body);
       const punto = await PuntoDeInteres.create(req.body);
-      console.log(punto);
+      console.log("El punto:", punto);
       punto.save();
 
       const updatePunto = await PuntoDeInteres.findByIdAndUpdate(
@@ -88,11 +88,15 @@ class ControllerPuntoDeInteres {
   }
 
   public async getPunto(req: Request, res: Response, next: NextFunction) {
-    const id = req.params.id;
+    try {
+      const id = req.params.id;
+      const punto = await PuntoDeInteres.findById(id);
 
-    const punto = await PuntoDeInteres.findById(id);
-
-    return res.json(punto);
+      return res.status(200).json(punto);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Ha ocurrido un error" });
+    }
   }
 
   public async editarPunto(req: Request, res: Response, next: NextFunction) {
@@ -118,9 +122,16 @@ class ControllerPuntoDeInteres {
       },
       { new: true }
     );
-
+    if (!puntoUpdated) {
+      return res
+        .status(400)
+        .json({
+          message: "Error, no se ha encontrado el punto con el siguiente id: ",
+          id,
+        });
+    }
     console.log("Punto act", puntoUpdated);
-    return res.json({
+    return res.status(200).json({
       message: "Punto actualizado",
       puntoUpdated,
     });
@@ -131,7 +142,13 @@ class ControllerPuntoDeInteres {
 
     const punto = await PuntoDeInteres.findByIdAndRemove(id);
 
-    return res.json({
+    if (!punto) {
+      return res.status(400).json({
+        message: "No se ha encontrado ningún punto de interés con ese id",
+      });
+    }
+
+    return res.status(200).json({
       message: "Punto de interés eliminado correctamente",
       punto,
     });

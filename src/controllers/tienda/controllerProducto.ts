@@ -26,7 +26,7 @@ class ControllerProducto {
       .save()
       .then((result: any) => {
         res.status(201).json({
-          message: "Admin creado",
+          message: "Producto creado",
           result: result,
         });
       })
@@ -39,14 +39,14 @@ class ControllerProducto {
 
   public async getProductos(req: Request, res: Response, next: NextFunction) {
     const productos = await Producto.find();
-    return res.json(productos);
+    return res.status(200).json(productos);
   }
 
   public async getProducto(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
 
     const producto = await Producto.findById(id);
-    return res.json(producto);
+    return res.status(200).json(producto);
   }
 
   public async updateProducto(req: Request, res: Response, next: NextFunction) {
@@ -68,7 +68,7 @@ class ControllerProducto {
         { new: true }
       );
       console.log("Producto act", prod);
-      return res.json({
+      return res.status(200).json({
         message: "Producto actualizado correctamente",
         prod,
       });
@@ -85,7 +85,7 @@ class ControllerProducto {
         { new: true }
       );
       console.log("Producto act", prod);
-      return res.json({
+      return res.status(200).json({
         message: "Producto actualizado correctamente",
         prod,
       });
@@ -100,7 +100,7 @@ class ControllerProducto {
     if (producto) {
       fs.unlink(path.resolve(producto.urlImg));
     }
-    return res.json({
+    return res.status(200).json({
       message: "Producto eliminado satisfactoriamente",
       producto,
     });

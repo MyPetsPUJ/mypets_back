@@ -9,16 +9,6 @@ import cookieParser from "cookie-parser";
 const jwt = require("jsonwebtoken");
 
 class ControllerLogin {
-  public dentroLogin(req: Request, res: Response, next: NextFunction) {
-    res.send([9, 9, 9]);
-    console.log("Dentro de login");
-    next();
-  }
-
-  public profile(req: Request, res: Response) {
-    res.send([1, 2, 3, 4]);
-  }
-
   public async hacerLogin(req: Request, res: Response, next: NextFunction) {
     console.log(req.body);
 
@@ -54,7 +44,7 @@ class ControllerLogin {
         { expiresIn: 60 * 60 }
       );
 
-      return res.header("auth-token", token).json({
+      return res.header("auth-token", token).status(200).json({
         message: "Usuario logueado satisfactoriamente",
         adoptante,
         tipo_usuario,
@@ -87,7 +77,7 @@ class ControllerLogin {
         expiresIn: 60 * 60,
       });
 
-      return res.header("auth-token", token).json({
+      return res.header("auth-token", token).status(200).json({
         message: "Usuario logueado satisfactoriamente",
         fundacion,
         tipo_usuario,
@@ -120,7 +110,7 @@ class ControllerLogin {
         expiresIn: 60 * 60,
       });
 
-      return res.header("auth-token", token).json({
+      return res.header("auth-token", token).status(200).json({
         message: "Usuario logueado satisfactoriamente",
         admin,
         tipo_usuario,
