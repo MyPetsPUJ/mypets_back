@@ -26,6 +26,11 @@ class ControllerAdmin {
         });
       });
   }
+
+  public async ping(req: Request, res: Response) {
+    console.log("Entrando");
+    return res.status(200).json({ message: "Pong" });
+  }
 }
 
 export const controllerAdmin = new ControllerAdmin();

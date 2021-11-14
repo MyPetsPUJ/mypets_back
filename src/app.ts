@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import routerAdmin from "../src/routes/routeAdmin";
 
 require("./database");
 
@@ -52,7 +53,7 @@ app.use("/api", require("./routes/routeSeccion"));
 // app.use("/api", require("./routes/routeLocalidad"));
 app.use("/api", require("./routes/routeVacunaGato"));
 app.use("/api", require("./routes/routeVacunaPerro"));
-app.use("/api", require("./routes/routeAdmin"));
+app.use("/api", routerAdmin);
 app.use("/api", require("./routes/routeProducto"));
 
 //esta carpeta se utlizará para guardar los archivos públicos de la aplicación

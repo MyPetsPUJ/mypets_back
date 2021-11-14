@@ -29,7 +29,7 @@ router.get(
 );
 
 router.get(
-  `/${dashAdmin}/${tienda}/${mostrarItem}/:id`,
+  `/${dashAdmin}/${tienda}/${mostrarItem}/${editarItem}/:id`,
   controllerProducto.getProducto
 );
 

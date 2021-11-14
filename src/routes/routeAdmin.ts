@@ -1,11 +1,15 @@
 import express from "express";
 import { controllerAdmin } from "../controllers/usuarios/controllerAdmin";
 
-const router = express.Router();
-
+const routerAdmin = express.Router();
 
 const crearAdmin = "crear-administrador";
+const ping = "ping";
 
-router.post(`/${crearAdmin}`, controllerAdmin.crearAdmin);
+routerAdmin.post(`/${crearAdmin}`, controllerAdmin.crearAdmin);
 
-module.exports = router;
+routerAdmin.get(`/${ping}`, controllerAdmin.ping);
+
+// module.exports = routerAdmin;
+
+export default routerAdmin;
