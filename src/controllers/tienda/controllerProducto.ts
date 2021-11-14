@@ -17,9 +17,9 @@ class ControllerProducto {
       nombre: req.body.nombre,
       tipoAnimal: req.body.tipoAnimal,
       urlImg: req.file?.path,
-      secion: req.body.seccion,
+      seccion: req.body.seccion,
       precio: req.body.precio,
-      idFundacion: decoded,
+      idAmin: decoded,
     });
 
     producto

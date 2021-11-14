@@ -7,7 +7,7 @@ interface Producto extends Document {
   urlImg: string;
   seccion: string;
   precio: string;
-  idFundacion:  mongoose.Types.ObjectId;
+  idAdmin: mongoose.Types.ObjectId;
 }
 
 const schema_producto: Schema = new Schema({
@@ -16,7 +16,7 @@ const schema_producto: Schema = new Schema({
   urlImg: { type: String, require: true },
   seccion: { type: String, require: true },
   precio: { type: String, require: true },
-  idFundacion: { type: mongoose.Types.ObjectId, ref: "Admin" },
+  idAdmin: { type: mongoose.Types.ObjectId, ref: "Admin" },
 });
 
 schema_producto.plugin(uniqueValidator);
