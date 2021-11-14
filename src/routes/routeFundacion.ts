@@ -13,8 +13,11 @@ const entidadPath = "crear-cuenta";
 const usuarioPath = "crear-fundacion";
 const perfilPath = "mi_cuenta";
 const fundacionesPath = "get-fundaciones";
-const fundacionPath = "get-fundacion";
+const fundacionPath = "fundacion";
 const publicacionesPath = "publicaciones";
+const adminPath = "dashboard-admin";
+const fundPath = "fundaciones";
+const mostrarPath = "mostrar-todas-las-fundaciones";
 
 router.post(
   `/${entidadPath}/${usuarioPath}`,
@@ -43,8 +46,13 @@ router.put(
   controllerFundacion.updateFundacion
 );
 
+router.get(
+  `/${adminPath}/${fundPath}/${mostrarPath}`,
+  controllerFundacion.getFundaciones
+);
+
 router.delete(
-  `/${dashboardFunPath}/${perfilPath}/:id`,
+  `/${adminPath}/${fundacionPath}/:id`,
   controllerFundacion.deleteFundacion
 );
 
