@@ -61,6 +61,13 @@ class ControllerPublicacion {
 
   public async getPublicaciones(req: Request, res: Response) {
     const publicaciones = await Publicacion.find();
+
+    if (publicaciones.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontraron publicaciones", publicaciones });
+    }
+
     return res.status(200).json(publicaciones);
   }
 
@@ -76,6 +83,13 @@ class ControllerPublicacion {
 
     const resultado = await Fundacion.findById(id).populate("publicaciones");
 
+    if (!resultado) {
+      return res.status(400).json({
+        message: "No se ha encontrado ninguna fundacion con el siguiente id: ",
+        id,
+      });
+    }
+
     const publis = resultado!.publicaciones;
 
     return res.status(200).json({ resultado, publis });
@@ -88,6 +102,16 @@ class ControllerPublicacion {
   ): Promise<Response> {
     const id = req.params.id;
     const publicacion = await Publicacion.findById(id);
+
+    if (!publicacion) {
+      return res
+        .status(400)
+        .json({
+          message: "No existe ninguna publicación con el siguiente id: ",
+          id,
+        });
+    }
+
     return res.status(200).json(publicacion);
   }
 
@@ -97,6 +121,20 @@ class ControllerPublicacion {
   ): Promise<Response> {
     const id = req.params.id;
     const publicacion = await Publicacion.findByIdAndRemove(id);
+
+    if (!publicacion) {
+      return res.status(400).json({
+        message: "No se ha encontrado ninguna publicación con ese id",
+      });
+    }
+
+    const fundacionID = publicacion?.autorPublicacion;
+
+    const fundacion = await Fundacion.findByIdAndUpdate(
+      fundacionID,
+      { $pull: { publicaciones: publicacion?._id } },
+      { new: true, useFindAndModify: false }
+    );
 
     if (publicacion) {
       try {

@@ -41,31 +41,73 @@ class ControllerAdoptante {
   }
 
   public async getAdoptantes(req: Request, res: Response): Promise<Response> {
+    console.log("Funcion");
     const adoptantes = await Adoptante.find();
+    console.log("Encontro");
+    if (adoptantes.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontró ningún adoptante", adoptantes });
+    }
+    console.log("No es 0");
     return res.status(200).json(adoptantes);
   }
 
   public async getAdoptante(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const adoptante = await Adoptante.findById(id);
+    if (!adoptante) {
+      return res.status(400).json({
+        message: "No existe ningún adoptante con el siguiente id: ",
+        id,
+      });
+    }
+
     return res.status(200).json(adoptante);
   }
 
-  public async getAnimalesAdoptados(req: Request, res: Response): Promise<Response> {
+  public async getAnimalesAdoptados(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
     const adoptante = await Adoptante.findById(id);
-    var animalesAdoptados: any[] =[];
 
-    for(var idAnimal of adoptante!.animalesAdoptados ){
+    if (!adoptante) {
+      return res.status(400).json({
+        message: "No existe ningún adoptante con el siguiente id: ",
+        id,
+      });
+    }
+
+    var animalesAdoptados: any[] = [];
+
+    for (var idAnimal of adoptante!.animalesAdoptados) {
       var nAnimal = await Animal.findById(idAnimal);
       animalesAdoptados.push(nAnimal);
     }
-    return res.status(200).json(animalesAdoptados); 
+
+    if (animalesAdoptados.length == 0) {
+      return res.status(204).json({
+        message: "No cuenta con ningún animal adoptado",
+        animalesAdoptados,
+      });
+    }
+    return res.status(200).json(animalesAdoptados);
   }
 
   public async deleteAdoptante(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const adoptante = await Adoptante.findByIdAndRemove(id);
+
+    if (!adoptante) {
+      return res
+        .status(400)
+        .json({
+          message: "No existe ningún adoptante con el siguiente id: ",
+          id,
+        });
+    }
 
     if (adoptante) {
       fs.unlink(path.resolve(adoptante.urlImg));

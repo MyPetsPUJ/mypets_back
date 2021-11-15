@@ -15,14 +15,21 @@ interface Admin extends Document {
 }
 
 const schema_admin: Schema<Admin> = new Schema<Admin>({
-  nombres: { type: String, require: true },
-  apellidos: { type: String, require: true },
+  nombres: { type: String, required: [true, "Por favor ingrese un nombre"] },
+  apellidos: {
+    type: String,
+    required: [true, "Por favor ingrese sus apellidos"],
+  },
   correo: {
     type: String,
-    require: true,
+    required: true,
     unique: [true, "Error, ya existe un admin con este correo"],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please fill a valid email address",
+    ],
   },
-  password: { type: String, require: true },
+  password: { type: String, required: [true, "Ingrese una contraseña"] },
   tipo_usuario: { type: String },
   productos: [{ type: mongoose.Types.ObjectId, ref: "Producto" }],
 });

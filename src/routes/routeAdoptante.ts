@@ -24,7 +24,7 @@ router.get(
   controllerAdoptante.getAdoptante
 );
 
-router.get(`/${dashboardPath}`, controllerAdoptante.getAdoptantes);
+router.get(`/${dashboardPath}/traer-todos`, controllerAdoptante.getAdoptantes);
 
 router.get(
   `/${dashboardPath}/${perfilPath}/:id`,

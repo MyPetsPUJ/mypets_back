@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 
-import Producto from "../../models/tienda/modelProducto";
+import { Producto } from "../../models/tienda/modelProducto";
 
 import config from "../../lib/helpers";
 
@@ -39,6 +39,12 @@ class ControllerProducto {
 
   public async getProductos(req: Request, res: Response, next: NextFunction) {
     const productos = await Producto.find();
+
+    if (productos.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se han encontrado productos", productos });
+    }
     return res.status(200).json(productos);
   }
 
@@ -46,6 +52,15 @@ class ControllerProducto {
     const id = req.params.id;
 
     const producto = await Producto.findById(id);
+
+    if (!producto) {
+      return res
+        .status(400)
+        .json({
+          message: "No se ha encontrado ningún producto con el siguiente id: ",
+          id,
+        });
+    }
     return res.status(200).json(producto);
   }
 
@@ -96,6 +111,15 @@ class ControllerProducto {
     const id = req.params.id;
 
     const producto = await Producto.findByIdAndRemove(id);
+
+    if (!producto) {
+      return res
+        .status(400)
+        .json({
+          message: "No se ha encontrado ningún producto con el siguiente id: ",
+          id,
+        });
+    }
 
     if (producto) {
       fs.unlink(path.resolve(producto.urlImg));

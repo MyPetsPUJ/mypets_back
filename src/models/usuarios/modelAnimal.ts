@@ -23,19 +23,53 @@ interface Animal extends Document {
 }
 
 const schema_animal: Schema = new Schema({
-  nombre: { type: String, required: true },
-  edad: { type: String, required: true },
-  raza: { type: String, required: true },
-  sexo: { type: String, required: true },
-  tamano: { type: String, required: true },
-  color_ojos: { type: String, required: true },
-  tipo_pelaje: { type: String, required: true },
-  situacion: { type: String, required: true },
-  desparasitado: { type: String, required: true },
-  ultima_vac: { type: String, required: true },
-  descripcion: { type: String, required: true },
-  urlImg: { type: String },
-  esquema_vac: { type: String, required: true },
+  nombre: {
+    type: String,
+    required: [true, "Por favor ingrese un nombre para el animal"],
+  },
+  edad: {
+    type: String,
+    required: [true, "Por favor seleccione una edad para el animal"],
+  },
+  raza: {
+    type: String,
+    required: [true, "Por favor ingrese la raza del animal"],
+  },
+  sexo: {
+    type: String,
+    required: [true, "Por favor ingrese si es macho o hembra"],
+    enum: ["Macho, Hembra"],
+  },
+  tamano: {
+    type: String,
+    required: [true, "Por favor ingrese el tamaño del animal"],
+  },
+  color_ojos: {
+    type: String,
+    required: [true, "Por favor seleccione el color de ojos del animal"],
+  },
+  tipo_pelaje: {
+    type: String,
+    required: [true, "Por favor seleccione el tipo de pelaje del animal"],
+  },
+  situacion: {
+    type: String,
+    required: [true, "Por favor ingrese si está esterilizado o no el animal"],
+  },
+  desparasitado: {
+    type: String,
+    required: [true, "Por favor ingrese si está o no desparasitado el animal"],
+  },
+  ultima_vac: { type: String },
+  descripcion: {
+    type: String,
+    required: [true, "Por favor ingrese una descripción para el animal"],
+  },
+  urlImg: {
+    type: String,
+    required: [true, "Por favor ingrese una imagen del animal"],
+  },
+  esquema_vac: { type: String },
   tipo_animal: { type: String, required: true },
   ownerFundacion: { type: mongoose.Types.ObjectId, ref: "Fundacion" },
   ownerAdoptante: { type: mongoose.Types.ObjectId, ref: "Adoptante" },

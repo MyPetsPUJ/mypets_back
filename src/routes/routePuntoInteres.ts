@@ -27,9 +27,14 @@ router.get(
   controllerPuntoDeInteres.getPunto
 );
 
+// router.delete(
+//   `/${dashboardPath}/${mapaPath}/:id`,
+//   controllerPuntoDeInteres.deletePunto
+// );
+
 router.delete(
   `/${dashboardPath}/${mapaPath}/:id`,
-  controllerPuntoDeInteres.deletePunto
+  controllerPuntoDeInteres.deleteAllPuntosFundacion
 );
 
 router.put(

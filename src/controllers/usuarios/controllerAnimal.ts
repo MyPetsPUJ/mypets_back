@@ -125,6 +125,11 @@ class ControllerAnimal {
 
   public async getAnimales(req: Request, res: Response) {
     const animales = await Animal.find();
+    if (animales.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontraron animales", animales });
+    }
     return res.status(200).json(animales);
   }
 
@@ -136,6 +141,11 @@ class ControllerAnimal {
 
     const id = req.params.id;
     const resultado = await Fundacion.findById(id).populate("animales");
+    if (!resultado) {
+      return res
+        .status(400)
+        .json({ message: "No se encontró ninguna fundación con ese id." });
+    }
     const animales = resultado!.animales;
 
     return res.status(200).json({ resultado, animales });
@@ -144,6 +154,12 @@ class ControllerAnimal {
   public async getAnimal(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const animal = await Animal.findById(id);
+    if (!animal) {
+      return res.status(400).json({
+        message: "No se encontró ningun animal con el siguiente id: ",
+        id,
+      });
+    }
     return res.status(200).json(animal);
   }
 
@@ -152,6 +168,11 @@ class ControllerAnimal {
     res: Response
   ): Promise<Response> {
     const animales = await Animal.find();
+    if (animales.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontró ningún animal.", animales });
+    }
     var animalesAdoptados: any[] = [];
     //*********************** */
 
@@ -159,6 +180,11 @@ class ControllerAnimal {
       if (animal.enAdopcion == true) {
         animalesAdoptados.push(animal);
       }
+    }
+    if (animalesAdoptados.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No hay ningún animal adoptado.", animalesAdoptados });
     }
     return res.status(200).json(animalesAdoptados);
 
@@ -169,6 +195,13 @@ class ControllerAnimal {
     const id = req.params.id;
 
     const animal = await Animal.findByIdAndRemove(id);
+
+    if (!animal) {
+      return res.status(400).json({
+        message: "No se ha encontrado ningún animal con el siguiente id: ",
+        id,
+      });
+    }
 
     const fundacionID = animal?.ownerFundacion;
 
@@ -195,47 +228,57 @@ class ControllerAnimal {
     req: Request,
     res: Response
   ): Promise<Response> {
-    const id = req.params.id;
-    const idDueno = req.body.idDueno;
-    const animal = await Animal.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          adoptado: true,
-          ownerAdoptante: mongoose.Types.ObjectId(idDueno),
+    try {
+      const id = req.params.id;
+      const idDueno = req.body.idDueno;
+      const animal = await Animal.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            adoptado: true,
+            ownerAdoptante: mongoose.Types.ObjectId(idDueno),
+          },
         },
-      },
-      { new: true, useFindAndModify: false }
-    );
-    console.log(await Adoptante.findById(idDueno));
+        { new: true, useFindAndModify: false }
+      );
+      console.log(await Adoptante.findById(idDueno));
 
-    const adoptante = await Adoptante.findByIdAndUpdate(
-      idDueno,
-      { $push: { animalesAdoptados: id } },
-      { new: true, useFindAndModify: false }
-    );
+      const adoptante = await Adoptante.findByIdAndUpdate(
+        idDueno,
+        { $push: { animalesAdoptados: id } },
+        { new: true, useFindAndModify: false }
+      );
 
-    return res.status(200).json({
-      message: " actualizado satisfactoriamente",
-      adoptante,
-    });
+      return res.status(200).json({
+        message: " actualizado satisfactoriamente",
+        adoptante,
+      });
+    } catch (error) {
+      console.log(error, "Server Error");
+      return res.status(400).json({ message: "Error" });
+    }
   }
 
   public async updateEstadoAnimal(
     req: Request,
     res: Response
   ): Promise<Response> {
-    const id = req.params.id;
-    const estado = req.body.nuevoEstado;
-    const animal = await Animal.findByIdAndUpdate(
-      id,
-      { $set: { enAdopcion: estado } },
-      { new: true, useFindAndModify: false }
-    );
-    return res.status(200).json({
-      message: " actualizado satisfactoriamente",
-      animal,
-    });
+    try {
+      const id = req.params.id;
+      const estado = req.body.nuevoEstado;
+      const animal = await Animal.findByIdAndUpdate(
+        id,
+        { $set: { enAdopcion: estado } },
+        { new: true, useFindAndModify: false }
+      );
+      return res.status(200).json({
+        message: " actualizado satisfactoriamente",
+        animal,
+      });
+    } catch (error) {
+      console.log(error, "Server Error");
+      return res.status(400).json({ message: "Error" });
+    }
   }
 
   public async updateAnimal(req: Request, res: Response): Promise<Response> {

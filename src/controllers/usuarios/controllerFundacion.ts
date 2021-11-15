@@ -46,18 +46,36 @@ class ControllerFundacion {
 
   public async getFundaciones(req: Request, res: Response): Promise<Response> {
     const fundaciones = await Fundacion.find();
+    if (fundaciones.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontraron fundaciones", fundaciones });
+    }
     return res.status(200).json(fundaciones);
   }
 
   public async getFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const fundacion = await Fundacion.findById(id);
+    if (!fundacion) {
+      return res.status(400).json({
+        message: "No existe ninguna fundación con el siguiente id: ",
+        id,
+      });
+    }
     return res.status(200).json(fundacion);
   }
 
   public async deleteFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const fundacion = await Fundacion.findByIdAndRemove(id);
+
+    if (!fundacion) {
+      return res.status(400).json({
+        message: "No existe ninguna fundación con el siguiente id: ",
+        id,
+      });
+    }
 
     if (fundacion) {
       fs.unlink(path.resolve(fundacion.urlImg));
@@ -70,7 +88,7 @@ class ControllerFundacion {
 
   public async updateFundacion(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
-    
+
     const {
       nombreFund,
       nombreEncar,

@@ -31,16 +31,50 @@ interface Fundacion extends Document {
 }
 
 const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
-  nombreFund: { type: String, required: [true, 'Por favor añada el nombre de fundación'] },
-  nombreEncar: { type: String, required: true },
-  apellidosEncar: { type: String, required: true },
-  tipo_doc: { type: String, required: true },
-  num_doc: { type: Number, required: true },
-  fecha_creacion: { type: String, required: true },
-  correo: { type: String, required: true },
-  num_celular: { type: String, required: true },
+  nombreFund: {
+    type: String,
+    required: [true, "Por favor añada el nombre de fundación"],
+  },
+  nombreEncar: {
+    type: String,
+    required: [true, "Por favor añada el nombre del responsable"],
+  },
+  apellidosEncar: {
+    type: String,
+    required: [true, "Por favor añada los apellidos del responsable"],
+  },
+  tipo_doc: {
+    type: String,
+    required: [true, "Por favor seleccione un tipo de documento"],
+  },
+  num_doc: {
+    type: Number,
+    required: [true, "Por favor ingrese un número de documento"],
+  },
+  fecha_creacion: {
+    type: String,
+    required: [true, "Por favor ingrese una fecha de creación"],
+  },
+  correo: {
+    type: String,
+    required: [true, "Por favor seleccione un correo"],
+    unique: true,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please fill a valid email address",
+    ],
+  },
+  num_celular: {
+    type: String,
+    required: [true, "Por favor ingrese un número de celular"],
+    unique: true,
+    match: [
+      /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/,
+      "Por favor ingrese un número de celular válido",
+    ],
+  },
   password: { type: String, required: true },
-  urlImg: { type: String },
+  urlImg: { type: String, required: true },
   usuarioIG: { type: String },
   tipo_usuario: { type: String },
   publicaciones: [{ type: mongoose.Types.ObjectId, ref: "Publicacion" }],
@@ -49,9 +83,9 @@ const schema_fundacion: Schema<Fundacion> = new Schema<Fundacion>({
   solicitudesFundacion: [
     { type: mongoose.Types.ObjectId, ref: "SolicitudAdopcion" },
   ],
-  direccion: { type: String, require: true },
-  mision: { type: String, require: true },
-  vision: { type: String, require: true },
+  direccion: { type: String, required: true },
+  mision: { type: String, required: true },
+  vision: { type: String, required: true },
   ubicacion: {
     type: {
       type: String,

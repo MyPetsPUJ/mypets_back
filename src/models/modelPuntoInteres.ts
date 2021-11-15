@@ -14,9 +14,18 @@ interface PuntoDeInteres extends Document {
 
 const schema_punto_de_interes: Schema<PuntoDeInteres> =
   new Schema<PuntoDeInteres>({
-    titulo: { type: String, require: true },
-    descripcion: { type: String, require: true },
-    direccion: { type: String, require: true },
+    titulo: {
+      type: String,
+      required: [true, "Por favor ingrese un título para el punto de interés."],
+    },
+    descripcion: {
+      type: String,
+      required: [true, "Debe ingresar una descripción para el punto."],
+    },
+    direccion: {
+      type: String,
+      required: [true, "Debe ingresar una dirección para el punto."],
+    },
     autorPuntoDeInteres: { type: mongoose.Types.ObjectId, ref: "Fundacion" },
     ubicacion: {
       type: {

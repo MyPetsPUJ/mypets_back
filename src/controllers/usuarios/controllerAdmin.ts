@@ -5,7 +5,7 @@ import Admin from "../../models/usuarios/modelAdmin";
 class ControllerAdmin {
   public async crearAdmin(req: Request, res: Response, next: NextFunction) {
     const admin = new Admin({
-      nombres: req.body.nombre,
+      nombres: req.body.nombres,
       apellidos: req.body.apellidos,
       correo: req.body.correo,
       password: req.body.password,

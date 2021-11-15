@@ -23,6 +23,12 @@ class ControllerPuntoDeInteres {
       console.log(req.body);
       const punto = await PuntoDeInteres.create(req.body);
       console.log("El punto:", punto);
+      if (!punto) {
+        return res
+          .status(400)
+          .json({ message: "Error, el punto de interés no fue creado" });
+      }
+
       punto.save();
 
       const updatePunto = await PuntoDeInteres.findByIdAndUpdate(
@@ -74,29 +80,32 @@ class ControllerPuntoDeInteres {
   }
 
   public async mostrarPuntos(req: Request, res: Response, next: NextFunction) {
-    try {
-      const puntos = await PuntoDeInteres.find();
-      const fundaciones = await Fundacion.find();
+    const puntos = await PuntoDeInteres.find();
+    const fundaciones = await Fundacion.find();
 
-      return res
-        .status(200)
-        .json({ message: "Resultado de búsqueda: ", puntos, fundaciones });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: "Error" });
+    if (puntos.length == 0 && fundaciones.length == 0) {
+      return res.status(204).json({
+        message: "Petición procesada, no se han encontrado resultados",
+        puntos,
+        fundaciones,
+      });
     }
+
+    return res
+      .status(200)
+      .json({ message: "Resultado de búsqueda: ", puntos, fundaciones });
   }
 
   public async getPunto(req: Request, res: Response, next: NextFunction) {
-    try {
-      const id = req.params.id;
-      const punto = await PuntoDeInteres.findById(id);
+    const id = req.params.id;
+    const punto = await PuntoDeInteres.findById(id);
 
-      return res.status(200).json(punto);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: "Ha ocurrido un error" });
+    if (!punto) {
+      return res
+        .status(400)
+        .json({ message: "No se ha encontrado el punto de interés" });
     }
+    return res.status(200).json(punto);
   }
 
   public async editarPunto(req: Request, res: Response, next: NextFunction) {
@@ -123,18 +132,33 @@ class ControllerPuntoDeInteres {
       { new: true }
     );
     if (!puntoUpdated) {
-      return res
-        .status(400)
-        .json({
-          message: "Error, no se ha encontrado el punto con el siguiente id: ",
-          id,
-        });
+      return res.status(400).json({
+        message: "Error, no se ha encontrado el punto con el siguiente id: ",
+        id,
+      });
     }
     console.log("Punto act", puntoUpdated);
     return res.status(200).json({
       message: "Punto actualizado",
       puntoUpdated,
     });
+  }
+
+  public async deleteAllPuntosFundacion(req: Request, res: Response) {
+    const id = req.params.id;
+
+    const resultado = await Fundacion.findById(id).populate("puntosDeInteres");
+
+    if (!resultado) {
+      return res.status(400).json({ message: "Fundación inexistente" });
+    }
+
+    const puntos = resultado!.puntosDeInteres;
+
+    await PuntoDeInteres.remove(puntos);
+    return res
+      .status(200)
+      .json({ message: "Puntos eliminados correctamente", puntos });
   }
 
   public async deletePunto(req: Request, res: Response, next: NextFunction) {
@@ -147,6 +171,14 @@ class ControllerPuntoDeInteres {
         message: "No se ha encontrado ningún punto de interés con ese id",
       });
     }
+
+    const fundacionID = punto?.autorPuntoDeInteres;
+
+    const fundacion = await Fundacion.findByIdAndUpdate(
+      fundacionID,
+      { $pull: { puntosDeInteres: punto?._id } },
+      { new: true, useFindAndModify: false }
+    );
 
     return res.status(200).json({
       message: "Punto de interés eliminado correctamente",

@@ -1,20 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import SolicitudAdopcion from "../models/solicitud-adopcion/modelSolicitudAdopcion"; 
+import SolicitudAdopcion from "../models/solicitud-adopcion/modelSolicitudAdopcion";
 import Adoptante from "../models/usuarios/modelAdoptante";
 import Animal from "../models/usuarios/modelAnimal";
 import Fundacion from "../models/usuarios/modelFundacion";
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-class ControllerSolicitudAdopcion{
-  public async crearSolicitud( req: Request, res: Response, next: NextFunction)
-  {
+class ControllerSolicitudAdopcion {
+  public async crearSolicitud(req: Request, res: Response, next: NextFunction) {
     const solicitud = new SolicitudAdopcion({
-      idAdoptante :req.body.adoptante._id,
-      idFundacion : mongoose.Types.ObjectId(req.body.idFundacion),
-      idAnimal : req.body.animal._id,
+      idAdoptante: req.body.adoptante._id,
+      idFundacion: mongoose.Types.ObjectId(req.body.idFundacion),
+      idAnimal: req.body.animal._id,
       idFormulario: null,
       fecha_solicitud: req.body.fecha,
-      estado : req.body.estado
+      estado: req.body.estado,
     });
 
     console.log(solicitud);
@@ -28,16 +27,16 @@ class ControllerSolicitudAdopcion{
         });
       })
       .catch((err: any) => {
-        res.status(500).json({
+        res.status(400).json({
           error: err,
         });
       });
-    
+
     const idUser = solicitud.idAdoptante;
     const idFunda = solicitud.idFundacion;
     const adoptanteUpdate = await Adoptante.findByIdAndUpdate(
       idUser,
-      { $push :{ solicitudesAdoptante: solicitud._id } },
+      { $push: { solicitudesAdoptante: solicitud._id } },
       { new: true, useFindAndModify: false }
     );
 
@@ -54,39 +53,51 @@ class ControllerSolicitudAdopcion{
   /*
   Param = id : idSolicitud
   */
-  public async getSolicitud( req: Request, res: Response): Promise<Response> {
+  public async getSolicitud(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
 
     const solicitud = await SolicitudAdopcion.findById(id);
+
+    if (!solicitud) {
+      return res
+        .status(400)
+        .json({ message: "No existe ninguna solicitud con ese id" });
+    }
     return res.status(200).json(solicitud);
   }
 
-  public async getSolicitudes( req: Request, res: Response): Promise<Response> {
+  public async getSolicitudes(req: Request, res: Response): Promise<Response> {
     const solicitudes = await SolicitudAdopcion.find();
+    if (solicitudes.length == 0) {
+      return res
+        .status(400)
+        .json({ message: "No se encontró ninguna solicitud" });
+    }
     return res.status(200).json(solicitudes);
   }
   /*
   Param = id: IdAdoptante
   Return Solicitud[]
   */
-  public async getSolicitudesAdoptante( req: Request, res: Response): Promise<Response> {
+  public async getSolicitudesAdoptante(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
 
     var solicitudes: any[] = [];
 
-    try{
+    try {
       const adoptante = await Adoptante.findById(id);
-      if( adoptante!.solicitudesAdoptante !== undefined ){
-        for(var solicitud of adoptante!.solicitudesAdoptante){
-          var nSolicitud = await SolicitudAdopcion.findById(solicitud); 
+      if (adoptante!.solicitudesAdoptante !== undefined) {
+        for (var solicitud of adoptante!.solicitudesAdoptante) {
+          var nSolicitud = await SolicitudAdopcion.findById(solicitud);
           solicitudes.push(nSolicitud);
-        } 
+        }
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
-    }
-    finally{
+    } finally {
       return res.status(200).json(solicitudes);
     }
   }
@@ -94,24 +105,25 @@ class ControllerSolicitudAdopcion{
   Param = id: IdFundacion
   Return Solicitud[]
   */
-  public async getSolicitudesFundacion( req: Request, res: Response): Promise<Response> {
+  public async getSolicitudesFundacion(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
 
     var solicitudes: any[] = [];
 
-    try{
+    try {
       const fundacion = await Fundacion.findById(id);
-      if( fundacion!.solicitudesFundacion !== undefined ){
-        for(var solicitud of fundacion!.solicitudesFundacion){
-          var nSolicitud = await SolicitudAdopcion.findById(solicitud); 
+      if (fundacion!.solicitudesFundacion !== undefined) {
+        for (var solicitud of fundacion!.solicitudesFundacion) {
+          var nSolicitud = await SolicitudAdopcion.findById(solicitud);
           solicitudes.push(nSolicitud);
-        } 
+        }
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
-    }
-    finally{
+    } finally {
       return res.status(200).json(solicitudes);
     }
   }
@@ -119,25 +131,32 @@ class ControllerSolicitudAdopcion{
   Param = id: idFundacion
   Return [Fundacion, Solicitud[i], Adoptante[i], Animal[i]]
   */
-  public async populateSolicitudesFundacion( req: Request, res: Response): Promise<Response> {
+  public async populateSolicitudesFundacion(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
 
     var solicitudes: any[] = [];
-    var adoptantes: any[] =[];
-    var animales: any[] =[];
+    var adoptantes: any[] = [];
+    var animales: any[] = [];
 
     const fundacion = await Fundacion.findById(id);
 
-    if( fundacion!.solicitudesFundacion !== undefined )
-    {
-      console.log("fundacion",fundacion);
-      for(var solicitud of fundacion!.solicitudesFundacion)
-      {
-        var nSolicitud = await SolicitudAdopcion.findById(solicitud).populate("idAnimal");
+    if (fundacion!.solicitudesFundacion !== undefined) {
+      console.log("fundacion", fundacion);
+      for (var solicitud of fundacion!.solicitudesFundacion) {
+        var nSolicitud = await SolicitudAdopcion.findById(solicitud).populate(
+          "idAnimal"
+        );
 
-        var mSolicitud = await SolicitudAdopcion.findById(solicitud).populate("idAdoptante");
-        
-        console.log("solicitud",solicitud); console.log("nsolicitud",nSolicitud); console.log("msolicitud",mSolicitud);
+        var mSolicitud = await SolicitudAdopcion.findById(solicitud).populate(
+          "idAdoptante"
+        );
+
+        console.log("solicitud", solicitud);
+        console.log("nsolicitud", nSolicitud);
+        console.log("msolicitud", mSolicitud);
 
         solicitudes.push(nSolicitud);
 
@@ -146,60 +165,75 @@ class ControllerSolicitudAdopcion{
 
         var animal = nSolicitud!.idAnimal;
         animales.push(animal);
-      } 
+      }
     }
-    return res.status(200).json({ fundacion,solicitudes,adoptantes,animales});
+    return res
+      .status(200)
+      .json({ fundacion, solicitudes, adoptantes, animales });
   }
   /* 
   Param = id: idSolicitud
   */
-  public async deleteSolicitud(req: Request, res: Response): Promise<Response>{
+  public async deleteSolicitud(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
 
     const solicitud = await SolicitudAdopcion.findById(id);
 
-    if(solicitud != null){
-
+    if (solicitud != null) {
       const newAdoptante = await Adoptante.findByIdAndUpdate(
         solicitud?.idAdoptante,
-        { $pull: { solicitudesAdoptante: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+        {
+          $pull: {
+            solicitudesAdoptante: {
+              $in: mongoose.Types.ObjectId(solicitud?._id),
+            },
+          },
+        },
         { new: true, useFindAndModify: false }
       );
 
       console.log("Paso Adoptante");
-    
+
       const newFundacion = await Fundacion.findByIdAndUpdate(
         solicitud?.idFundacion,
-        { $pull: { solicitudesFundacion: {$in : mongoose.Types.ObjectId( solicitud?._id) } } },
+        {
+          $pull: {
+            solicitudesFundacion: {
+              $in: mongoose.Types.ObjectId(solicitud?._id),
+            },
+          },
+        },
         { new: true, useFindAndModify: false }
       );
-    
+
       await SolicitudAdopcion.findByIdAndRemove(id);
     }
     return res.status(200).json({
-      message: "2 paso  eliminado satisfactoriamente",solicitud
+      message: "2 paso  eliminado satisfactoriamente",
+      solicitud,
     });
   }
   /*
   Param = id: idSolicitud
   Body = estado: Nuevo Estado de la solicitud (String) 
   */
-  public async updateEstadoSolicitud(req: Request, res: Response): Promise<Response>{
+  public async updateEstadoSolicitud(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
     const id = req.params.id;
-    
+
     const nuevoEstado = req.body.estado;
 
     const solicitud = await SolicitudAdopcion.findByIdAndUpdate(
       id,
-      {$set :{ estado: nuevoEstado} },
+      { $set: { estado: nuevoEstado } },
       { new: true, useFindAndModify: false }
     );
     return res.status(200).json({
-      message: " actualizado satisfactoriamente"
+      message: " actualizado satisfactoriamente",
     });
   }
-};
+}
 
-export const controllerSolicitudAdopcion= new ControllerSolicitudAdopcion()
-
-
+export const controllerSolicitudAdopcion = new ControllerSolicitudAdopcion();

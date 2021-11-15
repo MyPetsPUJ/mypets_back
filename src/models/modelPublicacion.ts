@@ -10,11 +10,17 @@ interface Publicacion extends Document {
 }
 
 const schema_publicacion: Schema = new Schema({
-  titulo: { type: String, required: true },
-  cuerpo: { type: String, required: true },
-  fecha: { type: String, required: true },
-  urlImg: { type: String, required: true },
-  seccion: { type: String, required: true },
+  titulo: { type: String, required: [true, "Debe ingresar un título."] },
+  cuerpo: {
+    type: String,
+    required: [true, "Debe ingresar un cuerpo para la publicación"],
+  },
+  fecha: { type: String, required: [true, "Ingrese una fecha"] },
+  urlImg: { type: String, required: [true, "Por favor ingrese una imagen"] },
+  seccion: {
+    type: String,
+    required: [true, "Seleccione la sección acorde a la publicación"],
+  },
   autorPublicacion: { type: mongoose.Types.ObjectId, ref: "Fundacion" },
 });
 

@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
-interface Producto extends Document {
+export interface iProducto extends Document {
   nombre: string;
   tipoAnimal: string;
   urlImg: string;
@@ -21,4 +21,4 @@ const schema_producto: Schema = new Schema({
 
 schema_producto.plugin(uniqueValidator);
 
-export default mongoose.model<Producto>("Producto", schema_producto);
+export const Producto: Model<iProducto> = mongoose.model("Producto", schema_producto);
