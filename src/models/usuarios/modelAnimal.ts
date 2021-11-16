@@ -38,7 +38,6 @@ const schema_animal: Schema = new Schema({
   sexo: {
     type: String,
     required: [true, "Por favor ingrese si es macho o hembra"],
-    enum: ["Macho, Hembra"],
   },
   tamano: {
     type: String,

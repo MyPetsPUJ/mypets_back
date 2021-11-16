@@ -277,7 +277,11 @@ class ControllerAnimal {
       });
     } catch (error) {
       console.log(error, "Server Error");
-      return res.status(400).json({ message: "Error" });
+      return res
+        .status(400)
+        .json({
+          message: "Error, no se encontró ningún animal para actualizar",
+        });
     }
   }
 
