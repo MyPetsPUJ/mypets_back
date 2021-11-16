@@ -27,15 +27,15 @@ router.get(
   controllerPuntoDeInteres.getPunto
 );
 
-// router.delete(
-//   `/${dashboardPath}/${mapaPath}/:id`,
-//   controllerPuntoDeInteres.deletePunto
-// );
-
 router.delete(
   `/${dashboardPath}/${mapaPath}/:id`,
-  controllerPuntoDeInteres.deleteAllPuntosFundacion
+  controllerPuntoDeInteres.deletePunto
 );
+
+// router.delete(
+//   `/${dashboardPath}/${mapaPath}/:id`,
+//   controllerPuntoDeInteres.deleteAllPuntosFundacion
+// );
 
 router.put(
   `/${dashboardPath}/${mapaPath}/${editarPath}/:id`,
